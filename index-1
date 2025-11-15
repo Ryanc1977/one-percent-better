@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>1% Better. Every Day.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-top: #eafdf5;
+      --bg-bottom: #ffffff;
+      --accent: #10b981;
+      --accent-soft: #a7f3d0;
+      --text-main: #0f172a;
+      --text-subtle: #64748b;
+      --card-bg: #ffffff;
+      --card-border: rgba(15,23,42,0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "SF Pro Text", sans-serif;
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 40%);
+      color: var(--text-main);
+    }
+    .page { max-width: 480px; margin: 0 auto; }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+    .top-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    input[type="date"],
+    select {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      background: #ffffff;
+    }
+    .progress-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffffaa;
+      font-weight: 600;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 16px 36px rgba(15,23,42,0.07);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+    .label-sm {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-subtle);
+      margin-bottom: 4px;
+    }
+    .quote {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .btn {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 4px 10px;
+      font-size: 12px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+    .btn:active { background: #f1f5f9; }
+    .btn-primary {
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      padding: 6px 12px;
+      font-size: 13px;
+      background: var(--accent);
+      color: #ffffff;
+      cursor: pointer;
+    }
+    .field {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+    .small { font-size: 11px; color: var(--text-subtle); margin-top: 4px; }
+    .task {
+      display: flex;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .task-title {
+      font-weight: 600;
+      gap: 4px;
+      flex-wrap: wrap;
+      display: flex;
+    }
+    .task-benefit {
+      font-size: 12px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+    .pill {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+    .pill-fav {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+      background: #ecfdf5;
+    }
+    .area-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 6px;
+    }
+    .area-title { font-weight: 600; font-size: 15px; }
+    .next-item {
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .badge-focus {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: var(--accent);
+      border: 1px solid #bbf7d0;
+    }
+    .add-form {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .add-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .add-row input[type="text"],
+    .add-row input[type="number"] {
+      flex: 1;
+      min-width: 0;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+    }
+    .fav-toggle {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-subtle);
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <h1>1% Better. Every Day.</h1>
+      <div class="subtitle">Tiny actions. Consistent momentum. Compounding results.</div>
+      <div class="top-row">
+        <span id="progressText" class="progress-badge">Today: 0% (0 / 0)</span>
+        <input id="dateInput" type="date" />
+      </div>
+      <div class="top-row">
+        <span id="timeBlockLabel" class="small">This moment: …</span>
+        <select id="weeklyFocusSelect">
+          <option>Health</option>
+          <option>Fitness</option>
+          <option>Spiritual</option>
+          <option>Family</option>
+          <option>Career</option>
+          <option>Mindset</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- WHAT'S NEXT -->
+    <section class="card">
+      <div class="label-sm">What’s next</div>
+      <div id="nextList"></div>
+    </section>
+
+    <!-- QUOTES + MORNING -->
+    <section class="card">
+      <div class="label-sm">Morning Inspiration</div>
+      <div id="quoteText" class="quote">Loading…</div>
+      <div style="display:flex; gap:6px; margin-bottom:8px;">
+        <button id="prevQuoteBtn" class="btn">← Back</button>
+        <button id="nextQuoteBtn" class="btn">Next →</button>
+      </div>
+      <div class="label-sm">Morning Focus</div>
+      <input id="morningInput" class="field"
+             placeholder="What’s the ONE thing that matters most today?" />
+    </section>
+
+    <!-- TASKS -->
+    <section class="card">
+      <div class="label-sm">Today’s tiny steps</div>
+      <div id="categoriesContainer"></div>
+
+      <!-- Add tiny step -->
+      <div class="add-form">
+        <div class="label-sm">Add a tiny step</div>
+        <div class="add-row">
+          <input id="addArea" type="text" placeholder="Area (e.g., Health)" />
+          <input id="addTitle" type="text" placeholder="1% action (e.g., 5-min walk)" />
+        </div>
+        <div class="add-row">
+          <input id="addMinutes" type="number" min="1" step="1" placeholder="Min" style="max-width:80px;" />
+          <input id="addBenefit" type="text" placeholder="Why this helps (optional)" />
+        </div>
+        <div class="add-row" style="align-items:center; justify-content:space-between;">
+          <label class="fav-toggle">
+            <input id="addFavorite" type="checkbox" />
+            <span>Mark as favorite</span>
+          </label>
+          <button id="addButton" class="btn-primary">Add step</button>
+        </div>
+        <div class="small">New steps are saved and included in suggestions.</div>
+      </div>
+    </section>
+
+    <!-- EVENING REFLECTION -->
+    <section class="card">
+      <div class="label-sm">Evening Reflection</div>
+      <input id="eveningInput" class="field"
+             placeholder="One win or insight from today?" />
+    </section>
+
+    <footer>
+      v3.2 — Data and custom steps are saved locally on this device.
+    </footer>
+
+  </div>
+
+<script>
+  // ----- Data -----
+  var QUOTES = [
+    "Momentum beats motivation.",
+    "Be where your feet are.",
+    "Tiny shifts create big change.",
+    "Each small step is a vote for who you’re becoming.",
+    "Rest is part of progress.",
+    "You don’t need a new life, you need a new day."
+  ];
+
+  var DEFAULT_ACTIONS = [
+    { id:"a1", area:"Health",   title:"2-min cold plunge",          benefit:"Boosts dopamine & resilience", minutes:2,  favorite:true },
+    { id:"a2", area:"Health",   title:"3 rounds Wim Hof breath",    benefit:"Calms and energizes",          minutes:5,  favorite:true },
+    { id:"a3", area:"Fitness",  title:"5-min stretch flow",         benefit:"Mobility + posture",           minutes:5,  favorite:true },
+    { id:"a4", area:"Spiritual",title:"10-min meditation sit",      benefit:"Clears mental noise",          minutes:10, favorite:true },
+    { id:"a5", area:"Family",   title:"1 loving check-in with Anya",benefit:"Deepens bond",                 minutes:2,  favorite:true },
+    { id:"a6", area:"Career",   title:"Send 1 message to a lead",   benefit:"Builds momentum",              minutes:3,  favorite:false},
+    { id:"a7", area:"Mindset",  title:"Write 1 gratitude",          benefit:"Shifts mindset",               minutes:2,  favorite:true }
+  ];
+
+  var STORAGE_KEY = "onepct_better_v3_2_full_v2";
+  var raw = null;
+  try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  var state = raw ? JSON.parse(raw) : {};
+  if (!state.days) state.days = {};
+  if (!state.weeklyFocus) state.weeklyFocus = "Health";
+  if (typeof state.quoteIndex !== "number") state.quoteIndex = 0;
+  if (!Array.isArray(state.actions) || !state.actions.length) state.actions = DEFAULT_ACTIONS.slice();
+
+  var currentDate = new Date().toISOString().slice(0,10);
+
+  // DOM refs
+  var dateInput = document.getElementById("dateInput");
+  var weeklyFocusSelect = document.getElementById("weeklyFocusSelect");
+  var timeBlockLabel = document.getElementById("timeBlockLabel");
+  var progressText = document.getElementById("progressText");
+  var categoriesContainer = document.getElementById("categoriesContainer");
+  var morningInput = document.getElementById("morningInput");
+  var eveningInput = document.getElementById("eveningInput");
+  var quoteText = document.getElementById("quoteText");
+  var prevQuoteBtn = document.getElementById("prevQuoteBtn");
+  var nextQuoteBtn = document.getElementById("nextQuoteBtn");
+  var nextList = document.getElementById("nextList");
+
+  var addArea = document.getElementById("addArea");
+  var addTitle = document.getElementById("addTitle");
+  var addMinutes = document.getElementById("addMinutes");
+  var addBenefit = document.getElementById("addBenefit");
+  var addFavorite = document.getElementById("addFavorite");
+  var addButton = document.getElementById("addButton");
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  function ensureDay(date) {
+    if (!state.days[date]) {
+      state.days[date] = { done: {}, morning: "", evening: "" };
+    }
+    return state.days[date];
+  }
+
+  function timeBlock() {
+    var h = new Date().getHours();
+    if (h < 10) return "Early morning";
+    if (h < 14) return "Midday";
+    if (h < 18) return "Afternoon";
+    if (h < 22) return "Evening";
+    return "Night";
+  }
+
+  function getActions() {
+    if (!Array.isArray(state.actions)) return DEFAULT_ACTIONS.slice();
+    if (!state.actions.length) return DEFAULT_ACTIONS.slice();
+    return state.actions;
+  }
+
+  function render() {
+    var day = ensureDay(currentDate);
+    dateInput.value = currentDate;
+    timeBlockLabel.textContent = "This moment: " + timeBlock();
+    weeklyFocusSelect.value = state.weeklyFocus;
+    morningInput.value = day.morning || "";
+    eveningInput.value = day.evening || "";
+    if (state.quoteIndex < 0) state.quoteIndex = 0;
+    if (state.quoteIndex >= QUOTES.length) state.quoteIndex = QUOTES.length - 1;
+    quoteText.textContent = "“" + QUOTES[state.quoteIndex] + "”";
+    renderTasks(day);
+    renderNext(day);
+    renderProgress(day);
+  }
+
+  function renderProgress(day) {
+    var actions = getActions();
+    var total = actions.length;
+    var done = 0;
+    for (var i = 0; i < actions.length; i++) {
+      if (day.done[actions[i].id]) done++;
+    }
+    var pct = total ? Math.round(done / total * 100) : 0;
+    progressText.textContent = "Today: " + pct + "% (" + done + " / " + total + ")";
+  }
+
+  function renderTasks(day) {
+    categoriesContainer.innerHTML = "";
+    var actions = getActions();
+
+    var byArea = {};
+    for (var i = 0; i < actions.length; i++) {
+      var a = actions[i];
+      if (!byArea[a.area]) byArea[a.area] = [];
+      byArea[a.area].push(a);
+    }
+
+    var areas = Object.keys(byArea).sort();
+    for (var ai = 0; ai < areas.length; ai++) {
+      var area = areas[ai];
+      var tasks = byArea[area];
+
+      var header = document.createElement("div");
+      header.className = "area-header";
+
+      var title = document.createElement("div");
+      title.className = "area-title";
+      title.textContent = area;
+
+      var meta = document.createElement("div");
+      meta.className = "small";
+      var countDone = 0;
+      for (var t = 0; t < tasks.length; t++) {
+        if (day.done[tasks[t].id]) countDone++;
+      }
+      meta.textContent = countDone + " / " + tasks.length + " done";
+
+      header.appendChild(title);
+      header.appendChild(meta);
+      categoriesContainer.appendChild(header);
+
+      for (var j = 0; j < tasks.length; j++) {
+        var task = tasks[j];
+
+        var row = document.createElement("label");
+        row.className = "task";
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!day.done[task.id];
+        (function(id) {
+          cb.addEventListener("change", function() {
+            var d = ensureDay(currentDate);
+            d.done[id] = cb.checked;
+            save();
+            render();
+          });
+        })(task.id);
+
+        var body = document.createElement("div");
+        var titleRow = document.createElement("div");
+        titleRow.className = "task-title";
+        titleRow.textContent = task.title;
+
+        if (task.favorite) {
+          var fav = document.createElement("span");
+          fav.className = "pill pill-fav";
+          fav.textContent = "favorite";
+          titleRow.appendChild(fav);
+        }
+
+        var mins = document.createElement("span");
+        mins.className = "pill";
+        mins.textContent = (task.minutes || 1) + " min";
+        titleRow.appendChild(mins);
+
+        var benefit = document.createElement("div");
+        benefit.className = "task-benefit";
+        benefit.textContent = task.benefit || "";
+
+        body.appendChild(titleRow);
+        body.appendChild(benefit);
+
+        row.appendChild(cb);
+        row.appendChild(body);
+        categoriesContainer.appendChild(row);
+      }
+    }
+  }
+
+  // Simplified, robust suggestion logic
+  function renderNext(day) {
+    nextList.innerHTML = "";
+    var actions = getActions();
+    if (!actions.length) {
+      nextList.innerHTML = '<div class="small">Add a tiny step below to get started.</div>';
+      return;
+    }
+
+    // Prefer undone tasks; fall back to all
+    var undone = [];
+    for (var i = 0; i < actions.length; i++) {
+      if (!day.done[actions[i].id]) undone.push(actions[i]);
+    }
+    var pool = undone.length ? undone : actions.slice();
+
+    // Slightly prioritize favorites & weekly focus
+    pool.sort(function(a, b) {
+      var sa = (a.favorite ? 2 : 0) + (a.area === state.weeklyFocus ? 1 : 0);
+      var sb = (b.favorite ? 2 : 0) + (b.area === state.weeklyFocus ? 1 : 0);
+      return sb - sa;
+    });
+
+    var top = pool.slice(0, 3);
+    for (var j = 0; j < top.length; j++) {
+      var t = top[j];
+      var div = document.createElement("div");
+      div.className = "next-item";
+      var badge = (t.area === state.weeklyFocus)
+        ? '<div class="badge-focus">Weekly focus</div>'
+        : '';
+      div.innerHTML =
+        '<div>' +
+          '<div>' + t.title + '</div>' +
+          '<div class="small">' + (t.benefit || "") + '</div>' +
+        '</div>' +
+        '<div style="text-align:right;">' +
+          '<div class="small">' + (t.minutes || 1) + ' min</div>' +
+          badge +
+        '</div>';
+      nextList.appendChild(div);
+    }
+  }
+
+  // ----- Add Task -----
+  function addTask() {
+    var area = addArea.value.trim() || "General";
+    var title = addTitle.value.trim();
+    var minutes = parseInt(addMinutes.value, 10);
+    if (!minutes || minutes <= 0) minutes = 3;
+    var benefit = addBenefit.value.trim();
+    var favorite = addFavorite.checked;
+
+    if (!title) return;
+
+    var id = "u" + Date.now() + Math.floor(Math.random() * 1000);
+    var task = {
+      id: id,
+      area: area,
+      title: title,
+      benefit: benefit || "Supports your long-term vision.",
+      minutes: minutes,
+      favorite: favorite
+    };
+
+    if (!Array.isArray(state.actions)) state.actions = DEFAULT_ACTIONS.slice();
+    state.actions.push(task);
+    save();
+
+    addArea.value = "";
+    addTitle.value = "";
+    addMinutes.value = "";
+    addBenefit.value = "";
+    addFavorite.checked = false;
+
+    render();
+  }
+
+  // Events
+  dateInput.onchange = function() {
+    currentDate = dateInput.value || new Date().toISOString().slice(0,10);
+    render();
+  };
+  weeklyFocusSelect.onchange = function() {
+    state.weeklyFocus = weeklyFocusSelect.value;
+    save();
+    render();
+  };
+  morningInput.oninput = function() {
+    var day = ensureDay(currentDate);
+    day.morning = morningInput.value;
+    save();
+  };
+  eveningInput.oninput = function() {
+    var day = ensureDay(currentDate);
+    day.evening = eveningInput.value;
+    save();
+  };
+  nextQuoteBtn.onclick = function() {
+    state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
+    save();
+    render();
+  };
+  prevQuoteBtn.onclick = function() {
+    state.quoteIndex = (state.quoteIndex + QUOTES.length - 1) % QUOTES.length;
+    save();
+    render();
+  };
+  addButton.onclick = addTask;
+
+  // Init
+  dateInput.value = currentDate;
+  render();
+</script>
+
+</body>
+</html>
