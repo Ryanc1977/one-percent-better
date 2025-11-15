@@ -87,6 +87,17 @@
       padding: 4px 10px;
       font-size: 12px;
       background: #ffffff;
+      cursor: pointer;
+    }
+    .btn:active { background: #f1f5f9; }
+    .btn-primary {
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      padding: 6px 12px;
+      font-size: 13px;
+      background: var(--accent);
+      color: #ffffff;
+      cursor: pointer;
     }
     .field {
       width: 100%;
@@ -106,8 +117,17 @@
       margin-bottom: 8px;
       font-size: 14px;
     }
-    .task-title { font-weight: 600; gap: 4px; flex-wrap: wrap; display: flex; }
-    .task-benefit { font-size: 12px; color: var(--text-subtle); margin-top: 2px; }
+    .task-title {
+      font-weight: 600;
+      gap: 4px;
+      flex-wrap: wrap;
+      display: flex;
+    }
+    .task-benefit {
+      font-size: 12px;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
     .pill {
       font-size: 10px;
       padding: 2px 6px;
@@ -145,6 +165,33 @@
       background: #ecfdf5;
       color: var(--accent);
       border: 1px solid #bbf7d0;
+    }
+    .add-form {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .add-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .add-row input[type="text"],
+    .add-row input[type="number"] {
+      flex: 1;
+      min-width: 0;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+    }
+    .fav-toggle {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--text-subtle);
     }
     footer {
       text-align: center;
@@ -193,177 +240,356 @@
       </div>
       <div class="label-sm">Morning Focus</div>
       <input id="morningInput" class="field"
-        placeholder="What’s the ONE thing that matters most today?" />
+             placeholder="What’s the ONE thing that matters most today?" />
     </section>
 
     <!-- TASKS -->
     <section class="card">
       <div class="label-sm">Today’s tiny steps</div>
       <div id="categoriesContainer"></div>
+
+      <!-- Add tiny step -->
+      <div class="add-form">
+        <div class="label-sm">Add a tiny step</div>
+        <div class="add-row">
+          <input id="addArea" type="text" placeholder="Area (e.g., Health)" />
+          <input id="addTitle" type="text" placeholder="1% action (e.g., 5-min walk)" />
+        </div>
+        <div class="add-row">
+          <input id="addMinutes" type="number" min="1" step="1" placeholder="Min" style="max-width:80px;" />
+          <input id="addBenefit" type="text" placeholder="Why this helps (optional)" />
+        </div>
+        <div class="add-row" style="align-items:center; justify-content:space-between;">
+          <label class="fav-toggle">
+            <input id="addFavorite" type="checkbox" />
+            <span>Mark as favorite</span>
+          </label>
+          <button id="addButton" class="btn-primary">Add step</button>
+        </div>
+        <div class="small">New steps are saved and included in suggestions.</div>
+      </div>
     </section>
 
     <!-- EVENING REFLECTION -->
     <section class="card">
       <div class="label-sm">Evening Reflection</div>
       <input id="eveningInput" class="field"
-        placeholder="One win or insight from today?" />
+             placeholder="One win or insight from today?" />
     </section>
 
     <footer>
-      v3.2 — Data saved locally on this device.
+      v3.2 — Data and custom steps are saved locally on this device.
     </footer>
 
   </div>
 
 <script>
-var QUOTES = [
-  "Momentum beats motivation.",
-  "Be where your feet are.",
-  "Tiny shifts create big change.",
-  "Each small step is a vote for who you’re becoming.",
-  "Rest is part of progress.",
-  "You don’t need a new life, you need a new day."
-];
+  // ----- Data -----
+  var QUOTES = [
+    "Momentum beats motivation.",
+    "Be where your feet are.",
+    "Tiny shifts create big change.",
+    "Each small step is a vote for who you’re becoming.",
+    "Rest is part of progress.",
+    "You don’t need a new life, you need a new day."
+  ];
 
-var ACTIONS = [
-  { id:"a1", area:"Health", title:"2-min cold plunge", benefit:"Boosts dopamine & resilience", minutes:2, favorite:true },
-  { id:"a2", area:"Health", title:"3 rounds Wim Hof breath", benefit:"Calms and energizes", minutes:5, favorite:true },
-  { id:"a3", area:"Fitness", title:"5-min stretch flow", benefit:"Mobility + posture", minutes:5, favorite:true },
-  { id:"a4", area:"Spiritual", title:"10-min meditation sit", benefit:"Clears mental noise", minutes:10, favorite:true },
-  { id:"a5", area:"Family", title:"1 loving check-in with Anya", benefit:"Deepens bond", minutes:2, favorite:true },
-  { id:"a6", area:"Career", title:"Send 1 message to a lead", benefit:"Builds momentum", minutes:3, favorite:false },
-  { id:"a7", area:"Mindset", title:"Write 1 gratitude", benefit:"Shifts mindset", minutes:2, favorite:true }
-];
+  var DEFAULT_ACTIONS = [
+    { id:"a1", area:"Health",   title:"2-min cold plunge",          benefit:"Boosts dopamine & resilience", minutes:2,  favorite:true },
+    { id:"a2", area:"Health",   title:"3 rounds Wim Hof breath",    benefit:"Calms and energizes",          minutes:5,  favorite:true },
+    { id:"a3", area:"Fitness",  title:"5-min stretch flow",         benefit:"Mobility + posture",           minutes:5,  favorite:true },
+    { id:"a4", area:"Spiritual",title:"10-min meditation sit",      benefit:"Clears mental noise",          minutes:10, favorite:true },
+    { id:"a5", area:"Family",   title:"1 loving check-in with Anya",benefit:"Deepens bond",                 minutes:2,  favorite:true },
+    { id:"a6", area:"Career",   title:"Send 1 message to a lead",   benefit:"Builds momentum",              minutes:3,  favorite:false},
+    { id:"a7", area:"Mindset",  title:"Write 1 gratitude",          benefit:"Shifts mindset",               minutes:2,  favorite:true }
+  ];
 
-var STORAGE_KEY = "onepct_better_v3_2";
-var state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-if (!state.days) state.days = {};
-if (!state.weeklyFocus) state.weeklyFocus = "Health";
-if (!state.quoteIndex) state.quoteIndex = 0;
-var currentDate = new Date().toISOString().slice(0,10);
+  var STORAGE_KEY = "onepct_better_v3_2_full";
+  var raw = localStorage.getItem(STORAGE_KEY);
+  var state = raw ? JSON.parse(raw) : {};
+  if (!state.days) state.days = {};
+  if (!state.weeklyFocus) state.weeklyFocus = "Health";
+  if (typeof state.quoteIndex !== "number") state.quoteIndex = 0;
+  if (!state.actions) state.actions = DEFAULT_ACTIONS;
 
-// DOM refs
-var dateInput = document.getElementById("dateInput");
-var weeklyFocusSelect = document.getElementById("weeklyFocusSelect");
-var timeBlockLabel = document.getElementById("timeBlockLabel");
-var progressText = document.getElementById("progressText");
-var categoriesContainer = document.getElementById("categoriesContainer");
-var morningInput = document.getElementById("morningInput");
-var eveningInput = document.getElementById("eveningInput");
-var quoteText = document.getElementById("quoteText");
-var prevQuoteBtn = document.getElementById("prevQuoteBtn");
-var nextQuoteBtn = document.getElementById("nextQuoteBtn");
-var nextList = document.getElementById("nextList");
+  var currentDate = new Date().toISOString().slice(0,10);
 
-function ensureDay(date){
-  if (!state.days[date]) state.days[date]={done:{},morning:"",evening:""};
-  return state.days[date];
-}
-function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  // DOM refs
+  var dateInput = document.getElementById("dateInput");
+  var weeklyFocusSelect = document.getElementById("weeklyFocusSelect");
+  var timeBlockLabel = document.getElementById("timeBlockLabel");
+  var progressText = document.getElementById("progressText");
+  var categoriesContainer = document.getElementById("categoriesContainer");
+  var morningInput = document.getElementById("morningInput");
+  var eveningInput = document.getElementById("eveningInput");
+  var quoteText = document.getElementById("quoteText");
+  var prevQuoteBtn = document.getElementById("prevQuoteBtn");
+  var nextQuoteBtn = document.getElementById("nextQuoteBtn");
+  var nextList = document.getElementById("nextList");
 
-function timeBlock(){
-  var h=new Date().getHours();
-  if(h<10)return"Early morning";
-  if(h<14)return"Midday";
-  if(h<18)return"Afternoon";
-  if(h<22)return"Evening";
-  return"Night";
-}
+  var addArea = document.getElementById("addArea");
+  var addTitle = document.getElementById("addTitle");
+  var addMinutes = document.getElementById("addMinutes");
+  var addBenefit = document.getElementById("addBenefit");
+  var addFavorite = document.getElementById("addFavorite");
+  var addButton = document.getElementById("addButton");
 
-function render(){
-  var day = ensureDay(currentDate);
-  dateInput.value=currentDate;
-  timeBlockLabel.textContent="This moment: "+timeBlock();
-  weeklyFocusSelect.value=state.weeklyFocus;
-  morningInput.value=day.morning||"";
-  eveningInput.value=day.evening||"";
-  quoteText.textContent="“"+QUOTES[state.quoteIndex]+"”";
-  renderTasks(day);
-  renderNext(day);
-  renderProgress(day);
-}
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
 
-function renderProgress(day){
-  var total=ACTIONS.length,done=0;
-  ACTIONS.forEach(a=>{ if(day.done[a.id]) done++; });
-  var pct = total?Math.round(done/total*100):0;
-  progressText.textContent="Today: "+pct+"% ("+done+" / "+total+")";
-}
+  function ensureDay(date) {
+    if (!state.days[date]) {
+      state.days[date] = { done: {}, morning: "", evening: "" };
+    }
+    return state.days[date];
+  }
 
-function renderTasks(day){
-  categoriesContainer.innerHTML="";
-  var byArea={};
-  ACTIONS.forEach(a=>{
-    if(!byArea[a.area]) byArea[a.area]=[];
-    byArea[a.area].push(a);
-  });
-  Object.keys(byArea).forEach(area=>{
-    var tasks=byArea[area];
-    var header=document.createElement("div");
-    header.className="area-header";
-    header.innerHTML=`<div class="area-title">${area}</div>
-                      <div class="small">${tasks.filter(t=>day.done[t.id]).length+" / "+tasks.length} done</div>`;
-    categoriesContainer.appendChild(header);
-    tasks.forEach(t=>{
-      var row=document.createElement("label");
-      row.className="task";
-      var cb=document.createElement("input");
-      cb.type="checkbox";
-      cb.checked=!!day.done[t.id];
-      cb.addEventListener("change",()=>{
-        day.done[t.id]=cb.checked;
-        save(); render();
-      });
-      var body=document.createElement("div");
-      body.innerHTML=`<div class="task-title">${t.title} 
-         ${t.favorite?'<span class="pill pill-fav">favorite</span>':''}
-         <span class="pill">${t.minutes} min</span></div>
-         <div class="task-benefit">${t.benefit}</div>`;
-      row.appendChild(cb); row.appendChild(body);
-      categoriesContainer.appendChild(row);
-    });
-  });
-}
+  function timeBlock() {
+    var h = new Date().getHours();
+    if (h < 10) return "Early morning";
+    if (h < 14) return "Midday";
+    if (h < 18) return "Afternoon";
+    if (h < 22) return "Evening";
+    return "Night";
+  }
 
-function renderNext(day){
-  nextList.innerHTML="";
-  var scored=ACTIONS.map(t=>({t,score:score(t,day)}))
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,3);
-  scored.forEach(({t})=>{
-    var div=document.createElement("div");
-    div.className="next-item";
-    div.innerHTML=`<div>
-        <div>${t.title}</div>
-        <div class="small">${t.benefit}</div>
-      </div>
-      <div style="text-align:right;">
-        <div class="small">${t.minutes} min</div>
-        ${t.area===state.weeklyFocus?'<div class="badge-focus">Weekly focus</div>':''}
-      </div>`;
-    nextList.appendChild(div);
-  });
-}
-function score(t,day){
-  var s=0,h=new Date().getHours();
-  if(h<10 && t.minutes<=5)s+=3;
-  if(h>=10&&h<14 && t.minutes<=5)s+=2;
-  if(h>=14&&h<18)s+=1;
-  if(h>=18&&h<22 && (t.area==="Family"||t.area==="Mindset"))s+=2;
-  if(!day.done[t.id])s+=2;
-  if(t.favorite)s+=2;
-  if(t.area===state.weeklyFocus)s+=1;
-  return s;
-}
+  function getActions() {
+    return state.actions || [];
+  }
 
-dateInput.onchange=()=>{currentDate=dateInput.value; render();};
-weeklyFocusSelect.onchange=()=>{state.weeklyFocus=weeklyFocusSelect.value; save(); render();};
-morningInput.oninput=()=>{ensureDay(currentDate).morning=morningInput.value; save();};
-eveningInput.oninput=()=>{ensureDay(currentDate).evening=eveningInput.value; save();};
-nextQuoteBtn.onclick=()=>{state.quoteIndex=(state.quoteIndex+1)%QUOTES.length; save(); render();};
-prevQuoteBtn.onclick=()=>{state.quoteIndex=(state.quoteIndex+QUOTES.length-1)%QUOTES.length; save(); render();};
+  function render() {
+    var day = ensureDay(currentDate);
+    dateInput.value = currentDate;
+    timeBlockLabel.textContent = "This moment: " + timeBlock();
+    weeklyFocusSelect.value = state.weeklyFocus;
+    morningInput.value = day.morning || "";
+    eveningInput.value = day.evening || "";
+    if (state.quoteIndex < 0) state.quoteIndex = 0;
+    if (state.quoteIndex >= QUOTES.length) state.quoteIndex = QUOTES.length - 1;
+    quoteText.textContent = "“" + QUOTES[state.quoteIndex] + "”";
+    renderTasks(day);
+    renderNext(day);
+    renderProgress(day);
+  }
 
-render();
+  function renderProgress(day) {
+    var actions = getActions();
+    var total = actions.length;
+    var done = 0;
+    for (var i = 0; i < actions.length; i++) {
+      if (day.done[actions[i].id]) done++;
+    }
+    var pct = total ? Math.round(done / total * 100) : 0;
+    progressText.textContent = "Today: " + pct + "% (" + done + " / " + total + ")";
+  }
+
+  function renderTasks(day) {
+    categoriesContainer.innerHTML = "";
+    var actions = getActions();
+
+    var byArea = {};
+    for (var i = 0; i < actions.length; i++) {
+      var a = actions[i];
+      if (!byArea[a.area]) byArea[a.area] = [];
+      byArea[a.area].push(a);
+    }
+
+    var areas = Object.keys(byArea).sort();
+    for (var ai = 0; ai < areas.length; ai++) {
+      var area = areas[ai];
+      var tasks = byArea[area];
+
+      var header = document.createElement("div");
+      header.className = "area-header";
+
+      var title = document.createElement("div");
+      title.className = "area-title";
+      title.textContent = area;
+
+      var meta = document.createElement("div");
+      meta.className = "small";
+      var countDone = 0;
+      for (var t = 0; t < tasks.length; t++) {
+        if (day.done[tasks[t].id]) countDone++;
+      }
+      meta.textContent = countDone + " / " + tasks.length + " done";
+
+      header.appendChild(title);
+      header.appendChild(meta);
+      categoriesContainer.appendChild(header);
+
+      for (var j = 0; j < tasks.length; j++) {
+        var task = tasks[j];
+
+        var row = document.createElement("label");
+        row.className = "task";
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!day.done[task.id];
+        (function(id) {
+          cb.addEventListener("change", function() {
+            var d = ensureDay(currentDate);
+            d.done[id] = cb.checked;
+            save();
+            render();
+          });
+        })(task.id);
+
+        var body = document.createElement("div");
+        var titleRow = document.createElement("div");
+        titleRow.className = "task-title";
+        titleRow.textContent = task.title;
+
+        if (task.favorite) {
+          var fav = document.createElement("span");
+          fav.className = "pill pill-fav";
+          fav.textContent = "favorite";
+          titleRow.appendChild(fav);
+        }
+
+        var mins = document.createElement("span");
+        mins.className = "pill";
+        mins.textContent = (task.minutes || 1) + " min";
+        titleRow.appendChild(mins);
+
+        var benefit = document.createElement("div");
+        benefit.className = "task-benefit";
+        benefit.textContent = task.benefit || "";
+
+        body.appendChild(titleRow);
+        body.appendChild(benefit);
+
+        row.appendChild(cb);
+        row.appendChild(body);
+        categoriesContainer.appendChild(row);
+      }
+    }
+  }
+
+  function scoreTask(task, day) {
+    var s = 0;
+    var h = new Date().getHours();
+    var minutes = task.minutes || 1;
+
+    if (h < 10 && minutes <= 5) s += 3;
+    else if (h < 14 && minutes <= 5) s += 2;
+    else if (h < 18) s += 1;
+    else if (h < 22 && (task.area === "Family" || task.area === "Mindset")) s += 2;
+    else if (minutes <= 3) s += 2;
+
+    if (!day.done[task.id]) s += 2;
+    if (task.favorite) s += 2;
+    if (task.area === state.weeklyFocus) s += 1;
+
+    return s;
+  }
+
+  function renderNext(day) {
+    nextList.innerHTML = "";
+    var actions = getActions();
+    if (!actions.length) {
+      nextList.innerHTML = '<div class="small">Add a tiny step below to get started.</div>';
+      return;
+    }
+
+    var scored = [];
+    for (var i = 0; i < actions.length; i++) {
+      var t = actions[i];
+      scored.push({ task: t, score: scoreTask(t, day) });
+    }
+    scored.sort(function(a, b) { return b.score - a.score; });
+
+    var top = scored.slice(0, 3);
+    for (var j = 0; j < top.length; j++) {
+      var t = top[j].task;
+      var div = document.createElement("div");
+      div.className = "next-item";
+      var rightBadge = (t.area === state.weeklyFocus)
+        ? '<div class="badge-focus">Weekly focus</div>'
+        : '';
+      div.innerHTML =
+        '<div>' +
+          '<div>' + t.title + '</div>' +
+          '<div class="small">' + (t.benefit || "") + '</div>' +
+        '</div>' +
+        '<div style="text-align:right;">' +
+          '<div class="small">' + (t.minutes || 1) + ' min</div>' +
+          rightBadge +
+        '</div>';
+      nextList.appendChild(div);
+    }
+  }
+
+  // ----- Add Task -----
+  function addTask() {
+    var area = addArea.value.trim() || "General";
+    var title = addTitle.value.trim();
+    var minutes = parseInt(addMinutes.value, 10);
+    if (!minutes || minutes <= 0) minutes = 3;
+    var benefit = addBenefit.value.trim();
+    var favorite = addFavorite.checked;
+
+    if (!title) return;
+
+    var id = "u" + Date.now() + Math.floor(Math.random() * 1000);
+    var task = {
+      id: id,
+      area: area,
+      title: title,
+      benefit: benefit || "Supports your long-term vision.",
+      minutes: minutes,
+      favorite: favorite
+    };
+
+    state.actions.push(task);
+    save();
+
+    addArea.value = "";
+    addTitle.value = "";
+    addMinutes.value = "";
+    addBenefit.value = "";
+    addFavorite.checked = false;
+
+    render();
+  }
+
+  // Events
+  dateInput.onchange = function() {
+    currentDate = dateInput.value || new Date().toISOString().slice(0,10);
+    render();
+  };
+  weeklyFocusSelect.onchange = function() {
+    state.weeklyFocus = weeklyFocusSelect.value;
+    save();
+    render();
+  };
+  morningInput.oninput = function() {
+    var day = ensureDay(currentDate);
+    day.morning = morningInput.value;
+    save();
+  };
+  eveningInput.oninput = function() {
+    var day = ensureDay(currentDate);
+    day.evening = eveningInput.value;
+    save();
+  };
+  nextQuoteBtn.onclick = function() {
+    state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
+    save();
+    render();
+  };
+  prevQuoteBtn.onclick = function() {
+    state.quoteIndex = (state.quoteIndex + QUOTES.length - 1) % QUOTES.length;
+    save();
+    render();
+  };
+  addButton.onclick = addTask;
+
+  // Init
+  dateInput.value = currentDate;
+  render();
 </script>
 
 </body>
