@@ -304,13 +304,14 @@
     { id:"a7", area:"Mindset",  title:"Write 1 gratitude",          benefit:"Shifts mindset",               minutes:2,  favorite:true }
   ];
 
-  var STORAGE_KEY = "onepct_better_v3_2_full";
-  var raw = localStorage.getItem(STORAGE_KEY);
+  var STORAGE_KEY = "onepct_better_v3_2_full_v2";
+  var raw = null;
+  try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) {}
   var state = raw ? JSON.parse(raw) : {};
   if (!state.days) state.days = {};
   if (!state.weeklyFocus) state.weeklyFocus = "Health";
   if (typeof state.quoteIndex !== "number") state.quoteIndex = 0;
-  if (!state.actions) state.actions = DEFAULT_ACTIONS;
+  if (!Array.isArray(state.actions) || !state.actions.length) state.actions = DEFAULT_ACTIONS.slice();
 
   var currentDate = new Date().toISOString().slice(0,10);
 
@@ -335,7 +336,9 @@
   var addButton = document.getElementById("addButton");
 
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {}
   }
 
   function ensureDay(date) {
@@ -355,7 +358,9 @@
   }
 
   function getActions() {
-    return state.actions || [];
+    if (!Array.isArray(state.actions)) return DEFAULT_ACTIONS.slice();
+    if (!state.actions.length) return DEFAULT_ACTIONS.slice();
+    return state.actions;
   }
 
   function render() {
@@ -468,24 +473,7 @@
     }
   }
 
-  function scoreTask(task, day) {
-    var s = 0;
-    var h = new Date().getHours();
-    var minutes = task.minutes || 1;
-
-    if (h < 10 && minutes <= 5) s += 3;
-    else if (h < 14 && minutes <= 5) s += 2;
-    else if (h < 18) s += 1;
-    else if (h < 22 && (task.area === "Family" || task.area === "Mindset")) s += 2;
-    else if (minutes <= 3) s += 2;
-
-    if (!day.done[task.id]) s += 2;
-    if (task.favorite) s += 2;
-    if (task.area === state.weeklyFocus) s += 1;
-
-    return s;
-  }
-
+  // Simplified, robust suggestion logic
   function renderNext(day) {
     nextList.innerHTML = "";
     var actions = getActions();
@@ -494,19 +482,26 @@
       return;
     }
 
-    var scored = [];
+    // Prefer undone tasks; fall back to all
+    var undone = [];
     for (var i = 0; i < actions.length; i++) {
-      var t = actions[i];
-      scored.push({ task: t, score: scoreTask(t, day) });
+      if (!day.done[actions[i].id]) undone.push(actions[i]);
     }
-    scored.sort(function(a, b) { return b.score - a.score; });
+    var pool = undone.length ? undone : actions.slice();
 
-    var top = scored.slice(0, 3);
+    // Slightly prioritize favorites & weekly focus
+    pool.sort(function(a, b) {
+      var sa = (a.favorite ? 2 : 0) + (a.area === state.weeklyFocus ? 1 : 0);
+      var sb = (b.favorite ? 2 : 0) + (b.area === state.weeklyFocus ? 1 : 0);
+      return sb - sa;
+    });
+
+    var top = pool.slice(0, 3);
     for (var j = 0; j < top.length; j++) {
-      var t = top[j].task;
+      var t = top[j];
       var div = document.createElement("div");
       div.className = "next-item";
-      var rightBadge = (t.area === state.weeklyFocus)
+      var badge = (t.area === state.weeklyFocus)
         ? '<div class="badge-focus">Weekly focus</div>'
         : '';
       div.innerHTML =
@@ -516,7 +511,7 @@
         '</div>' +
         '<div style="text-align:right;">' +
           '<div class="small">' + (t.minutes || 1) + ' min</div>' +
-          rightBadge +
+          badge +
         '</div>';
       nextList.appendChild(div);
     }
@@ -543,6 +538,7 @@
       favorite: favorite
     };
 
+    if (!Array.isArray(state.actions)) state.actions = DEFAULT_ACTIONS.slice();
     state.actions.push(task);
     save();
 
