@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>1% Better. Every Day.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-top: #eafdf5;
+      --bg-bottom: #ffffff;
+      --accent: #10b981;
+      --accent-soft: #a7f3d0;
+      --text-main: #0f172a;
+      --text-subtle: #64748b;
+      --card-bg: #ffffff;
+      --card-border: rgba(15,23,42,0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "SF Pro Text", sans-serif;
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 40%);
+      color: var(--text-main);
+    }
+    .page { max-width: 480px; margin: 0 auto; }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-subtle);
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+    .top-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    input[type="date"],
+    select {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      background: #ffffff;
+    }
+    .progress-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffffaa;
+      font-weight: 600;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 16px 36px rgba(15,23,42,0.07);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+    .label-sm {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-subtle);
+      margin-bottom: 4px;
+    }
+    .quote {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .btn {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 4px 10px;
+      font-size: 12px;
+      background: #ffffff;
+    }
+    .field {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+    .small { font-size: 11px; color: var(--text-subtle); margin-top: 4px; }
+    .task {
+      display: flex;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .task-title { font-weight: 600; gap: 4px; flex-wrap: wrap; display: flex; }
+    .task-benefit { font-size: 12px; color: var(--text-subtle); margin-top: 2px; }
+    .pill {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+    .pill-fav {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+      background: #ecfdf5;
+    }
+    .area-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 6px;
+    }
+    .area-title { font-weight: 600; font-size: 15px; }
+    .next-item {
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .badge-focus {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: var(--accent);
+      border: 1px solid #bbf7d0;
+    }
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-subtle);
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <h1>1% Better. Every Day.</h1>
+      <div class="subtitle">Tiny actions. Consistent momentum. Compounding results.</div>
+      <div class="top-row">
+        <span id="progressText" class="progress-badge">Today: 0% (0 / 0)</span>
+        <input id="dateInput" type="date" />
+      </div>
+      <div class="top-row">
+        <span id="timeBlockLabel" class="small">This moment: …</span>
+        <select id="weeklyFocusSelect">
+          <option>Health</option>
+          <option>Fitness</option>
+          <option>Spiritual</option>
+          <option>Family</option>
+          <option>Career</option>
+          <option>Mindset</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- WHAT'S NEXT -->
+    <section class="card">
+      <div class="label-sm">What’s next</div>
+      <div id="nextList"></div>
+    </section>
+
+    <!-- QUOTES + MORNING -->
+    <section class="card">
+      <div class="label-sm">Morning Inspiration</div>
+      <div id="quoteText" class="quote">Loading…</div>
+      <div style="display:flex; gap:6px; margin-bottom:8px;">
+        <button id="prevQuoteBtn" class="btn">← Back</button>
+        <button id="nextQuoteBtn" class="btn">Next →</button>
+      </div>
+      <div class="label-sm">Morning Focus</div>
+      <input id="morningInput" class="field"
+        placeholder="What’s the ONE thing that matters most today?" />
+    </section>
+
+    <!-- TASKS -->
+    <section class="card">
+      <div class="label-sm">Today’s tiny steps</div>
+      <div id="categoriesContainer"></div>
+    </section>
+
+    <!-- EVENING REFLECTION -->
+    <section class="card">
+      <div class="label-sm">Evening Reflection</div>
+      <input id="eveningInput" class="field"
+        placeholder="One win or insight from today?" />
+    </section>
+
+    <footer>
+      v3.2 — Data saved locally on this device.
+    </footer>
+
+  </div>
+
+<script>
+var QUOTES = [
+  "Momentum beats motivation.",
+  "Be where your feet are.",
+  "Tiny shifts create big change.",
+  "Each small step is a vote for who you’re becoming.",
+  "Rest is part of progress.",
+  "You don’t need a new life, you need a new day."
+];
+
+var ACTIONS = [
+  { id:"a1", area:"Health", title:"2-min cold plunge", benefit:"Boosts dopamine & resilience", minutes:2, favorite:true },
+  { id:"a2", area:"Health", title:"3 rounds Wim Hof breath", benefit:"Calms and energizes", minutes:5, favorite:true },
+  { id:"a3", area:"Fitness", title:"5-min stretch flow", benefit:"Mobility + posture", minutes:5, favorite:true },
+  { id:"a4", area:"Spiritual", title:"10-min meditation sit", benefit:"Clears mental noise", minutes:10, favorite:true },
+  { id:"a5", area:"Family", title:"1 loving check-in with Anya", benefit:"Deepens bond", minutes:2, favorite:true },
+  { id:"a6", area:"Career", title:"Send 1 message to a lead", benefit:"Builds momentum", minutes:3, favorite:false },
+  { id:"a7", area:"Mindset", title:"Write 1 gratitude", benefit:"Shifts mindset", minutes:2, favorite:true }
+];
+
+var STORAGE_KEY = "onepct_better_v3_2";
+var state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+if (!state.days) state.days = {};
+if (!state.weeklyFocus) state.weeklyFocus = "Health";
+if (!state.quoteIndex) state.quoteIndex = 0;
+var currentDate = new Date().toISOString().slice(0,10);
+
+// DOM refs
+var dateInput = document.getElementById("dateInput");
+var weeklyFocusSelect = document.getElementById("weeklyFocusSelect");
+var timeBlockLabel = document.getElementById("timeBlockLabel");
+var progressText = document.getElementById("progressText");
+var categoriesContainer = document.getElementById("categoriesContainer");
+var morningInput = document.getElementById("morningInput");
+var eveningInput = document.getElementById("eveningInput");
+var quoteText = document.getElementById("quoteText");
+var prevQuoteBtn = document.getElementById("prevQuoteBtn");
+var nextQuoteBtn = document.getElementById("nextQuoteBtn");
+var nextList = document.getElementById("nextList");
+
+function ensureDay(date){
+  if (!state.days[date]) state.days[date]={done:{},morning:"",evening:""};
+  return state.days[date];
+}
+function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+function timeBlock(){
+  var h=new Date().getHours();
+  if(h<10)return"Early morning";
+  if(h<14)return"Midday";
+  if(h<18)return"Afternoon";
+  if(h<22)return"Evening";
+  return"Night";
+}
+
+function render(){
+  var day = ensureDay(currentDate);
+  dateInput.value=currentDate;
+  timeBlockLabel.textContent="This moment: "+timeBlock();
+  weeklyFocusSelect.value=state.weeklyFocus;
+  morningInput.value=day.morning||"";
+  eveningInput.value=day.evening||"";
+  quoteText.textContent="“"+QUOTES[state.quoteIndex]+"”";
+  renderTasks(day);
+  renderNext(day);
+  renderProgress(day);
+}
+
+function renderProgress(day){
+  var total=ACTIONS.length,done=0;
+  ACTIONS.forEach(a=>{ if(day.done[a.id]) done++; });
+  var pct = total?Math.round(done/total*100):0;
+  progressText.textContent="Today: "+pct+"% ("+done+" / "+total+")";
+}
+
+function renderTasks(day){
+  categoriesContainer.innerHTML="";
+  var byArea={};
+  ACTIONS.forEach(a=>{
+    if(!byArea[a.area]) byArea[a.area]=[];
+    byArea[a.area].push(a);
+  });
+  Object.keys(byArea).forEach(area=>{
+    var tasks=byArea[area];
+    var header=document.createElement("div");
+    header.className="area-header";
+    header.innerHTML=`<div class="area-title">${area}</div>
+                      <div class="small">${tasks.filter(t=>day.done[t.id]).length+" / "+tasks.length} done</div>`;
+    categoriesContainer.appendChild(header);
+    tasks.forEach(t=>{
+      var row=document.createElement("label");
+      row.className="task";
+      var cb=document.createElement("input");
+      cb.type="checkbox";
+      cb.checked=!!day.done[t.id];
+      cb.addEventListener("change",()=>{
+        day.done[t.id]=cb.checked;
+        save(); render();
+      });
+      var body=document.createElement("div");
+      body.innerHTML=`<div class="task-title">${t.title} 
+         ${t.favorite?'<span class="pill pill-fav">favorite</span>':''}
+         <span class="pill">${t.minutes} min</span></div>
+         <div class="task-benefit">${t.benefit}</div>`;
+      row.appendChild(cb); row.appendChild(body);
+      categoriesContainer.appendChild(row);
+    });
+  });
+}
+
+function renderNext(day){
+  nextList.innerHTML="";
+  var scored=ACTIONS.map(t=>({t,score:score(t,day)}))
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,3);
+  scored.forEach(({t})=>{
+    var div=document.createElement("div");
+    div.className="next-item";
+    div.innerHTML=`<div>
+        <div>${t.title}</div>
+        <div class="small">${t.benefit}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="small">${t.minutes} min</div>
+        ${t.area===state.weeklyFocus?'<div class="badge-focus">Weekly focus</div>':''}
+      </div>`;
+    nextList.appendChild(div);
+  });
+}
+function score(t,day){
+  var s=0,h=new Date().getHours();
+  if(h<10 && t.minutes<=5)s+=3;
+  if(h>=10&&h<14 && t.minutes<=5)s+=2;
+  if(h>=14&&h<18)s+=1;
+  if(h>=18&&h<22 && (t.area==="Family"||t.area==="Mindset"))s+=2;
+  if(!day.done[t.id])s+=2;
+  if(t.favorite)s+=2;
+  if(t.area===state.weeklyFocus)s+=1;
+  return s;
+}
+
+dateInput.onchange=()=>{currentDate=dateInput.value; render();};
+weeklyFocusSelect.onchange=()=>{state.weeklyFocus=weeklyFocusSelect.value; save(); render();};
+morningInput.oninput=()=>{ensureDay(currentDate).morning=morningInput.value; save();};
+eveningInput.oninput=()=>{ensureDay(currentDate).evening=eveningInput.value; save();};
+nextQuoteBtn.onclick=()=>{state.quoteIndex=(state.quoteIndex+1)%QUOTES.length; save(); render();};
+prevQuoteBtn.onclick=()=>{state.quoteIndex=(state.quoteIndex+QUOTES.length-1)%QUOTES.length; save(); render();};
+
+render();
+</script>
+
+</body>
+</html>
