@@ -422,7 +422,7 @@
       padding:3px 8px;
       font-size:11px;
       background:#f9fafb;
-      color:var(--text-subtle);
+      color:#4b5563;
     }
   </style>
 </head>
@@ -514,7 +514,7 @@
     </div>
 
     <!-- CHECK-IN VIEW -->
-    <div id="view-checkin" style="display:none%;">
+    <div id="view-checkin" style="display:none;">
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Mood check</div>
@@ -630,7 +630,7 @@
       { title:"Box breathing – 5 cycles", minutes:3, benefit:"Nervous system reset", icon:"📦", blocks:["Any"] }
     ],
     "Fitness": [
-      { title:"10 bodyweight squats", minutes:2, benefit:"Activates legs & glutes", icon:"🏋️", blocks:["Afternoon"] },
+      { title:"10 bodyweight squats", minutes:2, benefit:"Activates legs & glutes", icon:"🏋️", blocks:["Any"] },
       { title:"10 pushups (or wall pushups)", minutes:2, benefit:"Builds upper-body strength", icon:"💪", blocks:["Any"] },
       { title:"5-min stretch flow", minutes:5, benefit:"Releases tightness from the day", icon:"🤸", blocks:["Evening"] }
     ],
@@ -662,31 +662,39 @@
     ]
   };
 
-  // DEFAULT ACTIONS: seeded from your spreadsheet-style routine
+  // DEFAULT ACTIONS: exactly 2 per Focus Area
   var DEFAULT_ACTIONS = [
     // Health
-    { id:"a1", area:"Health",   title:"Cold plunge – 2 min", minutes:2,  benefit:"Boosts dopamine & grit",         favorite:true,  blocks:["Morning"],            icon:"❄️" },
-    { id:"a2", area:"Health",   title:"Morning lemon water – 1 glass", minutes:2, benefit:"Hydrates & wakes digestion", favorite:false, blocks:["Morning"],           icon:"🍋" },
+    { id:"a1",  area:"Health",   title:"Cold plunge – 2 min", minutes:2,  benefit:"Boosts dopamine & grit",         favorite:true,  blocks:["Morning"],          icon:"❄️" },
+    { id:"a2",  area:"Health",   title:"Morning lemon water – 1 glass", minutes:2, benefit:"Hydrates & wakes digestion", favorite:false, blocks:["Morning"],         icon:"🍋" },
 
     // Breathwork
-    { id:"a3", area:"Breathwork", title:"Wim Hof – 3 rounds", minutes:11, benefit:"Oxygenates body & clears mind", favorite:true,  blocks:["Morning"],            icon:"🌬️" },
+    { id:"a3",  area:"Breathwork", title:"Wim Hof – 3 rounds", minutes:11, benefit:"Oxygenates body & clears mind", favorite:true,  blocks:["Morning"],          icon:"🌬️" },
+    { id:"a4",  area:"Breathwork", title:"Box breathing – 5 cycles", minutes:3, benefit:"Resets your nervous system", favorite:false, blocks:["Any"],              icon:"📦" },
 
-    // Movement / Fitness
-    { id:"a4", area:"Movement", title:"Lunch walk – 10 min", minutes:10, benefit:"Movement + sunlight in the middle of your day", favorite:true, blocks:["Midday","Afternoon"], icon:"🚶" },
-    { id:"a5", area:"Fitness",  title:"Strength training – 20 min", minutes:20, benefit:"Builds strength & resilience", favorite:false, blocks:["Afternoon"], icon:"🏋️" },
+    // Movement
+    { id:"a5",  area:"Movement", title:"Lunch walk – 10 min", minutes:10, benefit:"Movement + sunlight in the middle of your day", favorite:true, blocks:["Midday","Afternoon"], icon:"🚶" },
+    { id:"a6",  area:"Movement", title:"Step outside & feel the sun – 3 min", minutes:3, benefit:"Grounds your energy in nature", favorite:false, blocks:["Afternoon"], icon:"☀️" },
+
+    // Fitness
+    { id:"a7",  area:"Fitness",  title:"Strength training – 20 min", minutes:20, benefit:"Builds strength & resilience", favorite:true,  blocks:["Afternoon"],      icon:"🏋️" },
+    { id:"a8",  area:"Fitness",  title:"10 bodyweight squats – 2 min", minutes:2, benefit:"Activates legs & glutes quickly", favorite:false, blocks:["Any"],         icon:"🏃" },
 
     // Spiritual
-    { id:"a6", area:"Spiritual", title:"Meditation – 15 min", minutes:15, benefit:"Calms your mind and raises awareness", favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
-    { id:"a7", area:"Spiritual", title:"Evening journal – 5 min", minutes:5,  benefit:"Reflects and integrates your day", favorite:false, blocks:["Evening"], icon:"📓" },
+    { id:"a9",  area:"Spiritual", title:"Meditation – 15 min", minutes:15, benefit:"Calms your mind and raises awareness", favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
+    { id:"a10", area:"Spiritual", title:"Evening journal – 5 min", minutes:5,  benefit:"Reflects and integrates your day", favorite:false, blocks:["Evening"],      icon:"📓" },
 
     // Family
-    { id:"a8", area:"Family",   title:"Anya check-in – 1 meaningful moment", minutes:5, benefit:"Nurtures your connection with Anya", favorite:true,  blocks:["Evening"], icon:"💚" },
+    { id:"a11", area:"Family",   title:"Anya check-in – 1 meaningful moment", minutes:5, benefit:"Nurtures your connection with Anya", favorite:true,  blocks:["Evening"], icon:"💚" },
+    { id:"a12", area:"Family",   title:"Share one appreciation with family – 2 min", minutes:2, benefit:"Deepens connection & gratitude", favorite:false, blocks:["Evening"], icon:"💌" },
 
-    // Fun / Play
-    { id:"a9", area:"Fun",      title:"Salsa practice – 10 min", minutes:10, benefit:"Keeps you playful & in your body", favorite:false, blocks:["Evening"], icon:"💃" },
+    // Career
+    { id:"a13", area:"Career",  title:"EZ Tool focus block – 25 min", minutes:25, benefit:"Moves your business 1% forward", favorite:true,  blocks:["Afternoon"],    icon:"🛠️" },
+    { id:"a14", area:"Career",  title:"Reply to 1 important email – 3 min", minutes:3, benefit:"Reduces mental clutter & backlog", favorite:false, blocks:["Midday","Afternoon"], icon:"📩" },
 
-    // Career / Work
-    { id:"a10", area:"Career",  title:"EZ Tool focus block – 25 min", minutes:25, benefit:"Moves your business 1% forward", favorite:false, blocks:["Afternoon"], icon:"🛠️" }
+    // Fun
+    { id:"a15", area:"Fun",      title:"Salsa practice – 10 min", minutes:10, benefit:"Keeps you playful & in your body", favorite:true,  blocks:["Evening"],       icon:"💃" },
+    { id:"a16", area:"Fun",      title:"5-min play with Anya or pets", minutes:5, benefit:"Feeds joy & connection", favorite:false, blocks:["Evening"], icon:"🐾" }
   ];
 
   var STORAGE_KEY = "onepct_layout_v4_home_areas_split";
@@ -1003,7 +1011,7 @@
       tasksEl.className = "fa-tasks";
       if (expandedAreas[area]) tasksEl.style.display = "block";
 
-      // show up to 2 tasks
+      // show up to 2 tasks (we seed exactly 2, but this keeps it safe)
       tasks.slice(0,2).forEach(function(task){
         var row = document.createElement("label");
         row.className = "fa-task";
