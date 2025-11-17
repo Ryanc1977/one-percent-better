@@ -507,6 +507,7 @@
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Focus Areas</div>
+          <div class="section-meta linkish" id="addAreaBtn">＋ Add focus area</div>
         </div>
         <div id="areasGrid"></div>
       </section>
@@ -617,42 +618,75 @@
     return "Night";
   }
 
-  // suggestion bank for each area
+  // suggestion bank for each area (custom to your routine)
   var SUGGESTION_BANK = {
     "Health": [
-      { title:"Drink a tall glass of water", minutes:1, benefit:"Hydrates & wakes up digestion", icon:"💧", blocks:["Morning"] },
-      { title:"5 deep belly breaths", minutes:1, benefit:"Resets your nervous system", icon:"🌬️", blocks:["Any"] },
-      { title:"Stand and stretch your spine", minutes:2, benefit:"Releases tension from sitting", icon:"🧘", blocks:["Afternoon"] }
+      { title:"Morning lemon water", minutes:2, benefit:"Hydrates & wakes up digestion", icon:"🍋", blocks:["Morning"] },
+      { title:"Stand and stretch your spine", minutes:2, benefit:"Releases tension from sitting", icon:"🧘", blocks:["Afternoon"] },
+      { title:"Early shutdown – phone off 30 min before bed", minutes:1, benefit:"Supports deeper sleep", icon:"🌙", blocks:["Night"] }
+    ],
+    "Breathwork": [
+      { title:"Wim Hof – 1 light round", minutes:5, benefit:"Boosts focus & calm", icon:"🌬️", blocks:["Morning"] },
+      { title:"Box breathing – 5 cycles", minutes:3, benefit:"Nervous system reset", icon:"📦", blocks:["Any"] }
     ],
     "Fitness": [
       { title:"10 bodyweight squats", minutes:2, benefit:"Activates legs & glutes", icon:"🏋️", blocks:["Afternoon"] },
-      { title:"Walk around the block", minutes:5, benefit:"Clears the mind & moves blood", icon:"🚶", blocks:["Midday","Afternoon"] },
-      { title:"20-second plank", minutes:1, benefit:"Wakes up your core", icon:"🧱", blocks:["Morning","Afternoon"] }
+      { title:"10 pushups (or wall pushups)", minutes:2, benefit:"Builds upper-body strength", icon:"💪", blocks:["Any"] },
+      { title:"5-min stretch flow", minutes:5, benefit:"Releases tightness from the day", icon:"🤸", blocks:["Evening"] }
+    ],
+    "Movement": [
+      { title:"Lunch walk – once around the block", minutes:10, benefit:"Clears the mind & moves blood", icon:"🚶", blocks:["Midday","Afternoon"] },
+      { title:"Step outside & feel the sun", minutes:3, benefit:"Grounds your energy", icon:"☀️", blocks:["Afternoon"] },
+      { title:"Walk while on a call", minutes:5, benefit:"Stacks movement into your day", icon:"📱", blocks:["Any"] }
+    ],
+    "Spiritual": [
+      { title:"Meditate – 5 min", minutes:5, benefit:"Calms your mind & nervous system", icon:"🧘", blocks:["Morning","Evening"] },
+      { title:"Write 1 sentence of truth", minutes:2, benefit:"Keeps you honest with yourself", icon:"🖊️", blocks:["Evening","Night"] },
+      { title:"10 conscious breaths with hand on heart", minutes:3, benefit:"Reconnects you to your body", icon:"❤️", blocks:["Any"] }
     ],
     "Family": [
-      { title:"Send a kind text", minutes:2, benefit:"Reminds someone they matter", icon:"💌", blocks:["Any"] },
-      { title:"Share one appreciation", minutes:2, benefit:"Deepens connection", icon:"💚", blocks:["Evening"] }
-    ],
-    "Mindset": [
-      { title:"Write 1 sentence about a win", minutes:2, benefit:"Focuses your brain on progress", icon:"📝", blocks:["Evening","Night"] },
-      { title:"Name 3 things going well", minutes:3, benefit:"Shifts you into gratitude", icon:"✨", blocks:["Any"] }
+      { title:"Send Anya a loving text/voice note", minutes:2, benefit:"Strengthens your bond", icon:"💌", blocks:["Any"] },
+      { title:"Share one appreciation with family", minutes:2, benefit:"Deepens connection", icon:"💚", blocks:["Evening"] }
     ],
     "Career": [
+      { title:"One tiny EZ Tool step", minutes:5, benefit:"Keeps momentum on your business", icon:"🛠️", blocks:["Afternoon"] },
       { title:"Reply to 1 important email", minutes:3, benefit:"Reduces mental clutter", icon:"📩", blocks:["Midday","Afternoon"] },
       { title:"Capture 1 idea in notes", minutes:2, benefit:"Keeps your ideas from slipping away", icon:"📓", blocks:["Any"] }
+    ],
+    "Fun": [
+      { title:"Dance 1 salsa song in the kitchen", minutes:3, benefit:"Shifts you into joy", icon:"💃", blocks:["Evening"] },
+      { title:"5-min play with Anya or pets", minutes:5, benefit:"Feeds play & connection", icon:"🐾", blocks:["Evening"] }
     ],
     "_default": [
       { title:"Take 3 slow breaths", minutes:1, benefit:"Recenters your energy", icon:"🌬️", blocks:["Any"] }
     ]
   };
 
+  // DEFAULT ACTIONS: seeded from your spreadsheet-style routine
   var DEFAULT_ACTIONS = [
-    { id:"a1", area:"Health",   title:"Meditation – 10 min", benefit:"Calms the mind", minutes:10, favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
-    { id:"a2", area:"Health",   title:"Cold plunge – 2 min", benefit:"Boosts dopamine & grit", minutes:2, favorite:true,  blocks:["Morning"], icon:"❄️" },
-    { id:"a3", area:"Fitness",  title:"Strength training – 15 min", benefit:"Builds muscle & endurance", minutes:15, favorite:false, blocks:["Afternoon"], icon:"🏋️" },
-    { id:"a4", area:"Family",   title:"Meaningful check-in", benefit:"Nurtures family bonds", minutes:5, favorite:true,  blocks:["Evening"], icon:"💚" },
-    { id:"a5", area:"Mindset",  title:"Write 1 gratitude",   benefit:"Shifts into appreciation", minutes:2, favorite:true,  blocks:["Morning","Evening"], icon:"📝" },
-    { id:"a6", area:"Career",   title:"1 outreach message",  benefit:"Grows opportunities", minutes:3, favorite:false, blocks:["Afternoon"], icon:"📨" }
+    // Health
+    { id:"a1", area:"Health",   title:"Cold plunge – 2 min", minutes:2,  benefit:"Boosts dopamine & grit",         favorite:true,  blocks:["Morning"],            icon:"❄️" },
+    { id:"a2", area:"Health",   title:"Morning lemon water – 1 glass", minutes:2, benefit:"Hydrates & wakes digestion", favorite:false, blocks:["Morning"],           icon:"🍋" },
+
+    // Breathwork
+    { id:"a3", area:"Breathwork", title:"Wim Hof – 3 rounds", minutes:11, benefit:"Oxygenates body & clears mind", favorite:true,  blocks:["Morning"],            icon:"🌬️" },
+
+    // Movement / Fitness
+    { id:"a4", area:"Movement", title:"Lunch walk – 10 min", minutes:10, benefit:"Movement + sunlight in the middle of your day", favorite:true, blocks:["Midday","Afternoon"], icon:"🚶" },
+    { id:"a5", area:"Fitness",  title:"Strength training – 20 min", minutes:20, benefit:"Builds strength & resilience", favorite:false, blocks:["Afternoon"], icon:"🏋️" },
+
+    // Spiritual
+    { id:"a6", area:"Spiritual", title:"Meditation – 15 min", minutes:15, benefit:"Calms your mind and raises awareness", favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
+    { id:"a7", area:"Spiritual", title:"Evening journal – 5 min", minutes:5,  benefit:"Reflects and integrates your day", favorite:false, blocks:["Evening"], icon:"📓" },
+
+    // Family
+    { id:"a8", area:"Family",   title:"Anya check-in – 1 meaningful moment", minutes:5, benefit:"Nurtures your connection with Anya", favorite:true,  blocks:["Evening"], icon:"💚" },
+
+    // Fun / Play
+    { id:"a9", area:"Fun",      title:"Salsa practice – 10 min", minutes:10, benefit:"Keeps you playful & in your body", favorite:false, blocks:["Evening"], icon:"💃" },
+
+    // Career / Work
+    { id:"a10", area:"Career",  title:"EZ Tool focus block – 25 min", minutes:25, benefit:"Moves your business 1% forward", favorite:false, blocks:["Afternoon"], icon:"🛠️" }
   ];
 
   var STORAGE_KEY = "onepct_layout_v4_home_areas_split";
@@ -663,6 +697,9 @@
   if (!Array.isArray(state.actions)) state.actions = DEFAULT_ACTIONS.slice();
   if (!state.days) state.days = {};
   if (typeof state.quoteIndex !== "number") state.quoteIndex = 0;
+  if (!Array.isArray(state.areas)) {
+    state.areas = ["Health","Breathwork","Movement","Fitness","Spiritual","Family","Career","Fun"];
+  }
 
   var todayISO = new Date().toISOString().slice(0,10);
   var currentDate = state.currentDate || todayISO;
@@ -746,6 +783,7 @@
   var morningInput    = document.getElementById("morningInput");
 
   var areasGrid       = document.getElementById("areasGrid");
+  var addAreaBtn      = document.getElementById("addAreaBtn");
 
   var journalInput    = document.getElementById("journalInput");
   var eveningInput    = document.getElementById("eveningInput");
@@ -935,8 +973,14 @@
       byArea[a.area].push(a);
     });
 
-    Object.keys(byArea).sort().forEach(function(area){
-      var tasks = byArea[area];
+    // union of saved areas + areas implied by actions
+    var areaSet = {};
+    (state.areas || []).forEach(function(a){ areaSet[a] = true; });
+    Object.keys(byArea).forEach(function(a){ areaSet[a] = true; });
+    var areaNames = Object.keys(areaSet).sort();
+
+    areaNames.forEach(function(area){
+      var tasks = byArea[area] || [];
       var doneCount = tasks.filter(a => day.done[a.id]).length;
       var total = tasks.length;
       var pct = total ? Math.round(doneCount/total*100) : 0;
@@ -1173,6 +1217,20 @@
       });
       navBtns.forEach(function(b){ b.classList.toggle("active", b===btn); });
     });
+  });
+
+  // Add focus area button
+  addAreaBtn.addEventListener("click", function(){
+    var name = prompt("New focus area name (e.g., Travel, Creativity, Recovery)?");
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    if (!state.areas) state.areas = [];
+    if (state.areas.indexOf(name) === -1) {
+      state.areas.push(name);
+    }
+    saveState();
+    render();
   });
 
   // ---------- INIT ----------
