@@ -55,46 +55,45 @@
       align-items: center;
     }
 
-    /* Tree-of-life style logo */
+    /* Tree-of-life style logo with clear lines + glow */
     .hero-icon {
       position: relative;
       width: 56px;
       height: 56px;
       border-radius: 999px;
-      background: radial-gradient(circle at 20% 15%, #fef3c7 0, #f97316 24%, #ec4899 48%, #6366f1 72%, #22c55e 100%);
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+      background: radial-gradient(circle at 30% 15%, #fef9c3 0, #38bdf8 40%, #0f766e 85%);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow:
+        0 0 0 2px rgba(56, 189, 248, 0.55),
+        0 0 22px rgba(56, 189, 248, 0.8);
       overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.7);
     }
-    /* trunk */
+    /* canopy (clean circular outline) */
     .hero-icon::before {
       content: "";
       position: absolute;
-      bottom: 6px;
+      top: 9px;
       left: 50%;
       transform: translateX(-50%);
-      width: 12px;
-      height: 28px;
+      width: 34px;
+      height: 34px;
       border-radius: 999px;
-      background: linear-gradient(180deg, #4b5563, #b45309);
-      box-shadow: 0 0 6px rgba(15, 23, 42, 0.4);
+      background: radial-gradient(circle at 30% 20%, #bbf7d0 0, #22c55e 55%, #16a34a 100%);
+      border: 2px solid #065f46;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
     }
-    /* canopy / branches */
+    /* trunk (solid, clean line) */
     .hero-icon::after {
       content: "";
       position: absolute;
-      bottom: 14px;
+      bottom: 8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 40px;
-      height: 40px;
+      width: 8px;
+      height: 22px;
       border-radius: 999px;
-      background:
-        radial-gradient(circle at 25% 30%, rgba(254, 249, 195, 0.9) 0, transparent 40%),
-        radial-gradient(circle at 70% 35%, rgba(219, 234, 254, 0.9) 0, transparent 45%),
-        radial-gradient(circle at 50% 70%, rgba(187, 247, 208, 0.9) 0, transparent 40%);
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-      opacity: 0.96;
+      background: linear-gradient(180deg, #78350f, #451a03);
+      box-shadow: 0 0 5px rgba(15, 23, 42, 0.7);
     }
 
     h1 {
