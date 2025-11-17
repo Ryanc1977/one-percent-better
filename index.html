@@ -55,45 +55,60 @@
       align-items: center;
     }
 
-    /* Tree-of-life style logo with clear lines + glow */
+    /* Tree-of-life logo similar to your reference:
+       - white circle
+       - black line tree silhouette
+       - soft green glow around */
     .hero-icon {
       position: relative;
       width: 56px;
       height: 56px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 15%, #fef9c3 0, #38bdf8 40%, #0f766e 85%);
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: #ffffff;
+      border: 2px solid #111827;
       box-shadow:
-        0 0 0 2px rgba(56, 189, 248, 0.55),
-        0 0 22px rgba(56, 189, 248, 0.8);
+        0 0 0 3px rgba(34, 197, 94, 0.28),
+        0 10px 24px rgba(15, 23, 42, 0.35);
       overflow: hidden;
     }
-    /* canopy (clean circular outline) */
+    /* ground + trunk + main branches */
     .hero-icon::before {
       content: "";
       position: absolute;
-      top: 9px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #bbf7d0 0, #22c55e 55%, #16a34a 100%);
-      border: 2px solid #065f46;
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+      inset: 10px 10px 6px 10px;
+      background:
+        /* ground */
+        radial-gradient(circle at 50% 120%, #111827 0, #111827 45%, transparent 46%),
+        /* trunk */
+        linear-gradient(#111827, #111827) center 60% / 7px 26px no-repeat,
+        /* main left branch */
+        linear-gradient(#111827, #111827) 45% 42% / 14px 5px no-repeat,
+        /* main right branch */
+        linear-gradient(#111827, #111827) 55% 38% / 14px 5px no-repeat,
+        /* lower left branch */
+        linear-gradient(#111827, #111827) 42% 52% / 14px 4px no-repeat,
+        /* lower right branch */
+        linear-gradient(#111827, #111827) 58% 50% / 14px 4px no-repeat;
+      background-repeat: no-repeat;
     }
-    /* trunk (solid, clean line) */
+    /* leaves cluster as small dots along the branches */
     .hero-icon::after {
       content: "";
       position: absolute;
-      bottom: 8px;
+      top: 8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 8px;
-      height: 22px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #78350f, #451a03);
-      box-shadow: 0 0 5px rgba(15, 23, 42, 0.7);
+      width: 36px;
+      height: 28px;
+      background:
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 30% 40% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 40% 28% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 52% 22% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 64% 30% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 70% 42% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 36% 52% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 60% 52% / 6px 6px no-repeat,
+        radial-gradient(circle, #111827 0 35%, transparent 36%) 48% 36% / 6px 6px no-repeat;
     }
 
     h1 {
