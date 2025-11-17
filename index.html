@@ -252,51 +252,92 @@
       background: #f9fafb;
     }
 
-    .areas-grid {
-      display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap: 8px;
-    }
+    textarea.field { resize: vertical; min-height: 90px; }
 
-    .area-card {
+    /* Focus Areas styles */
+    .fa-card {
       border-radius: 16px;
       border: 1px solid #e5e7eb;
-      padding: 10px 10px 9px;
       background: #f9fafb;
-      font-size: 12px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
     }
-    .area-name-row{
+    .fa-header {
       display:flex;
       justify-content:space-between;
       align-items:center;
-      margin-bottom:4px;
+      cursor:pointer;
     }
-    .area-name{
-      font-weight:600;
+    .fa-name {
       display:flex;
       align-items:center;
       gap:6px;
+      font-size:13px;
+      font-weight:600;
     }
-    .area-tag{
+    .fa-summary {
+      font-size:11px;
+      color:var(--text-subtle);
+    }
+    .fa-toggle {
+      font-size:13px;
+      color:var(--accent-strong);
+    }
+    .fa-tasks {
+      margin-top:6px;
+      display:none;
+    }
+    .fa-task {
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      padding:6px 7px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      background:#ffffff;
+      margin-bottom:6px;
+      font-size:12px;
+    }
+    .fa-task-body {
+      flex:1;
+    }
+    .fa-task-title-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:4px;
+      align-items:center;
+      font-weight:600;
+      margin-bottom:2px;
+    }
+    .pill {
       font-size:10px;
       padding:2px 6px;
       border-radius:999px;
-      background:#ecfdf5;
-      color:var(--accent-strong);
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
     }
-    .area-footer{
+    .pill-smart {
+      border-color:var(--accent-soft);
+      color:var(--accent-strong);
+      background:#ecfdf5;
+      cursor:pointer;
+    }
+    .fa-task-benefit {
+      font-size:11px;
+      color:var(--text-subtle);
+    }
+    .fa-footer {
       margin-top:4px;
       display:flex;
       justify-content:space-between;
+      align-items:center;
       font-size:11px;
-      color:var(--accent-strong);
     }
     .linkish{
       font-size:11px;
       color:var(--accent-strong);
+      cursor:pointer;
     }
-
-    textarea.field { resize: vertical; min-height: 90px; }
 
     /* bottom nav */
     nav {
@@ -381,8 +422,6 @@
       background:#f9fafb;
       color:var(--text-subtle);
     }
-
-    .small-link { font-size:11px;color:var(--accent-strong);cursor:pointer; }
   </style>
 </head>
 <body>
@@ -428,6 +467,17 @@
         <div id="weekSummary" class="small"></div>
       </section>
 
+      <!-- Inspirational Quote (formerly Morning Focus) -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Inspirational Quote</div>
+        </div>
+        <div id="quoteText" class="focus-quote">Loading…</div>
+        <div class="small linkish" id="nextQuoteBtn">New quote ↻</div>
+        <div style="height:8px;"></div>
+        <input id="morningInput" class="field" placeholder="What's your intention today?" />
+      </section>
+
       <!-- Streak highlights -->
       <section class="section-card">
         <div class="section-title-row">
@@ -448,23 +498,12 @@
         <div id="smartNowList"></div>
       </section>
 
-      <!-- Morning Focus -->
+      <!-- Focus Areas -->
       <section class="section-card">
         <div class="section-title-row">
-          <div class="section-title">Morning Focus</div>
+          <div class="section-title">Focus Areas</div>
         </div>
-        <div id="quoteText" class="focus-quote">Loading…</div>
-        <div class="small-link" id="nextQuoteBtn">New quote ↻</div>
-        <div style="height:8px;"></div>
-        <input id="morningInput" class="field" placeholder="What's your intention this morning?" />
-      </section>
-
-      <!-- 1% Focus of this week -->
-      <section class="section-card">
-        <div class="section-title-row">
-          <div class="section-title">1% Focus of this week</div>
-        </div>
-        <div id="areasGrid" class="areas-grid"></div>
+        <div id="areasGrid"></div>
       </section>
 
     </div>
@@ -579,7 +618,7 @@
     { id:"a6", area:"Career",   title:"1 outreach message",  benefit:"Grows opportunities", minutes:3, favorite:false, blocks:["Afternoon"], icon:"📨" }
   ];
 
-  var STORAGE_KEY = "onepct_match_layout_v1";
+  var STORAGE_KEY = "onepct_match_layout_v2_focusareas";
   var state;
   try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
   catch(e){ state = {}; }
@@ -590,6 +629,9 @@
 
   var todayISO = new Date().toISOString().slice(0,10);
   var currentDate = state.currentDate || todayISO;
+
+  // track which Focus Areas are expanded (not persisted – UI only)
+  var expandedAreas = {};
 
   // ---------- HELPERS ----------
 
@@ -688,7 +730,6 @@
       return;
     }
     var base = new Date(currentDate);
-    // Build Mon–Sun of current week
     var dayOfWeek = base.getDay(); // 0=Sun
     var monday = new Date(base);
     monday.setDate(base.getDate() - ((dayOfWeek + 6) % 7));
@@ -725,7 +766,6 @@
   }
 
   function computeActionStreak(actionId){
-    // count consecutive days ending today where action is done
     var streak = 0;
     var cursor = new Date(currentDate);
     while (true){
@@ -819,39 +859,118 @@
       byArea[a.area].push(a);
     });
 
-    Object.keys(byArea).sort().forEach(area=>{
+    Object.keys(byArea).sort().forEach(function(area){
       var tasks = byArea[area];
-      var done = tasks.filter(a => day.done[a.id]).length;
+      var doneCount = tasks.filter(a => day.done[a.id]).length;
       var total = tasks.length;
-      var pct = total ? Math.round(done/total*100) : 0;
+      var pct = total ? Math.round(doneCount/total*100) : 0;
 
       var card = document.createElement("div");
-      card.className = "area-card";
-      var row = document.createElement("div");
-      row.className = "area-name-row";
+      card.className = "fa-card";
 
+      var header = document.createElement("div");
+      header.className = "fa-header";
       var name = document.createElement("div");
-      name.className = "area-name";
+      name.className = "fa-name";
       name.innerHTML = "<span>💚</span><span>"+area+"</span>";
+      var right = document.createElement("div");
+      right.innerHTML = "<span class='fa-summary'>"+doneCount+" / "+total+" • "+pct+"%</span> <span class='fa-toggle'>"+
+        (expandedAreas[area] ? "▴" : "▾")+"</span>";
+      header.appendChild(name);
+      header.appendChild(right);
 
-      var tag = document.createElement("div");
-      tag.className = "area-tag";
-      tag.textContent = pct + "% today";
+      var tasksEl = document.createElement("div");
+      tasksEl.className = "fa-tasks";
+      if (expandedAreas[area]) tasksEl.style.display = "block";
 
-      row.appendChild(name);
-      row.appendChild(tag);
+      // show up to 2 tasks
+      tasks.slice(0,2).forEach(function(task){
+        var row = document.createElement("label");
+        row.className = "fa-task";
 
-      var sub = document.createElement("div");
-      sub.className = "small";
-      sub.textContent = done + " of " + total + " tiny steps";
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!day.done[task.id];
+        cb.addEventListener("change", function(){
+          ensureDay(currentDate).done[task.id] = cb.checked;
+          saveState();
+          render();
+        });
+
+        var body = document.createElement("div");
+        body.className = "fa-task-body";
+
+        var titleRow = document.createElement("div");
+        titleRow.className = "fa-task-title-row";
+        var titleSpan = document.createElement("span");
+        titleSpan.textContent = task.title.replace(/ –.*/,"");
+        titleRow.appendChild(titleSpan);
+
+        var mins = document.createElement("span");
+        mins.className = "pill";
+        mins.textContent = (task.minutes || 1) + " min";
+        titleRow.appendChild(mins);
+
+        var smart = document.createElement("span");
+        smart.className = "pill pill-smart";
+        smart.textContent = task.favorite ? "Smart Now ✓" : "Add to Smart Now";
+        smart.addEventListener("click", function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          task.favorite = !task.favorite;
+          saveState();
+          render();
+        });
+        titleRow.appendChild(smart);
+
+        var benefit = document.createElement("div");
+        benefit.className = "fa-task-benefit";
+        benefit.textContent = task.benefit || "";
+
+        body.appendChild(titleRow);
+        body.appendChild(benefit);
+
+        row.appendChild(cb);
+        row.appendChild(body);
+        tasksEl.appendChild(row);
+      });
 
       var footer = document.createElement("div");
-      footer.className = "area-footer";
-      footer.innerHTML = "<span class='linkish'>+ Add task</span><span class='linkish'>Next ›</span>";
+      footer.className = "fa-footer";
+      var add = document.createElement("span");
+      add.className = "linkish";
+      add.textContent = "＋ Add task";
+      add.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        var title = prompt("New 1% task for "+area+"?");
+        if (!title) return;
+        var m = parseInt(prompt("Minutes (number)?") || "3",10);
+        if (!m || m<1) m = 3;
+        var benefit = prompt("Short benefit line (optional):") || "Supports your long-term vision.";
+        var id = "u" + Date.now() + Math.floor(Math.random()*1000);
+        state.actions.push({
+          id:id, area:area, title:title, benefit:benefit,
+          minutes:m, favorite:false
+        });
+        saveState();
+        render();
+      });
+      var note = document.createElement("span");
+      note.className = "small";
+      note.textContent = "Tap area to expand";
 
-      card.appendChild(row);
-      card.appendChild(sub);
+      footer.appendChild(add);
+      footer.appendChild(note);
+
+      card.appendChild(header);
+      card.appendChild(tasksEl);
       card.appendChild(footer);
+
+      header.addEventListener("click", function(){
+        expandedAreas[area] = !expandedAreas[area];
+        render();
+      });
+
       areasGrid.appendChild(card);
     });
   }
