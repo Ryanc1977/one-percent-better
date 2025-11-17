@@ -322,6 +322,12 @@
       background:#ecfdf5;
       cursor:pointer;
     }
+    .pill-delete {
+      border-color:#fecaca;
+      color:#b91c1c;
+      background:#fef2f2;
+      cursor:pointer;
+    }
     .fa-task-benefit {
       font-size:11px;
       color:var(--text-subtle);
@@ -546,7 +552,7 @@
     </div>
 
     <!-- STATS VIEW -->
-    <div id="view-stats" style="display:none;">
+    <div id="view-stats" style="display:none%;">
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Your momentum</div>
@@ -655,7 +661,7 @@
     ],
     "Fun": [
       { title:"Dance 1 salsa song in the kitchen", minutes:3, benefit:"Shifts you into joy", icon:"💃", blocks:["Evening"] },
-      { title:"5-min play with Anya or pets", minutes:5, benefit:"Feeds play & connection", icon:"🐾", blocks:["Evening"] }
+      { title:"5-min play with Anya or pets", minutes:5, benefit:"Feeds joy & connection", icon:"🐾", blocks:["Evening"] }
     ],
     "_default": [
       { title:"Take 3 slow breaths", minutes:1, benefit:"Recenters your energy", icon:"🌬️", blocks:["Any"] }
@@ -1011,9 +1017,9 @@
       tasksEl.className = "fa-tasks";
       if (expandedAreas[area]) tasksEl.style.display = "block";
 
-      // show up to 2 tasks (we seed exactly 2, but this keeps it safe)
-      tasks.slice(0,2).forEach(function(task){
-        var row = document.createElement("label");
+      // show ALL tasks and allow removal, but enforce min 2 per area
+      tasks.forEach(function(task){
+        var row = document.createElement("div");
         row.className = "fa-task";
 
         var cb = document.createElement("input");
@@ -1058,8 +1064,31 @@
         body.appendChild(titleRow);
         body.appendChild(benefit);
 
+        var del = document.createElement("span");
+        del.className = "pill pill-delete";
+        del.textContent = "Remove";
+        del.addEventListener("click", function(ev){
+          ev.stopPropagation();
+          if (tasks.length <= 2) {
+            alert("Each focus area needs at least 2 tasks. Add another before deleting this one.");
+            return;
+          }
+          if (!confirm("Remove this task from " + area + "?")) return;
+          // remove from actions
+          state.actions = state.actions.filter(function(a){ return a.id !== task.id; });
+          // clean from all days
+          Object.keys(state.days).forEach(function(k){
+            if (state.days[k].done && state.days[k].done[task.id]) {
+              delete state.days[k].done[task.id];
+            }
+          });
+          saveState();
+          render();
+        });
+
         row.appendChild(cb);
         row.appendChild(body);
+        row.appendChild(del);
         tasksEl.appendChild(row);
       });
 
