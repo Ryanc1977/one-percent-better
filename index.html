@@ -332,6 +332,8 @@
       justify-content:space-between;
       align-items:center;
       font-size:11px;
+      gap:8px;
+      flex-wrap:wrap;
     }
     .linkish{
       font-size:11px;
@@ -467,7 +469,7 @@
         <div id="weekSummary" class="small"></div>
       </section>
 
-      <!-- Inspirational Quote (formerly Morning Focus) -->
+      <!-- Inspirational Quote -->
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Inspirational Quote</div>
@@ -498,14 +500,16 @@
         <div id="smartNowList"></div>
       </section>
 
-      <!-- Focus Areas -->
+    </div>
+
+    <!-- AREAS VIEW -->
+    <div id="view-areas" style="display:none;">
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Focus Areas</div>
         </div>
         <div id="areasGrid"></div>
       </section>
-
     </div>
 
     <!-- CHECK-IN VIEW -->
@@ -577,6 +581,10 @@
       <span class="nav-icon">🌤️</span>
       <span>Home</span>
     </div>
+    <div class="nav-btn" data-view="areas">
+      <span class="nav-icon">🎯</span>
+      <span>Areas</span>
+    </div>
     <div class="nav-btn" data-view="checkin">
       <span class="nav-icon">✍️</span>
       <span>Check-In</span>
@@ -609,6 +617,35 @@
     return "Night";
   }
 
+  // suggestion bank for each area
+  var SUGGESTION_BANK = {
+    "Health": [
+      { title:"Drink a tall glass of water", minutes:1, benefit:"Hydrates & wakes up digestion", icon:"💧", blocks:["Morning"] },
+      { title:"5 deep belly breaths", minutes:1, benefit:"Resets your nervous system", icon:"🌬️", blocks:["Any"] },
+      { title:"Stand and stretch your spine", minutes:2, benefit:"Releases tension from sitting", icon:"🧘", blocks:["Afternoon"] }
+    ],
+    "Fitness": [
+      { title:"10 bodyweight squats", minutes:2, benefit:"Activates legs & glutes", icon:"🏋️", blocks:["Afternoon"] },
+      { title:"Walk around the block", minutes:5, benefit:"Clears the mind & moves blood", icon:"🚶", blocks:["Midday","Afternoon"] },
+      { title:"20-second plank", minutes:1, benefit:"Wakes up your core", icon:"🧱", blocks:["Morning","Afternoon"] }
+    ],
+    "Family": [
+      { title:"Send a kind text", minutes:2, benefit:"Reminds someone they matter", icon:"💌", blocks:["Any"] },
+      { title:"Share one appreciation", minutes:2, benefit:"Deepens connection", icon:"💚", blocks:["Evening"] }
+    ],
+    "Mindset": [
+      { title:"Write 1 sentence about a win", minutes:2, benefit:"Focuses your brain on progress", icon:"📝", blocks:["Evening","Night"] },
+      { title:"Name 3 things going well", minutes:3, benefit:"Shifts you into gratitude", icon:"✨", blocks:["Any"] }
+    ],
+    "Career": [
+      { title:"Reply to 1 important email", minutes:3, benefit:"Reduces mental clutter", icon:"📩", blocks:["Midday","Afternoon"] },
+      { title:"Capture 1 idea in notes", minutes:2, benefit:"Keeps your ideas from slipping away", icon:"📓", blocks:["Any"] }
+    ],
+    "_default": [
+      { title:"Take 3 slow breaths", minutes:1, benefit:"Recenters your energy", icon:"🌬️", blocks:["Any"] }
+    ]
+  };
+
   var DEFAULT_ACTIONS = [
     { id:"a1", area:"Health",   title:"Meditation – 10 min", benefit:"Calms the mind", minutes:10, favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
     { id:"a2", area:"Health",   title:"Cold plunge – 2 min", benefit:"Boosts dopamine & grit", minutes:2, favorite:true,  blocks:["Morning"], icon:"❄️" },
@@ -618,7 +655,7 @@
     { id:"a6", area:"Career",   title:"1 outreach message",  benefit:"Grows opportunities", minutes:3, favorite:false, blocks:["Afternoon"], icon:"📨" }
   ];
 
-  var STORAGE_KEY = "onepct_match_layout_v2_focusareas";
+  var STORAGE_KEY = "onepct_layout_v4_home_areas_split";
   var state;
   try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
   catch(e){ state = {}; }
@@ -630,7 +667,7 @@
   var todayISO = new Date().toISOString().slice(0,10);
   var currentDate = state.currentDate || todayISO;
 
-  // track which Focus Areas are expanded (not persisted – UI only)
+  // track which Focus Areas are expanded (UI only)
   var expandedAreas = {};
 
   // ---------- HELPERS ----------
@@ -653,6 +690,41 @@
   function getActions(){
     if (!Array.isArray(state.actions) || !state.actions.length) state.actions = DEFAULT_ACTIONS.slice();
     return state.actions;
+  }
+
+  function generateSuggestionForArea(area){
+    var bank = SUGGESTION_BANK[area] || SUGGESTION_BANK._default || [];
+    if (!bank.length) {
+      alert("No ideas available yet for this area.");
+      return;
+    }
+    var existing = getActions().filter(a => a.area === area);
+    var picked = null;
+    for (var i=0;i<bank.length;i++){
+      var s = bank[i];
+      var found = existing.some(a => a.title === s.title);
+      if (!found){
+        picked = s;
+        break;
+      }
+    }
+    if (!picked){
+      alert("You’ve already added all the ideas I have for this area.");
+      return;
+    }
+    var id = "g" + Date.now() + Math.floor(Math.random()*1000);
+    state.actions.push({
+      id:id,
+      area:area,
+      title:picked.title,
+      benefit:picked.benefit,
+      minutes:picked.minutes,
+      favorite:false,
+      icon:picked.icon,
+      blocks:picked.blocks
+    });
+    saveState();
+    render();
   }
 
   // ---------- DOM ----------
@@ -813,7 +885,11 @@
 
     var undone = actions.filter(a => !day.done[a.id]);
     var pool = undone.length ? undone : actions.slice();
-    pool = pool.filter(a => !a.blocks || a.blocks.indexOf(block)>=0);
+    pool = pool.filter(a => {
+      if (!a.blocks || !a.blocks.length) return true;
+      if (a.blocks.indexOf("Any") >= 0) return true;
+      return a.blocks.indexOf(block)>=0;
+    });
     pool.sort((a,b)=>{
       var sa = (a.favorite?2:0);
       var sb = (b.favorite?2:0);
@@ -937,6 +1013,7 @@
 
       var footer = document.createElement("div");
       footer.className = "fa-footer";
+
       var add = document.createElement("span");
       add.className = "linkish";
       add.textContent = "＋ Add task";
@@ -955,12 +1032,17 @@
         saveState();
         render();
       });
-      var note = document.createElement("span");
-      note.className = "small";
-      note.textContent = "Tap area to expand";
+
+      var ideas = document.createElement("span");
+      ideas.className = "linkish";
+      ideas.textContent = "✨ 1% ideas";
+      ideas.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        generateSuggestionForArea(area);
+      });
 
       footer.appendChild(add);
-      footer.appendChild(note);
+      footer.appendChild(ideas);
 
       card.appendChild(header);
       card.appendChild(tasksEl);
@@ -1078,6 +1160,7 @@
   // NAV
   var views = {
     home:    document.getElementById("view-home"),
+    areas:   document.getElementById("view-areas"),
     checkin: document.getElementById("view-checkin"),
     stats:   document.getElementById("view-stats")
   };
