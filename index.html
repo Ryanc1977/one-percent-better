@@ -514,7 +514,7 @@
     </div>
 
     <!-- CHECK-IN VIEW -->
-    <div id="view-checkin" style="display:none;">
+    <div id="view-checkin" style="display:none%;">
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Mood check</div>
@@ -1060,7 +1060,7 @@
 
       var add = document.createElement("span");
       add.className = "linkish";
-      add.textContent = "＋ Add task";
+      add.textContent = "+ Add task";
       add.addEventListener("click", function(ev){
         ev.stopPropagation();
         var title = prompt("New 1% task for "+area+"?");
@@ -1079,7 +1079,7 @@
 
       var ideas = document.createElement("span");
       ideas.className = "linkish";
-      ideas.textContent = "✨ 1% ideas";
+      ideas.textContent = "+ Add suggestion";
       ideas.addEventListener("click", function(ev){
         ev.stopPropagation();
         generateSuggestionForArea(area);
