@@ -322,12 +322,6 @@
       background:#ecfdf5;
       cursor:pointer;
     }
-    .pill-delete {
-      border-color:#fecaca;
-      color:#b91c1c;
-      background:#fef2f2;
-      cursor:pointer;
-    }
     .fa-task-benefit {
       font-size:11px;
       color:var(--text-subtle);
@@ -345,6 +339,18 @@
       font-size:11px;
       color:var(--accent-strong);
       cursor:pointer;
+    }
+
+    .trash-btn {
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: 4px;
+      opacity: 0.7;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .trash-btn:hover {
+      opacity: 1;
+      transform: scale(1.15);
     }
 
     /* bottom nav */
@@ -552,7 +558,7 @@
     </div>
 
     <!-- STATS VIEW -->
-    <div id="view-stats" style="display:none%;">
+    <div id="view-stats" style="display:none;">
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Your momentum</div>
@@ -668,7 +674,7 @@
     ]
   };
 
-  // DEFAULT ACTIONS: exactly 2 per Focus Area
+  // DEFAULT ACTIONS: exactly 2 per Focus Area (starter set)
   var DEFAULT_ACTIONS = [
     // Health
     { id:"a1",  area:"Health",   title:"Cold plunge – 2 min", minutes:2,  benefit:"Boosts dopamine & grit",         favorite:true,  blocks:["Morning"],          icon:"❄️" },
@@ -1017,7 +1023,7 @@
       tasksEl.className = "fa-tasks";
       if (expandedAreas[area]) tasksEl.style.display = "block";
 
-      // show ALL tasks and allow removal, but enforce min 2 per area
+      // show ALL tasks and allow removal
       tasks.forEach(function(task){
         var row = document.createElement("div");
         row.className = "fa-task";
@@ -1065,14 +1071,11 @@
         body.appendChild(benefit);
 
         var del = document.createElement("span");
-        del.className = "pill pill-delete";
-        del.textContent = "Remove";
+        del.className = "trash-btn";
+        del.innerHTML = "🗑️";
+        del.title = "Delete task";
         del.addEventListener("click", function(ev){
           ev.stopPropagation();
-          if (tasks.length <= 2) {
-            alert("Each focus area needs at least 2 tasks. Add another before deleting this one.");
-            return;
-          }
           if (!confirm("Remove this task from " + area + "?")) return;
           // remove from actions
           state.actions = state.actions.filter(function(a){ return a.id !== task.id; });
