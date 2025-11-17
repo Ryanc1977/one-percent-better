@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      /* slightly darker background for more contrast */
       --bg-top: #d2e7dc;
       --bg-bottom: #e3f0e8;
       --accent: #10b981;
@@ -55,72 +54,68 @@
       align-items: center;
     }
 
-    /* Tree-of-life logo similar to your reference:
-       - white circle
-       - black line tree silhouette
-       - soft green glow around */
+    /* 1% logo: sunrise over a wave inside a glowing circle */
     .hero-icon {
       position: relative;
       width: 56px;
       height: 56px;
       border-radius: 999px;
-      background: #ffffff;
-      border: 2px solid #111827;
+      background: radial-gradient(circle at 30% 10%, #fef9c3 0, #facc15 35%, #22c55e 80%);
+      border: 2px solid #ffffff;
       box-shadow:
         0 0 0 3px rgba(34, 197, 94, 0.28),
-        0 10px 24px rgba(15, 23, 42, 0.35);
+        0 10px 26px rgba(15, 23, 42, 0.35);
       overflow: hidden;
     }
-    /* ground + trunk + main branches */
     .hero-icon::before {
       content: "";
       position: absolute;
-      inset: 10px 10px 6px 10px;
+      inset: 0;
       background:
-        /* ground */
-        radial-gradient(circle at 50% 120%, #111827 0, #111827 45%, transparent 46%),
-        /* trunk */
-        linear-gradient(#111827, #111827) center 60% / 7px 26px no-repeat,
-        /* main left branch */
-        linear-gradient(#111827, #111827) 45% 42% / 14px 5px no-repeat,
-        /* main right branch */
-        linear-gradient(#111827, #111827) 55% 38% / 14px 5px no-repeat,
-        /* lower left branch */
-        linear-gradient(#111827, #111827) 42% 52% / 14px 4px no-repeat,
-        /* lower right branch */
-        linear-gradient(#111827, #111827) 58% 50% / 14px 4px no-repeat;
-      background-repeat: no-repeat;
+        radial-gradient(circle at 50% 140%, #0f766e 0, #0f766e 40%, transparent 41%),
+        linear-gradient(to top, rgba(15,23,42,0.08), transparent 40%);
     }
-    /* leaves cluster as small dots along the branches */
     .hero-icon::after {
       content: "";
       position: absolute;
-      top: 8px;
       left: 50%;
+      bottom: 46%;
+      width: 22px;
+      height: 22px;
       transform: translateX(-50%);
-      width: 36px;
-      height: 28px;
       background:
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 30% 40% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 40% 28% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 52% 22% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 64% 30% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 70% 42% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 36% 52% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 60% 52% / 6px 6px no-repeat,
-        radial-gradient(circle, #111827 0 35%, transparent 36%) 48% 36% / 6px 6px no-repeat;
+        radial-gradient(circle, #fefce8 0, #facc15 55%, transparent 56%),
+        conic-gradient(from 0deg,
+          rgba(250, 204, 21, 0.0) 0deg,
+          rgba(250, 204, 21, 0.9) 20deg,
+          rgba(250, 204, 21, 0.0) 40deg,
+          rgba(250, 204, 21, 0.0) 80deg,
+          rgba(250, 204, 21, 0.9) 100deg,
+          rgba(250, 204, 21, 0.0) 120deg,
+          rgba(250, 204, 21, 0.0) 160deg,
+          rgba(250, 204, 21, 0.9) 180deg,
+          rgba(250, 204, 21, 0.0) 200deg,
+          rgba(250, 204, 21, 0.0) 240deg,
+          rgba(250, 204, 21, 0.9) 260deg,
+          rgba(250, 204, 21, 0.0) 280deg,
+          rgba(250, 204, 21, 0.0) 320deg,
+          rgba(250, 204, 21, 0.9) 340deg,
+          rgba(250, 204, 21, 0.0) 360deg
+        );
+      border-radius: 999px;
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.9);
     }
 
     h1 {
       margin: 0;
-      font-size: 24px; /* slightly larger */
+      font-size: 24px;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
 
     .subtitle {
       margin-top: 3px;
-      font-size: 13px; /* slightly larger */
+      font-size: 13px;
       color: var(--text-subtle);
     }
 
@@ -128,7 +123,7 @@
       display: flex;
       gap: 8px;
       margin-top: 10px;
-      font-size: 12px; /* slightly larger */
+      font-size: 12px;
       color: var(--text-subtle);
       flex-wrap: wrap;
     }
@@ -172,12 +167,12 @@
     }
 
     .section-title {
-      font-size: 15px; /* slightly larger */
+      font-size: 15px;
       font-weight: 600;
     }
 
     .section-meta {
-      font-size: 12px; /* slightly larger */
+      font-size: 12px;
       color: var(--text-subtle);
     }
 
@@ -194,7 +189,7 @@
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      font-size: 12px; /* slightly larger */
+      font-size: 12px;
       color: var(--text-subtle);
       flex: 1;
     }
@@ -218,7 +213,7 @@
     }
 
     .small {
-      font-size: 12px; /* slightly larger */
+      font-size: 12px;
       color: var(--text-subtle);
     }
 
@@ -276,8 +271,8 @@
     }
 
     .smart-body { flex: 1; }
-    .smart-title { font-size: 14px; font-weight: 600; } /* larger */
-    .smart-sub  { font-size: 12px; color: var(--text-subtle); } /* larger */
+    .smart-title { font-size: 14px; font-weight: 600; }
+    .smart-sub  { font-size: 12px; color: var(--text-subtle); }
 
     .smart-meta {
       font-size: 12px;
@@ -285,12 +280,10 @@
       color: var(--text-subtle);
     }
 
-    .heart {
-      font-size: 12px;
-    }
+    .heart { font-size: 12px; }
 
     .focus-quote {
-      font-size: 18px; /* slightly larger */
+      font-size: 18px;
       font-weight: 600;
       line-height: 1.4;
       margin-bottom: 6px;
@@ -301,13 +294,13 @@
       padding: 8px 10px;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
-      font-size: 14px; /* slightly larger */
+      font-size: 14px;
       background: #f9fafb;
     }
 
     textarea.field { resize: vertical; min-height: 90px; }
 
-    /* Focus Areas styles */
+    /* Focus Areas */
     .fa-card {
       border-radius: 16px;
       border: 1px solid #e5e7eb;
@@ -325,7 +318,7 @@
       display:flex;
       align-items:center;
       gap:6px;
-      font-size:14px; /* larger */
+      font-size:14px;
       font-weight:600;
     }
     .fa-summary {
@@ -354,7 +347,7 @@
       border:1px solid #e5e7eb;
       background:#ffffff;
       margin-bottom:6px;
-      font-size:13px; /* larger */
+      font-size:13px;
     }
     .fa-task-body {
       flex:1;
@@ -423,12 +416,12 @@
     .nav-btn {
       flex: 1;
       text-align: center;
-      font-size: 12px; /* slightly larger */
+      font-size: 12px;
       color: var(--text-subtle);
       cursor: pointer;
     }
     .nav-icon {
-      font-size: 19px; /* slightly larger */
+      font-size: 19px;
       display: block;
       margin-bottom: 2px;
     }
@@ -520,17 +513,9 @@
   </header>
 
   <main>
-    <!-- Intention section right under header -->
-    <section class="section-card">
-      <div class="section-title-row">
-        <div class="section-title">Today's Intention</div>
-      </div>
-      <input id="morningInput" class="field" placeholder="What is your intention today?" />
-    </section>
 
     <!-- HOME VIEW -->
     <div id="view-home">
-
       <!-- This week at a glance -->
       <section class="section-card">
         <div class="section-title-row">
@@ -540,7 +525,7 @@
         <div id="weekSummary" class="small"></div>
       </section>
 
-      <!-- Inspirational Quote (directly under week at a glance) -->
+      <!-- Inspirational Quote -->
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Inspirational Quote</div>
@@ -549,7 +534,7 @@
         <div class="small linkish" id="nextQuoteBtn">New quote ↻</div>
       </section>
 
-      <!-- Next up (formerly Smart Now) -->
+      <!-- Next up -->
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Next up</div>
@@ -568,7 +553,6 @@
           Protect your streaks. Even a 1-minute version counts.
         </div>
       </section>
-
     </div>
 
     <!-- AREAS VIEW -->
@@ -584,6 +568,13 @@
 
     <!-- CHECK-IN VIEW -->
     <div id="view-checkin" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Today's Intention</div>
+        </div>
+        <input id="morningInput" class="field" placeholder="What is your intention today?" />
+      </section>
+
       <section class="section-card">
         <div class="section-title-row">
           <div class="section-title">Mood check</div>
@@ -667,7 +658,7 @@
 </div>
 
 <script>
-  // ---------- BASIC DATA ----------
+  // ---------- DATA & HELPERS ----------
 
   var QUOTES = [
     "The journey of a thousand miles begins with one step.",
@@ -687,7 +678,6 @@
     return "Night";
   }
 
-  // suggestion bank for each area (custom to your routine)
   var SUGGESTION_BANK = {
     "Health": [
       { title:"Morning lemon water", minutes:2, benefit:"Hydrates & wakes up digestion", icon:"🍋", blocks:["Morning"] },
@@ -731,37 +721,28 @@
     ]
   };
 
-  // DEFAULT ACTIONS: exactly 2 per Focus Area (starter set)
   var DEFAULT_ACTIONS = [
-    // Health
     { id:"a1",  area:"Health",   title:"Cold plunge – 2 min", minutes:2,  benefit:"Boosts dopamine & grit",         favorite:true,  blocks:["Morning"],          icon:"❄️" },
     { id:"a2",  area:"Health",   title:"Morning lemon water – 1 glass", minutes:2, benefit:"Hydrates & wakes digestion", favorite:false, blocks:["Morning"],         icon:"🍋" },
 
-    // Breathwork
     { id:"a3",  area:"Breathwork", title:"Wim Hof – 3 rounds", minutes:11, benefit:"Oxygenates body & clears mind", favorite:true,  blocks:["Morning"],          icon:"🌬️" },
     { id:"a4",  area:"Breathwork", title:"Box breathing – 5 cycles", minutes:3, benefit:"Resets your nervous system", favorite:false, blocks:["Any"],              icon:"📦" },
 
-    // Movement
     { id:"a5",  area:"Movement", title:"Lunch walk – 10 min", minutes:10, benefit:"Movement + sunlight in the middle of your day", favorite:true, blocks:["Midday","Afternoon"], icon:"🚶" },
     { id:"a6",  area:"Movement", title:"Step outside & feel the sun – 3 min", minutes:3, benefit:"Grounds your energy in nature", favorite:false, blocks:["Afternoon"], icon:"☀️" },
 
-    // Fitness
     { id:"a7",  area:"Fitness",  title:"Strength training – 20 min", minutes:20, benefit:"Builds strength & resilience", favorite:true,  blocks:["Afternoon"],      icon:"🏋️" },
     { id:"a8",  area:"Fitness",  title:"10 bodyweight squats – 2 min", minutes:2, benefit:"Activates legs & glutes quickly", favorite:false, blocks:["Any"],         icon:"🏃" },
 
-    // Spiritual
     { id:"a9",  area:"Spiritual", title:"Meditation – 15 min", minutes:15, benefit:"Calms your mind and raises awareness", favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
     { id:"a10", area:"Spiritual", title:"Evening journal – 5 min", minutes:5,  benefit:"Reflects and integrates your day", favorite:false, blocks:["Evening"],      icon:"📓" },
 
-    // Family
     { id:"a11", area:"Family",   title:"Anya check-in – 1 meaningful moment", minutes:5, benefit:"Nurtures your connection with Anya", favorite:true,  blocks:["Evening"], icon:"💚" },
     { id:"a12", area:"Family",   title:"Share one appreciation with family – 2 min", minutes:2, benefit:"Deepens connection & gratitude", favorite:false, blocks:["Evening"], icon:"💌" },
 
-    // Career
     { id:"a13", area:"Career",  title:"EZ Tool focus block – 25 min", minutes:25, benefit:"Moves your business 1% forward", favorite:true,  blocks:["Afternoon"],    icon:"🛠️" },
     { id:"a14", area:"Career",  title:"Reply to 1 important email – 3 min", minutes:3, benefit:"Reduces mental clutter & backlog", favorite:false, blocks:["Midday","Afternoon"], icon:"📩" },
 
-    // Fun
     { id:"a15", area:"Fun",      title:"Salsa practice – 10 min", minutes:10, benefit:"Keeps you playful & in your body", favorite:true,  blocks:["Evening"],       icon:"💃" },
     { id:"a16", area:"Fun",      title:"5-min play with Anya or pets", minutes:5, benefit:"Feeds joy & connection", favorite:false, blocks:["Evening"], icon:"🐾" }
   ];
@@ -781,10 +762,7 @@
   var todayISO = new Date().toISOString().slice(0,10);
   var currentDate = state.currentDate || todayISO;
 
-  // track which Focus Areas are expanded (UI only)
   var expandedAreas = {};
-
-  // ---------- HELPERS ----------
 
   function ensureDay(date){
     if (!state.days[date]) state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null };
@@ -841,7 +819,7 @@
     render();
   }
 
-  // ---------- DOM ----------
+  // ---------- DOM REFS ----------
 
   var dateLabel       = document.getElementById("dateLabel");
   var progressChip    = document.getElementById("progressChip");
@@ -876,16 +854,15 @@
     var day = ensureDay(currentDate);
     dateInput.value = currentDate;
     dateLabel.textContent = formatDateLabel(currentDate);
+
     morningInput.value = day.morning || "";
     eveningInput.value = day.evening || "";
     journalInput.value = day.journal || "";
 
-    // quote
     if (state.quoteIndex < 0) state.quoteIndex = 0;
     if (state.quoteIndex >= QUOTES.length) state.quoteIndex = QUOTES.length-1;
     quoteText.textContent = "“" + QUOTES[state.quoteIndex] + "”";
 
-    // moods
     moodButtons.forEach(function(btn){
       btn.classList.toggle("active", btn.dataset.mood === day.mood);
     });
@@ -927,7 +904,7 @@
       var total = actions.length || 1;
       var done = actions.filter(a => day.done[a.id]).length;
       var pct = Math.round(done/total*100);
-      completions.push({date:key,pct:pct,jsDate:d});
+      completions.push({date:key,pct:pct});
     }
 
     completions.forEach(function(info,i){
@@ -956,7 +933,9 @@
     while (true){
       var key = cursor.toISOString().slice(0,10);
       var day = state.days[key];
-      if (!day || !day.done[actionId]) break;
+      if (!day) break;
+      var done = day.done && day.done[actionId];
+      if (!done) break;
       streak++;
       cursor.setDate(cursor.getDate()-1);
     }
@@ -1009,12 +988,10 @@
       return sb-sa;
     });
 
-    // Show up to 5 "Next up" actions
-    pool.slice(0,5).forEach(a=>{
+    pool.slice(0,5).forEach(function(a){
       var row = document.createElement("div");
       row.className = "smart-item";
 
-      // Clicking a Next up item toggles it completed for today
       row.addEventListener("click", function(){
         var d = ensureDay(currentDate);
         d.done[a.id] = !d.done[a.id];
@@ -1052,12 +1029,11 @@
     areasGrid.innerHTML = "";
     var actions = getActions();
     var byArea = {};
-    actions.forEach(a=>{
+    actions.forEach(function(a){
       if (!byArea[a.area]) byArea[a.area] = [];
       byArea[a.area].push(a);
     });
 
-    // union of saved areas + areas implied by actions
     var areaSet = {};
     (state.areas || []).forEach(function(a){ areaSet[a] = true; });
     Object.keys(byArea).forEach(function(a){ areaSet[a] = true; });
@@ -1065,7 +1041,7 @@
 
     areaNames.forEach(function(area){
       var tasks = byArea[area] || [];
-      var doneCount = tasks.filter(a => day.done[a.id]).length;
+      var doneCount = tasks.filter(function(a){ return day.done[a.id]; }).length;
       var total = tasks.length;
       var pct = total ? Math.round(doneCount/total*100) : 0;
 
@@ -1094,18 +1070,14 @@
         ev.stopPropagation();
         if (!confirm("Delete focus area '" + area + "' and all its tasks?")) return;
 
-        // remove from saved areas list
         if (Array.isArray(state.areas)) {
           state.areas = state.areas.filter(function(aName){ return aName !== area; });
         }
 
-        // collect ids of tasks for this area
         var ids = tasks.map(function(t){ return t.id; });
 
-        // remove actions in this area
         state.actions = state.actions.filter(function(a){ return a.area !== area; });
 
-        // clean from all days
         Object.keys(state.days).forEach(function(k){
           var d = state.days[k];
           if (!d || !d.done) return;
@@ -1134,7 +1106,6 @@
       tasksEl.className = "fa-tasks";
       if (expandedAreas[area]) tasksEl.style.display = "block";
 
-      // show ALL tasks and allow removal
       tasks.forEach(function(task){
         var row = document.createElement("div");
         row.className = "fa-task";
@@ -1188,13 +1159,10 @@
         del.addEventListener("click", function(ev){
           ev.stopPropagation();
           if (!confirm("Remove this task from " + area + "?")) return;
-          // remove from actions
           state.actions = state.actions.filter(function(a){ return a.id !== task.id; });
-          // clean from all days
           Object.keys(state.days).forEach(function(k){
-            if (state.days[k].done && state.days[k].done[task.id]) {
-              delete state.days[k].done[task.id];
-            }
+            var d = state.days[k];
+            if (d.done && d.done[task.id]) delete d.done[task.id];
           });
           saveState();
           render();
@@ -1252,8 +1220,6 @@
     });
   }
 
-  // ---------- STATS & CALENDAR ----------
-
   function renderStats(){
     var dates = Object.keys(state.days).sort();
     var streak = 0;
@@ -1285,7 +1251,7 @@
       var key = d.toISOString().slice(0,10);
       var day = state.days[key];
       if (!day) continue;
-      actions.forEach(a=>{
+      actions.forEach(function(a){
         if (day.done[a.id]){
           mins += (a.minutes||0);
           if (a.reps) reps += a.reps;
@@ -1305,7 +1271,7 @@
       var key = d.toISOString().slice(0,10);
       var day = state.days[key] || {done:{}};
       var total = actions.length||1;
-      var done = actions.filter(a => day.done[a.id]).length;
+      var done = actions.filter(function(a){ return day.done[a.id]; }).length;
       var pct = Math.round(done/total*100);
       var cell = document.createElement("div");
       cell.className = "cal-day";
@@ -1352,7 +1318,6 @@
     });
   });
 
-  // NAV
   var views = {
     home:    document.getElementById("view-home"),
     areas:   document.getElementById("view-areas"),
@@ -1370,7 +1335,6 @@
     });
   });
 
-  // Add focus area button
   addAreaBtn.addEventListener("click", function(){
     var name = prompt("New focus area name (e.g., Travel, Creativity, Recovery)?");
     if (!name) return;
