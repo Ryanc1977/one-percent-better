@@ -55,51 +55,58 @@
       align-items: center;
     }
 
-    /* Sunset + wave logo */
+    /* Tree-of-life style logo */
     .hero-icon {
       position: relative;
-      width: 52px;
-      height: 52px;
+      width: 56px;
+      height: 56px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #fee2e2 0, #f97316 28%, #fb923c 48%, #0ea5e9 62%, #0369a1 100%);
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.35);
+      background: radial-gradient(circle at 20% 15%, #fef3c7 0, #f97316 24%, #ec4899 48%, #6366f1 72%, #22c55e 100%);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
       overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.7);
     }
+    /* trunk */
     .hero-icon::before {
       content: "";
       position: absolute;
       bottom: 6px;
       left: 50%;
       transform: translateX(-50%);
-      width: 26px;
-      height: 26px;
+      width: 12px;
+      height: 28px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #fefce8 0, #fde68a 40%, #facc15 100%);
-      box-shadow: 0 0 10px rgba(250, 204, 21, 0.9);
+      background: linear-gradient(180deg, #4b5563, #b45309);
+      box-shadow: 0 0 6px rgba(15, 23, 42, 0.4);
     }
+    /* canopy / branches */
     .hero-icon::after {
       content: "";
       position: absolute;
-      left: -6px;
-      right: -6px;
-      bottom: 10px;
-      height: 16px;
-      background: linear-gradient(90deg, #22c55e, #14b8a6, #0ea5e9);
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
-      box-shadow: 0 -4px 8px rgba(15, 23, 42, 0.25);
-      opacity: 0.95;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(254, 249, 195, 0.9) 0, transparent 40%),
+        radial-gradient(circle at 70% 35%, rgba(219, 234, 254, 0.9) 0, transparent 45%),
+        radial-gradient(circle at 50% 70%, rgba(187, 247, 208, 0.9) 0, transparent 40%);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+      opacity: 0.96;
     }
 
     h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 24px; /* slightly larger */
       font-weight: 800;
       letter-spacing: -0.02em;
     }
 
     .subtitle {
       margin-top: 3px;
-      font-size: 12px;
+      font-size: 13px; /* slightly larger */
       color: var(--text-subtle);
     }
 
@@ -107,7 +114,7 @@
       display: flex;
       gap: 8px;
       margin-top: 10px;
-      font-size: 11px;
+      font-size: 12px; /* slightly larger */
       color: var(--text-subtle);
       flex-wrap: wrap;
     }
@@ -151,12 +158,12 @@
     }
 
     .section-title {
-      font-size: 14px;
+      font-size: 15px; /* slightly larger */
       font-weight: 600;
     }
 
     .section-meta {
-      font-size: 11px;
+      font-size: 12px; /* slightly larger */
       color: var(--text-subtle);
     }
 
@@ -173,7 +180,7 @@
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      font-size: 11px;
+      font-size: 12px; /* slightly larger */
       color: var(--text-subtle);
       flex: 1;
     }
@@ -197,7 +204,7 @@
     }
 
     .small {
-      font-size: 11px;
+      font-size: 12px; /* slightly larger */
       color: var(--text-subtle);
     }
 
@@ -250,16 +257,16 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size: 15px;
+      font-size: 16px;
       flex-shrink: 0;
     }
 
     .smart-body { flex: 1; }
-    .smart-title { font-size: 13px; font-weight: 600; }
-    .smart-sub  { font-size: 11px; color: var(--text-subtle); }
+    .smart-title { font-size: 14px; font-weight: 600; } /* larger */
+    .smart-sub  { font-size: 12px; color: var(--text-subtle); } /* larger */
 
     .smart-meta {
-      font-size: 11px;
+      font-size: 12px;
       text-align: right;
       color: var(--text-subtle);
     }
@@ -269,7 +276,7 @@
     }
 
     .focus-quote {
-      font-size: 17px;
+      font-size: 18px; /* slightly larger */
       font-weight: 600;
       line-height: 1.4;
       margin-bottom: 6px;
@@ -280,7 +287,7 @@
       padding: 8px 10px;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
-      font-size: 13px;
+      font-size: 14px; /* slightly larger */
       background: #f9fafb;
     }
 
@@ -304,11 +311,11 @@
       display:flex;
       align-items:center;
       gap:6px;
-      font-size:13px;
+      font-size:14px; /* larger */
       font-weight:600;
     }
     .fa-summary {
-      font-size:11px;
+      font-size:12px;
       color:var(--text-subtle);
     }
     .fa-toggle {
@@ -333,7 +340,7 @@
       border:1px solid #e5e7eb;
       background:#ffffff;
       margin-bottom:6px;
-      font-size:12px;
+      font-size:13px; /* larger */
     }
     .fa-task-body {
       flex:1;
@@ -347,7 +354,7 @@
       margin-bottom:2px;
     }
     .pill {
-      font-size:10px;
+      font-size:11px;
       padding:2px 6px;
       border-radius:999px;
       border:1px solid #e5e7eb;
@@ -360,7 +367,7 @@
       cursor:pointer;
     }
     .fa-task-benefit {
-      font-size:11px;
+      font-size:12px;
       color:var(--text-subtle);
     }
     .fa-footer {
@@ -368,12 +375,12 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      font-size:11px;
+      font-size:12px;
       gap:8px;
       flex-wrap:wrap;
     }
     .linkish{
-      font-size:11px;
+      font-size:12px;
       color:var(--accent-strong);
       cursor:pointer;
     }
@@ -402,12 +409,12 @@
     .nav-btn {
       flex: 1;
       text-align: center;
-      font-size: 11px;
+      font-size: 12px; /* slightly larger */
       color: var(--text-subtle);
       cursor: pointer;
     }
     .nav-icon {
-      font-size: 18px;
+      font-size: 19px; /* slightly larger */
       display: block;
       margin-bottom: 2px;
     }
@@ -443,10 +450,10 @@
       border:1px solid #e5e7eb;
       background:#f9fafb;
       padding:8px;
-      font-size:11px;
+      font-size:12px;
     }
     .stat-label{color:var(--text-subtle);}
-    .stat-value{font-weight:700;font-size:14px;margin-top:2px;}
+    .stat-value{font-weight:700;font-size:15px;margin-top:2px;}
 
     .calendar{
       display:grid;
@@ -458,7 +465,7 @@
       border-radius:6px;
       padding:3px 2px;
       border:1px solid #e5e7eb;
-      font-size:9px;
+      font-size:10px;
       text-align:center;
       background:#f9fafb;
       color:var(--text-subtle);
@@ -519,6 +526,15 @@
         <div id="weekSummary" class="small"></div>
       </section>
 
+      <!-- Inspirational Quote (directly under week at a glance) -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Inspirational Quote</div>
+        </div>
+        <div id="quoteText" class="focus-quote">Loading…</div>
+        <div class="small linkish" id="nextQuoteBtn">New quote ↻</div>
+      </section>
+
       <!-- Next up (formerly Smart Now) -->
       <section class="section-card">
         <div class="section-title-row">
@@ -526,15 +542,6 @@
           <div class="section-meta" id="smartNowMeta">Next up • —</div>
         </div>
         <div id="smartNowList"></div>
-      </section>
-
-      <!-- Inspirational Quote -->
-      <section class="section-card">
-        <div class="section-title-row">
-          <div class="section-title">Inspirational Quote</div>
-        </div>
-        <div id="quoteText" class="focus-quote">Loading…</div>
-        <div class="small linkish" id="nextQuoteBtn">New quote ↻</div>
       </section>
 
       <!-- Streak highlights -->
