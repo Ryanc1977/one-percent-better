@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>1% Better. Every Day.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-top: #e7f6ee;
+      --bg-bottom: #f5faf7;
+      --accent: #10b981;
+      --accent-soft: #a7f3d0;
+      --accent-strong: #047857;
+      --text-main: #0f172a;
+      --text-subtle: #64748b;
+      --card-bg: #ffffff;
+      --card-border: rgba(15,23,42,0.04);
+    }
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top left, var(--bg-top), var(--bg-bottom));
+      color: var(--text-main);
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 18px 18px 8px;
+      text-align: left;
+    }
+
+    .hero-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 18px 20px;
+      box-shadow: 0 20px 45px rgba(15,23,42,0.10);
+      border: 1px solid var(--card-border);
+    }
+
+    .hero-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .hero-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, #bbf7d0,#22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: #ecfdf3;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-strong {
+      border-color: var(--accent-soft);
+      color: var(--accent-strong);
+      background: #ecfdf5;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      padding: 8px 18px 66px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 14px 16px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+      margin-top: 10px;
+    }
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .section-meta {
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+
+    .week-bars {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      margin-top: 8px;
+      margin-bottom: 6px;
+    }
+
+    .week-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: var(--text-subtle);
+      flex: 1;
+    }
+
+    .week-pill {
+      width: 100%;
+      max-width: 26px;
+      border-radius: 999px;
+      background: #e5f7ed;
+      position: relative;
+      overflow: hidden;
+      height: 42px;
+    }
+    .week-fill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 999px;
+      background: linear-gradient(180deg,#6ee7b7,#22c55e);
+    }
+
+    .small {
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+
+    .highlight-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .highlight-pill {
+      border-radius: 999px;
+      border: 1px solid #fee2e2;
+      background: #fef2f2;
+      font-size: 11px;
+      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #b91c1c;
+    }
+
+    .highlight-pill span.label {
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .smart-item {
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      background: #f9fafb;
+    }
+
+    .smart-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #e5f7ed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .smart-body { flex: 1; }
+    .smart-title { font-size: 13px; font-weight: 600; }
+    .smart-sub  { font-size: 11px; color: var(--text-subtle); }
+
+    .smart-meta {
+      font-size: 11px;
+      text-align: right;
+      color: var(--text-subtle);
+    }
+
+    .heart {
+      font-size: 12px;
+    }
+
+    .focus-quote {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .field {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      background: #f9fafb;
+    }
+
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 8px;
+    }
+
+    .area-card {
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      padding: 10px 10px 9px;
+      background: #f9fafb;
+      font-size: 12px;
+    }
+    .area-name-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:4px;
+    }
+    .area-name{
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .area-tag{
+      font-size:10px;
+      padding:2px 6px;
+      border-radius:999px;
+      background:#ecfdf5;
+      color:var(--accent-strong);
+    }
+    .area-footer{
+      margin-top:4px;
+      display:flex;
+      justify-content:space-between;
+      font-size:11px;
+      color:var(--accent-strong);
+    }
+    .linkish{
+      font-size:11px;
+      color:var(--accent-strong);
+    }
+
+    textarea.field { resize: vertical; min-height: 90px; }
+
+    /* bottom nav */
+    nav {
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-around;
+      padding: 6px 0 8px;
+    }
+    .nav-btn {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-subtle);
+      cursor: pointer;
+    }
+    .nav-icon {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .nav-btn.active {
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    .moods {
+      display:flex;
+      gap:8px;
+      font-size:22px;
+      margin-bottom:6px;
+    }
+    .mood-btn{
+      cursor:pointer;
+      opacity:.5;
+      transition:transform .1s,opacity .1s;
+    }
+    .mood-btn.active{
+      opacity:1;
+      transform:scale(1.08);
+    }
+
+    .stats-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+      margin-top:6px;
+    }
+    .stat-card{
+      border-radius:14px;
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      padding:8px;
+      font-size:11px;
+    }
+    .stat-label{color:var(--text-subtle);}
+    .stat-value{font-weight:700;font-size:14px;margin-top:2px;}
+
+    .calendar{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:4px;
+      margin-top:8px;
+    }
+    .cal-day{
+      border-radius:6px;
+      padding:3px 2px;
+      border:1px solid #e5e7eb;
+      font-size:9px;
+      text-align:center;
+      background:#f9fafb;
+      color:var(--text-subtle);
+    }
+
+    input[type="date"]{
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      padding:3px 8px;
+      font-size:11px;
+      background:#f9fafb;
+      color:var(--text-subtle);
+    }
+
+    .small-link { font-size:11px;color:var(--accent-strong);cursor:pointer; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HERO HEADER CARD -->
+  <header>
+    <div class="hero-card">
+      <div class="hero-row">
+        <div class="hero-icon">🌅</div>
+        <div>
+          <h1>1% Better. Every Day.</h1>
+          <div class="subtitle">Tiny actions. Compounding peace.</div>
+        </div>
+      </div>
+      <div class="hero-meta" style="margin-top:12px;">
+        <span class="chip"><span id="dateLabel"></span></span>
+        <span class="chip chip-strong" id="progressChip">Today: 0% (0/0)</span>
+      </div>
+      <div class="hero-meta">
+        <span class="chip">
+          <span class="small">Time of day:</span>
+          <span id="timeBlockLabel">—</span>
+        </span>
+        <span class="chip">
+          <span class="small">View date:</span>
+          <input id="dateInput" type="date" />
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME VIEW -->
+    <div id="view-home">
+
+      <!-- This week at a glance -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">This week at a glance</div>
+        </div>
+        <div id="weekBars" class="week-bars"></div>
+        <div id="weekSummary" class="small"></div>
+      </section>
+
+      <!-- Streak highlights -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Streak highlights</div>
+        </div>
+        <div id="streakHighlights" class="highlight-row"></div>
+        <div class="small" style="margin-top:6px;">
+          Protect your streaks. Even a 1-minute version counts.
+        </div>
+      </section>
+
+      <!-- Smart Now -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Smart Now</div>
+          <div class="section-meta" id="smartNowMeta">Smart • —</div>
+        </div>
+        <div id="smartNowList"></div>
+      </section>
+
+      <!-- Morning Focus -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Morning Focus</div>
+        </div>
+        <div id="quoteText" class="focus-quote">Loading…</div>
+        <div class="small-link" id="nextQuoteBtn">New quote ↻</div>
+        <div style="height:8px;"></div>
+        <input id="morningInput" class="field" placeholder="What's your intention this morning?" />
+      </section>
+
+      <!-- 1% Focus of this week -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">1% Focus of this week</div>
+        </div>
+        <div id="areasGrid" class="areas-grid"></div>
+      </section>
+
+    </div>
+
+    <!-- CHECK-IN VIEW -->
+    <div id="view-checkin" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Mood check</div>
+        </div>
+        <div class="moods">
+          <span class="mood-btn" data-mood="angry">😡</span>
+          <span class="mood-btn" data-mood="sad">😕</span>
+          <span class="mood-btn" data-mood="neutral">😐</span>
+          <span class="mood-btn" data-mood="ok">🙂</span>
+          <span class="mood-btn" data-mood="great">🤩</span>
+        </div>
+        <div class="small">Tap how you feel right now.</div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Daily reflection</div>
+        </div>
+        <textarea id="journalInput" class="field" placeholder="What’s on your mind today?"></textarea>
+        <div class="small" style="margin-top:4px;">Saved for this date only.</div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Evening gratitude</div>
+        </div>
+        <input id="eveningInput" class="field" placeholder="What’s one thing you appreciated today?" />
+      </section>
+    </div>
+
+    <!-- STATS VIEW -->
+    <div id="view-stats" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Your momentum</div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Streak (approx)</div>
+            <div class="stat-value" id="streakValue">0 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Minutes this week</div>
+            <div class="stat-value" id="minutesValue">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Reps this week</div>
+            <div class="stat-value" id="repsValue">0</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Last 14 days</div>
+        </div>
+        <div id="calendar" class="calendar"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <nav>
+    <div class="nav-btn active" data-view="home">
+      <span class="nav-icon">🌤️</span>
+      <span>Home</span>
+    </div>
+    <div class="nav-btn" data-view="checkin">
+      <span class="nav-icon">✍️</span>
+      <span>Check-In</span>
+    </div>
+    <div class="nav-btn" data-view="stats">
+      <span class="nav-icon">📊</span>
+      <span>Stats</span>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // ---------- BASIC DATA ----------
+
+  var QUOTES = [
+    "The journey of a thousand miles begins with one step.",
+    "Momentum beats motivation.",
+    "Tiny shifts create big change.",
+    "Each small step is a vote for who you’re becoming.",
+    "Rest is part of progress.",
+    "You don’t need a new life, you need a new day."
+  ];
+
+  function timeBlock() {
+    var h = new Date().getHours();
+    if (h < 10) return "Morning";
+    if (h < 14) return "Midday";
+    if (h < 18) return "Afternoon";
+    if (h < 22) return "Evening";
+    return "Night";
+  }
+
+  var DEFAULT_ACTIONS = [
+    { id:"a1", area:"Health",   title:"Meditation – 10 min", benefit:"Calms the mind", minutes:10, favorite:true,  blocks:["Morning","Evening"], icon:"🧘" },
+    { id:"a2", area:"Health",   title:"Cold plunge – 2 min", benefit:"Boosts dopamine & grit", minutes:2, favorite:true,  blocks:["Morning"], icon:"❄️" },
+    { id:"a3", area:"Fitness",  title:"Strength training – 15 min", benefit:"Builds muscle & endurance", minutes:15, favorite:false, blocks:["Afternoon"], icon:"🏋️" },
+    { id:"a4", area:"Family",   title:"Meaningful check-in", benefit:"Nurtures family bonds", minutes:5, favorite:true,  blocks:["Evening"], icon:"💚" },
+    { id:"a5", area:"Mindset",  title:"Write 1 gratitude",   benefit:"Shifts into appreciation", minutes:2, favorite:true,  blocks:["Morning","Evening"], icon:"📝" },
+    { id:"a6", area:"Career",   title:"1 outreach message",  benefit:"Grows opportunities", minutes:3, favorite:false, blocks:["Afternoon"], icon:"📨" }
+  ];
+
+  var STORAGE_KEY = "onepct_match_layout_v1";
+  var state;
+  try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch(e){ state = {}; }
+
+  if (!Array.isArray(state.actions)) state.actions = DEFAULT_ACTIONS.slice();
+  if (!state.days) state.days = {};
+  if (typeof state.quoteIndex !== "number") state.quoteIndex = 0;
+
+  var todayISO = new Date().toISOString().slice(0,10);
+  var currentDate = state.currentDate || todayISO;
+
+  // ---------- HELPERS ----------
+
+  function ensureDay(date){
+    if (!state.days[date]) state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null };
+    return state.days[date];
+  }
+
+  function saveState(){
+    state.currentDate = currentDate;
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function formatDateLabel(date){
+    var d = new Date(date);
+    return d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+  }
+
+  function getActions(){
+    if (!Array.isArray(state.actions) || !state.actions.length) state.actions = DEFAULT_ACTIONS.slice();
+    return state.actions;
+  }
+
+  // ---------- DOM ----------
+
+  var dateLabel       = document.getElementById("dateLabel");
+  var progressChip    = document.getElementById("progressChip");
+  var dateInput       = document.getElementById("dateInput");
+  var timeBlockLabel  = document.getElementById("timeBlockLabel");
+
+  var weekBars        = document.getElementById("weekBars");
+  var weekSummary     = document.getElementById("weekSummary");
+
+  var streakHighlights= document.getElementById("streakHighlights");
+  var smartNowList    = document.getElementById("smartNowList");
+  var smartNowMeta    = document.getElementById("smartNowMeta");
+
+  var quoteText       = document.getElementById("quoteText");
+  var nextQuoteBtn    = document.getElementById("nextQuoteBtn");
+  var morningInput    = document.getElementById("morningInput");
+
+  var areasGrid       = document.getElementById("areasGrid");
+
+  var journalInput    = document.getElementById("journalInput");
+  var eveningInput    = document.getElementById("eveningInput");
+  var moodButtons     = document.querySelectorAll(".mood-btn");
+
+  var streakValue     = document.getElementById("streakValue");
+  var minutesValue    = document.getElementById("minutesValue");
+  var repsValue       = document.getElementById("repsValue");
+  var calendarEl      = document.getElementById("calendar");
+
+  // ---------- RENDER ----------
+
+  function render(){
+    var day = ensureDay(currentDate);
+    dateInput.value = currentDate;
+    dateLabel.textContent = formatDateLabel(currentDate);
+    timeBlockLabel.textContent = timeBlock();
+    morningInput.value = day.morning || "";
+    eveningInput.value = day.evening || "";
+    journalInput.value = day.journal || "";
+
+    // quote
+    if (state.quoteIndex < 0) state.quoteIndex = 0;
+    if (state.quoteIndex >= QUOTES.length) state.quoteIndex = QUOTES.length-1;
+    quoteText.textContent = "“" + QUOTES[state.quoteIndex] + "”";
+
+    // moods
+    moodButtons.forEach(function(btn){
+      btn.classList.toggle("active", btn.dataset.mood === day.mood);
+    });
+
+    renderProgress(day);
+    renderWeekGlance();
+    renderStreakHighlights();
+    renderSmartNow(day);
+    renderAreasToday(day);
+    renderStats();
+    renderCalendar();
+  }
+
+  function renderProgress(day){
+    var actions = getActions();
+    var total = actions.length;
+    var done = actions.filter(a => day.done[a.id]).length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    progressChip.textContent = "Today: " + pct + "% ("+done+"/"+total+")";
+  }
+
+  function renderWeekGlance(){
+    weekBars.innerHTML = "";
+    var actions = getActions();
+    if (!actions.length){
+      weekSummary.textContent = "Add a few tiny steps to start your rhythm.";
+      return;
+    }
+    var base = new Date(currentDate);
+    // Build Mon–Sun of current week
+    var dayOfWeek = base.getDay(); // 0=Sun
+    var monday = new Date(base);
+    monday.setDate(base.getDate() - ((dayOfWeek + 6) % 7));
+    var completions = [];
+    for (var i=0;i<7;i++){
+      var d = new Date(monday);
+      d.setDate(monday.getDate()+i);
+      var key = d.toISOString().slice(0,10);
+      var day = state.days[key] || {done:{}};
+      var total = actions.length || 1;
+      var done = actions.filter(a => day.done[a.id]).length;
+      var pct = Math.round(done/total*100);
+      completions.push({date:key,pct:pct,jsDate:d});
+    }
+
+    completions.forEach(function(info,i){
+      var bar = document.createElement("div");
+      bar.className = "week-bar";
+      var pill = document.createElement("div");
+      pill.className = "week-pill";
+      var fill = document.createElement("div");
+      fill.className = "week-fill";
+      fill.style.height = Math.max(0,Math.min(100, info.pct)) + "%";
+      pill.appendChild(fill);
+      var label = document.createElement("div");
+      label.textContent = ["M","T","W","T","F","S","S"][i];
+      bar.appendChild(pill);
+      bar.appendChild(label);
+      weekBars.appendChild(bar);
+    });
+
+    var activeDays = completions.filter(c => c.pct >= 50).length;
+    weekSummary.textContent = activeDays + " of 7 days at 50%+. You’re building a gentle rhythm.";
+  }
+
+  function computeActionStreak(actionId){
+    // count consecutive days ending today where action is done
+    var streak = 0;
+    var cursor = new Date(currentDate);
+    while (true){
+      var key = cursor.toISOString().slice(0,10);
+      var day = state.days[key];
+      if (!day || !day.done[actionId]) break;
+      streak++;
+      cursor.setDate(cursor.getDate()-1);
+    }
+    return streak;
+  }
+
+  function renderStreakHighlights(){
+    streakHighlights.innerHTML = "";
+    var actions = getActions();
+    var streaks = actions.map(a => ({action:a, streak:computeActionStreak(a.id)}))
+                         .filter(x => x.streak>0)
+                         .sort((a,b)=>b.streak-a.streak)
+                         .slice(0,3);
+
+    if (!streaks.length){
+      streakHighlights.innerHTML = '<span class="small">Complete a tiny step today to start your streaks.</span>';
+      return;
+    }
+
+    streaks.forEach(s => {
+      var pill = document.createElement("div");
+      pill.className = "highlight-pill";
+      pill.innerHTML = "⚡ <span class='label'>" +
+        s.action.title.replace(/ –.*/,"") +
+        "</span> – " + s.streak + " day" + (s.streak===1?"":"s");
+      streakHighlights.appendChild(pill);
+    });
+  }
+
+  function renderSmartNow(day){
+    smartNowList.innerHTML = "";
+    var block = timeBlock();
+    smartNowMeta.textContent = "Smart • " + block;
+    var actions = getActions();
+    if (!actions.length){
+      smartNowList.innerHTML = "<div class='small'>Add a tiny step in your focus areas first.</div>";
+      return;
+    }
+
+    var undone = actions.filter(a => !day.done[a.id]);
+    var pool = undone.length ? undone : actions.slice();
+    pool = pool.filter(a => !a.blocks || a.blocks.indexOf(block)>=0);
+    pool.sort((a,b)=>{
+      var sa = (a.favorite?2:0);
+      var sb = (b.favorite?2:0);
+      return sb-sa;
+    });
+
+    pool.slice(0,3).forEach(a=>{
+      var row = document.createElement("div");
+      row.className = "smart-item";
+
+      var ic = document.createElement("div");
+      ic.className = "smart-icon";
+      ic.textContent = a.icon || "✨";
+
+      var body = document.createElement("div");
+      body.className = "smart-body";
+      var title = document.createElement("div");
+      title.className = "smart-title";
+      title.textContent = a.title.replace(/ –.*/,"");
+      var sub = document.createElement("div");
+      sub.className = "smart-sub";
+      sub.textContent = a.benefit || "";
+      body.appendChild(title);
+      body.appendChild(sub);
+
+      var meta = document.createElement("div");
+      meta.className = "smart-meta";
+      meta.innerHTML = (a.minutes||1) + " min<br>" + (a.favorite?'<span class="heart">♥</span>':"&nbsp;");
+
+      row.appendChild(ic);
+      row.appendChild(body);
+      row.appendChild(meta);
+      smartNowList.appendChild(row);
+    });
+  }
+
+  function renderAreasToday(day){
+    areasGrid.innerHTML = "";
+    var actions = getActions();
+    var byArea = {};
+    actions.forEach(a=>{
+      if (!byArea[a.area]) byArea[a.area] = [];
+      byArea[a.area].push(a);
+    });
+
+    Object.keys(byArea).sort().forEach(area=>{
+      var tasks = byArea[area];
+      var done = tasks.filter(a => day.done[a.id]).length;
+      var total = tasks.length;
+      var pct = total ? Math.round(done/total*100) : 0;
+
+      var card = document.createElement("div");
+      card.className = "area-card";
+      var row = document.createElement("div");
+      row.className = "area-name-row";
+
+      var name = document.createElement("div");
+      name.className = "area-name";
+      name.innerHTML = "<span>💚</span><span>"+area+"</span>";
+
+      var tag = document.createElement("div");
+      tag.className = "area-tag";
+      tag.textContent = pct + "% today";
+
+      row.appendChild(name);
+      row.appendChild(tag);
+
+      var sub = document.createElement("div");
+      sub.className = "small";
+      sub.textContent = done + " of " + total + " tiny steps";
+
+      var footer = document.createElement("div");
+      footer.className = "area-footer";
+      footer.innerHTML = "<span class='linkish'>+ Add task</span><span class='linkish'>Next ›</span>";
+
+      card.appendChild(row);
+      card.appendChild(sub);
+      card.appendChild(footer);
+      areasGrid.appendChild(card);
+    });
+  }
+
+  // ---------- STATS & CALENDAR ----------
+
+  function renderStats(){
+    var dates = Object.keys(state.days).sort();
+    var streak = 0;
+    if (dates.length){
+      var cursor = new Date(currentDate);
+      while (true){
+        var key = cursor.toISOString().slice(0,10);
+        var day = state.days[key];
+        if (!day) break;
+        var any = Object.values(day.done||{}).some(Boolean);
+        if (!any) break;
+        streak++;
+        cursor.setDate(cursor.getDate()-1);
+      }
+    }
+    streakValue.textContent = streak + " day" + (streak===1?"":"s");
+
+    var base = new Date(currentDate);
+    var dow = base.getDay();
+    var monday = new Date(base);
+    monday.setDate(base.getDate() - ((dow+6)%7));
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate()+6);
+
+    var mins = 0;
+    var reps = 0;
+    var actions = getActions();
+    for (var d=new Date(monday); d<=sunday; d.setDate(d.getDate()+1)){
+      var key = d.toISOString().slice(0,10);
+      var day = state.days[key];
+      if (!day) continue;
+      actions.forEach(a=>{
+        if (day.done[a.id]){
+          mins += (a.minutes||0);
+          if (a.reps) reps += a.reps;
+        }
+      });
+    }
+    minutesValue.textContent = mins;
+    repsValue.textContent = reps;
+  }
+
+  function renderCalendar(){
+    calendarEl.innerHTML = "";
+    var actions = getActions();
+    for (var i=13;i>=0;i--){
+      var d = new Date();
+      d.setDate(d.getDate()-i);
+      var key = d.toISOString().slice(0,10);
+      var day = state.days[key] || {done:{}};
+      var total = actions.length||1;
+      var done = actions.filter(a => day.done[a.id]).length;
+      var pct = Math.round(done/total*100);
+      var cell = document.createElement("div");
+      cell.className = "cal-day";
+      cell.textContent = pct + "%";
+      var light = 100 - Math.round(pct*0.4);
+      cell.style.background = "hsl(140,60%,"+light+"%)";
+      calendarEl.appendChild(cell);
+    }
+  }
+
+  // ---------- EVENTS ----------
+
+  dateInput.addEventListener("change", function(){
+    currentDate = dateInput.value || todayISO;
+    ensureDay(currentDate);
+    saveState();
+    render();
+  });
+
+  nextQuoteBtn.addEventListener("click", function(){
+    state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
+    saveState();
+    render();
+  });
+
+  morningInput.addEventListener("input", function(){
+    ensureDay(currentDate).morning = morningInput.value;
+    saveState();
+  });
+  eveningInput.addEventListener("input", function(){
+    ensureDay(currentDate).evening = eveningInput.value;
+    saveState();
+  });
+  journalInput.addEventListener("input", function(){
+    ensureDay(currentDate).journal = journalInput.value;
+    saveState();
+  });
+
+  moodButtons.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      ensureDay(currentDate).mood = btn.dataset.mood;
+      saveState();
+      render();
+    });
+  });
+
+  // NAV
+  var views = {
+    home:    document.getElementById("view-home"),
+    checkin: document.getElementById("view-checkin"),
+    stats:   document.getElementById("view-stats")
+  };
+  var navBtns = document.querySelectorAll(".nav-btn");
+  navBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var v = btn.dataset.view;
+      Object.keys(views).forEach(function(k){
+        views[k].style.display = (k===v) ? "block" : "none";
+      });
+      navBtns.forEach(function(b){ b.classList.toggle("active", b===btn); });
+    });
+  });
+
+  // ---------- INIT ----------
+  dateInput.value = currentDate;
+  render();
+</script>
+</body>
+</html>
