@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg-top: #d2e7dc;
-      --bg-bottom: #e3f0e8;
+      --bg-top: #c8e3d5;
+      --bg-bottom: #dfeee6;
       --accent: #10b981;
       --accent-soft: #a7f3d0;
       --accent-strong: #047857;
       --text-main: #0f172a;
       --text-subtle: #64748b;
       --card-bg: #ffffff;
-      --card-border: rgba(15,23,42,0.04);
+      --card-border: rgba(15,23,42,0.06);
     }
     * { box-sizing: border-box; }
 
@@ -25,6 +25,7 @@
         "SF Pro Text", sans-serif;
       background: radial-gradient(circle at top left, var(--bg-top), var(--bg-bottom));
       color: var(--text-main);
+      font-size: 15px;
     }
 
     .app {
@@ -44,7 +45,7 @@
       background: var(--card-bg);
       border-radius: 28px;
       padding: 18px 20px;
-      box-shadow: 0 20px 45px rgba(15,23,42,0.10);
+      box-shadow: 0 20px 45px rgba(15,23,42,0.12);
       border: 1px solid var(--card-border);
     }
 
@@ -57,14 +58,14 @@
     /* 1% logo: sunrise over a wave inside a glowing circle */
     .hero-icon {
       position: relative;
-      width: 56px;
-      height: 56px;
+      width: 60px;
+      height: 60px;
       border-radius: 999px;
       background: radial-gradient(circle at 30% 10%, #fef9c3 0, #facc15 35%, #22c55e 80%);
       border: 2px solid #ffffff;
       box-shadow:
         0 0 0 3px rgba(34, 197, 94, 0.28),
-        0 10px 26px rgba(15, 23, 42, 0.35);
+        0 12px 26px rgba(15, 23, 42, 0.35);
       overflow: hidden;
     }
     .hero-icon::before {
@@ -80,8 +81,8 @@
       position: absolute;
       left: 50%;
       bottom: 46%;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       transform: translateX(-50%);
       background:
         radial-gradient(circle, #fefce8 0, #facc15 55%, transparent 56%),
@@ -114,7 +115,7 @@
     }
 
     .subtitle {
-      margin-top: 3px;
+      margin-top: 4px;
       font-size: 13px;
       color: var(--text-subtle);
     }
@@ -136,6 +137,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .chip-strong {
@@ -147,7 +149,7 @@
 
     main {
       flex: 1;
-      padding: 8px 18px 66px;
+      padding: 8px 18px 70px;
     }
 
     .section-card {
@@ -155,7 +157,7 @@
       border-radius: 22px;
       padding: 14px 16px;
       border: 1px solid var(--card-border);
-      box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.05);
       margin-top: 10px;
     }
 
@@ -167,7 +169,7 @@
     }
 
     .section-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
     }
 
@@ -196,12 +198,12 @@
 
     .week-pill {
       width: 100%;
-      max-width: 26px;
+      max-width: 28px;
       border-radius: 999px;
       background: #e5f7ed;
       position: relative;
       overflow: hidden;
-      height: 42px;
+      height: 44px;
     }
     .week-fill {
       position: absolute;
@@ -291,7 +293,7 @@
 
     .field {
       width: 100%;
-      padding: 8px 10px;
+      padding: 9px 11px;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
       font-size: 14px;
@@ -300,7 +302,77 @@
 
     textarea.field { resize: vertical; min-height: 90px; }
 
-    /* Focus Areas */
+    /* Focus Areas list */
+    .area-card {
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 10px 11px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      transition: background 0.12s, transform 0.08s;
+    }
+    .area-card:hover{
+      background:#eefdf5;
+      transform:translateY(-1px);
+    }
+    .area-main{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .area-name{
+      font-size:14px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .area-pill{
+      font-size:11px;
+      padding:2px 7px;
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      background:#ffffff;
+      color:var(--text-subtle);
+    }
+    .area-meta{
+      font-size:12px;
+      color:var(--text-subtle);
+    }
+    .area-right{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-shrink:0;
+    }
+    .area-chevron{
+      font-size:15px;
+      color:#9ca3af;
+    }
+
+    .trash-btn {
+      cursor: pointer;
+      font-size: 15px;
+      opacity: 0.7;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .trash-btn:hover {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+
+    .linkish{
+      font-size:12px;
+      color:var(--accent-strong);
+      cursor:pointer;
+    }
+
+    /* Sub-focus cards (detail view) reuse fa-* styles */
+
     .fa-card {
       border-radius: 16px;
       border: 1px solid #e5e7eb;
@@ -325,14 +397,14 @@
       font-size:12px;
       color:var(--text-subtle);
     }
-    .fa-toggle {
-      font-size:13px;
-      color:var(--accent-strong);
-    }
     .fa-right {
       display:flex;
       align-items:center;
       gap:6px;
+    }
+    .fa-toggle {
+      font-size:13px;
+      color:var(--accent-strong);
     }
     .fa-tasks {
       margin-top:6px;
@@ -353,3 +425,1230 @@
       flex:1;
     }
     .fa-task-title-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:4px;
+      align-items:center;
+      font-weight:600;
+      margin-bottom:2px;
+    }
+    .pill {
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+    }
+    .pill-smart {
+      border-color:var(--accent-soft);
+      color:var(--accent-strong);
+      background:#ecfdf5;
+      cursor:pointer;
+    }
+    .fa-task-benefit {
+      font-size:12px;
+      color:var(--text-subtle);
+    }
+    .fa-footer {
+      margin-top:4px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:12px;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    /* bottom nav */
+    nav {
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-around;
+      padding: 6px 0 8px;
+    }
+    .nav-btn {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-subtle);
+      cursor: pointer;
+    }
+    .nav-icon {
+      font-size: 19px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .nav-btn.active {
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    .moods {
+      display:flex;
+      gap:8px;
+      font-size:22px;
+      margin-bottom:6px;
+    }
+    .mood-btn{
+      cursor:pointer;
+      opacity:.5;
+      transition:transform .1s,opacity .1s;
+    }
+    .mood-btn.active{
+      opacity:1;
+      transform:scale(1.08);
+    }
+
+    .stats-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+      margin-top:6px;
+    }
+    .stat-card{
+      border-radius:14px;
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      padding:8px;
+      font-size:12px;
+    }
+    .stat-label{color:var(--text-subtle);}
+    .stat-value{font-weight:700;font-size:15px;margin-top:2px;}
+
+    .calendar{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:4px;
+      margin-top:8px;
+    }
+    .cal-day{
+      border-radius:6px;
+      padding:3px 2px;
+      border:1px solid #e5e7eb;
+      font-size:10px;
+      text-align:center;
+      background:#f9fafb;
+      color:var(--text-subtle);
+    }
+
+    input[type="date"]{
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      padding:3px 8px;
+      font-size:11px;
+      background:#f9fafb;
+      color:#4b5563;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HERO HEADER CARD -->
+  <header>
+    <div class="hero-card">
+      <div class="hero-row">
+        <div class="hero-icon" aria-hidden="true"></div>
+        <div>
+          <h1>1% Better. Every Day.</h1>
+          <div class="subtitle">Small shifts. Compounding change.</div>
+        </div>
+      </div>
+      <div class="hero-meta" style="margin-top:12px;">
+        <span class="chip"><span id="dateLabel"></span></span>
+        <span class="chip chip-strong" id="progressChip">Today: 0% (0/0)</span>
+        <span class="chip">
+          <span class="small">View date:</span>
+          <input id="dateInput" type="date" />
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME VIEW -->
+    <div id="view-home">
+      <!-- This week at a glance -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">This week at a glance</div>
+        </div>
+        <div id="weekBars" class="week-bars"></div>
+        <div id="weekSummary" class="small"></div>
+      </section>
+
+      <!-- Inspirational Quote -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Inspirational Quote</div>
+        </div>
+        <div id="quoteText" class="focus-quote">Loading…</div>
+        <div class="small linkish" id="nextQuoteBtn">New quote ↻</div>
+      </section>
+
+      <!-- Next up -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Next up</div>
+          <div class="section-meta" id="smartNowMeta">Next up • —</div>
+        </div>
+        <div id="smartNowList"></div>
+      </section>
+
+      <!-- Streak highlights -->
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Streak highlights</div>
+        </div>
+        <div id="streakHighlights" class="highlight-row"></div>
+        <div class="small" style="margin-top:6px;">
+          Protect your streaks. Even a 1-minute version counts.
+        </div>
+      </section>
+    </div>
+
+    <!-- AREAS VIEW (list) -->
+    <div id="view-areas" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Focus Areas</div>
+          <div class="section-meta linkish" id="addAreaBtn">＋ Add focus area</div>
+        </div>
+        <div class="small" style="margin-bottom:4px;">
+          Tap an area to see sub-focus groups and 1% tasks.
+        </div>
+        <div id="areasGrid"></div>
+      </section>
+    </div>
+
+    <!-- AREA DETAIL VIEW -->
+    <div id="view-area-detail" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">
+            <span id="areaBackBtn" class="linkish">← Focus Areas</span>
+          </div>
+          <div class="section-meta linkish" id="addSubFocusBtn">＋ Add sub-focus</div>
+        </div>
+        <div class="small" id="areaDetailSubtitle">
+          Sub-focus groups help you organize your 1% actions.
+        </div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title" id="areaDetailTitle">Area</div>
+          <div class="section-meta linkish" id="areaAddSuggestionBtn">＋ Add suggestion</div>
+        </div>
+        <div id="subFocusList"></div>
+      </section>
+    </div>
+
+    <!-- CHECK-IN VIEW -->
+    <div id="view-checkin" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Today's Intention</div>
+        </div>
+        <input id="morningInput" class="field" placeholder="What is your intention today?" />
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Mood check</div>
+        </div>
+        <div class="moods">
+          <span class="mood-btn" data-mood="angry">😡</span>
+          <span class="mood-btn" data-mood="sad">😕</span>
+          <span class="mood-btn" data-mood="neutral">😐</span>
+          <span class="mood-btn" data-mood="ok">🙂</span>
+          <span class="mood-btn" data-mood="great">🤩</span>
+        </div>
+        <div class="small">Tap how you feel right now.</div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Daily reflection</div>
+        </div>
+        <textarea id="journalInput" class="field" placeholder="What’s on your mind today?"></textarea>
+        <div class="small" style="margin-top:4px;">Saved for this date only.</div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Evening gratitude</div>
+        </div>
+        <input id="eveningInput" class="field" placeholder="What’s one thing you appreciated today?" />
+      </section>
+    </div>
+
+    <!-- STATS VIEW -->
+    <div id="view-stats" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Your momentum</div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Streak (approx)</div>
+            <div class="stat-value" id="streakValue">0 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Minutes this week</div>
+            <div class="stat-value" id="minutesValue">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Reps this week</div>
+            <div class="stat-value" id="repsValue">0</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Last 14 days</div>
+        </div>
+        <div id="calendar" class="calendar"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <nav>
+    <div class="nav-btn active" data-view="home">
+      <span class="nav-icon">🌤️</span>
+      <span>Home</span>
+    </div>
+    <div class="nav-btn" data-view="areas">
+      <span class="nav-icon">🎯</span>
+      <span>Areas</span>
+    </div>
+    <div class="nav-btn" data-view="checkin">
+      <span class="nav-icon">✍️</span>
+      <span>Check-In</span>
+    </div>
+    <div class="nav-btn" data-view="stats">
+      <span class="nav-icon">📊</span>
+      <span>Stats</span>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // ---------- DATA & HELPERS ----------
+
+  var QUOTES = [
+    "The journey of a thousand miles begins with one step.",
+    "Momentum beats motivation.",
+    "Small shifts create big change.",
+    "Each small step is a vote for who you’re becoming.",
+    "Rest is part of progress.",
+    "You don’t need a new life, you need a new day."
+  ];
+
+  function timeBlock() {
+    var h = new Date().getHours();
+    if (h < 10) return "Morning";
+    if (h < 14) return "Midday";
+    if (h < 18) return "Afternoon";
+    if (h < 22) return "Evening";
+    return "Night";
+  }
+
+  var DEFAULT_AREAS = [
+    "Shoulder",
+    "Diet",
+    "Exercise",
+    "Dance",
+    "Wellness",
+    "Anya's Creativity Zone",
+    "Soundbath",
+    "Ciqu",
+    "EZ Tool"
+  ];
+
+  var DEFAULT_SUBFOCUSES = {
+    "Shoulder": ["Mobility","PT & Rehab"],
+    "Diet": ["Fasting","Meals"],
+    "Exercise": ["Strength","Cardio"],
+    "Dance": ["Salsa","Footwork"],
+    "Wellness": ["Cold Plunge","Breathwork","Meditation"],
+    "Anya's Creativity Zone": ["Setup","Content"],
+    "Soundbath": ["Practice","Events"],
+    "Ciqu": ["Finance","Operations"],
+    "EZ Tool": ["Product","Marketing"]
+  };
+
+  var SUGGESTION_BANK = {
+    "Shoulder": [
+      { title:"2-min shoulder circles", minutes:2, benefit:"Lubricates the joint and eases stiffness", icon:"🌀", blocks:["Morning"], subFocus:"Mobility" },
+      { title:"Wall slides – 5 reps", minutes:3, benefit:"Supports posture and scapular control", icon:"🧱", blocks:["Any"], subFocus:"PT & Rehab" }
+    ],
+    "Diet": [
+      { title:"Log today’s first meal", minutes:2, benefit:"Builds awareness of what you’re eating", icon:"📓", blocks:["Morning"], subFocus:"Meals" },
+      { title:"Add one extra glass of water", minutes:1, benefit:"Supports energy and digestion", icon:"💧", blocks:["Any"], subFocus:"Fasting" }
+    ],
+    "Exercise": [
+      { title:"1 set of 10 squats", minutes:3, benefit:"Activates legs and circulation", icon:"🏋️", blocks:["Any"], subFocus:"Strength" },
+      { title:"5-min brisk walk", minutes:5, benefit:"Gently raises heart rate", icon:"🚶", blocks:["Midday","Afternoon"], subFocus:"Cardio" }
+    ],
+    "Dance": [
+      { title:"Dance 1 salsa song", minutes:3, benefit:"Shifts you into joy fast", icon:"💃", blocks:["Evening"], subFocus:"Salsa" },
+      { title:"5-min basic footwork", minutes:5, benefit:"Builds coordination and confidence", icon:"🦶", blocks:["Any"], subFocus:"Footwork" }
+    ],
+    "Wellness": [
+      { title:"Cold plunge – 2 min", minutes:2, benefit:"Boosts dopamine & resilience", icon:"❄️", blocks:["Morning"], subFocus:"Cold Plunge" },
+      { title:"Wim Hof – 1 light round", minutes:5, benefit:"Energizes and clears the mind", icon:"🌬️", blocks:["Morning"], subFocus:"Breathwork" },
+      { title:"Meditate – 5 min", minutes:5, benefit:"Calms nervous system", icon:"🧘", blocks:["Evening"], subFocus:"Meditation" }
+    ],
+    "Anya's Creativity Zone": [
+      { title:"Brainstorm 3 video ideas with Anya", minutes:5, benefit:"Feeds shared creativity", icon:"🎥", blocks:["Afternoon","Evening"], subFocus:"Content" },
+      { title:"Tidy one small part of the setup", minutes:3, benefit:"Keeps the space inspiring", icon:"🧹", blocks:["Any"], subFocus:"Setup" }
+    ],
+    "Soundbath": [
+      { title:"10-min soundbath practice", minutes:10, benefit:"Deepens your craft", icon:"🎶", blocks:["Evening"], subFocus:"Practice" },
+      { title:"Reach out about one future event", minutes:3, benefit:"Keeps momentum for offerings", icon:"📩", blocks:["Afternoon"], subFocus:"Events" }
+    ],
+    "Ciqu": [
+      { title:"Review today’s top 3 numbers", minutes:5, benefit:"Keeps a clear handle on the business", icon:"📊", blocks:["Midday"], subFocus:"Finance" },
+      { title:"Send 1 check-in to a vendor/client", minutes:3, benefit:"Maintains healthy relationships", icon:"🤝", blocks:["Afternoon"], subFocus:"Operations" }
+    ],
+    "EZ Tool": [
+      { title:"Capture 1 product idea in notes", minutes:3, benefit:"Keeps the roadmap alive", icon:"🛠️", blocks:["Any"], subFocus:"Product" },
+      { title:"Improve one line of app copy", minutes:4, benefit:"Makes the experience clearer", icon:"✍️", blocks:["Evening"], subFocus:"Marketing" }
+    ],
+    "_default": [
+      { title:"Take 3 slow breaths", minutes:1, benefit:"Recenters your energy", icon:"🌬️", blocks:["Any"] }
+    ]
+  };
+
+  var DEFAULT_ACTIONS = [
+    // Shoulder
+    { id:"a1",  area:"Shoulder", subFocus:"Mobility",     title:"Shoulder CARs – 3 slow circles", minutes:3, benefit:"Keeps your shoulder joint mobile", favorite:true,  blocks:["Morning"], icon:"🌀" },
+    { id:"a2",  area:"Shoulder", subFocus:"PT & Rehab",   title:"Wall slides – 5 reps",           minutes:3, benefit:"Supports posture and scapular control", favorite:false, blocks:["Any"], icon:"🧱" },
+
+    // Diet
+    { id:"a3",  area:"Diet", subFocus:"Fasting",          title:"Hydrate – 1 extra glass of water", minutes:2, benefit:"Supports energy & fasting", favorite:true, blocks:["Morning"], icon:"💧" },
+    { id:"a4",  area:"Diet", subFocus:"Meals",            title:"Log first meal of the day",       minutes:2, benefit:"Builds awareness of intake", favorite:false, blocks:["Any"], icon:"📓" },
+
+    // Exercise
+    { id:"a5",  area:"Exercise", subFocus:"Strength",     title:"1 strength block – 15 min",      minutes:15, benefit:"Builds strength & resilience", favorite:true, blocks:["Afternoon"], icon:"🏋️" },
+    { id:"a6",  area:"Exercise", subFocus:"Cardio",       title:"Lunch walk – 10 min",            minutes:10, benefit:"Movement + sunlight", favorite:false, blocks:["Midday","Afternoon"], icon:"🚶" },
+
+    // Dance
+    { id:"a7",  area:"Dance", subFocus:"Salsa",           title:"Dance 1 salsa song",             minutes:3, benefit:"Shifts you into joy", favorite:true, blocks:["Evening"], icon:"💃" },
+    { id:"a8",  area:"Dance", subFocus:"Footwork",        title:"5-min basic footwork",           minutes:5, benefit:"Improves timing & control", favorite:false, blocks:["Any"], icon:"🦶" },
+
+    // Wellness
+    { id:"a9",  area:"Wellness", subFocus:"Cold Plunge",  title:"Cold plunge – 2 min",            minutes:2, benefit:"Boosts dopamine & grit", favorite:true, blocks:["Morning"], icon:"❄️" },
+    { id:"a10", area:"Wellness", subFocus:"Meditation",   title:"Meditation – 10 min",            minutes:10, benefit:"Calms mind and body", favorite:false, blocks:["Evening"], icon:"🧘" },
+
+    // Anya's Creativity Zone
+    { id:"a11", area:"Anya's Creativity Zone", subFocus:"Content", title:"One creative idea with Anya", minutes:5, benefit:"Strengthens your creative bond", favorite:true, blocks:["Evening"], icon:"🎥" },
+    { id:"a12", area:"Anya's Creativity Zone", subFocus:"Setup",   title:"Tidy one part of the setup", minutes:3, benefit:"Keeps the space inspiring", favorite:false, blocks:["Any"], icon:"🧹" },
+
+    // Soundbath
+    { id:"a13", area:"Soundbath", subFocus:"Practice",    title:"10-min soundbath practice",      minutes:10, benefit:"Deepens your skill & presence", favorite:true, blocks:["Evening"], icon:"🎶" },
+    { id:"a14", area:"Soundbath", subFocus:"Events",      title:"Reach out about one future event", minutes:3, benefit:"Grows your offerings", favorite:false, blocks:["Afternoon"], icon:"📩" },
+
+    // Ciqu
+    { id:"a15", area:"Ciqu", subFocus:"Finance",          title:"Review key numbers – 5 min",     minutes:5, benefit:"Keeps you grounded in the business", favorite:true, blocks:["Midday"], icon:"📊" },
+    { id:"a16", area:"Ciqu", subFocus:"Operations",       title:"Send one check-in message",      minutes:3, benefit:"Maintains clean communication", favorite:false, blocks:["Afternoon"], icon:"🤝" },
+
+    // EZ Tool
+    { id:"a17", area:"EZ Tool", subFocus:"Product",       title:"Capture one product idea",       minutes:3, benefit:"Moves the app 1% forward", favorite:true, blocks:["Any"], icon:"🛠️" },
+    { id:"a18", area:"EZ Tool", subFocus:"Marketing",     title:"Improve one line of copy",       minutes:4, benefit:"Sharpens your message", favorite:false, blocks:["Evening"], icon:"✍️" }
+  ];
+
+  var STORAGE_KEY = "onepct_v41_focus";
+  var todayISO = new Date().toISOString().slice(0,10);
+
+  var state;
+  (function initState(){
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && parsed.version === "4.1.0") {
+          state = parsed;
+          return;
+        }
+      }
+    } catch(e){}
+    // Fresh clean slate
+    state = {
+      version: "4.1.0",
+      actions: DEFAULT_ACTIONS.slice(),
+      days: {},
+      quoteIndex: 0,
+      areas: DEFAULT_AREAS.slice(),
+      subFocuses: JSON.parse(JSON.stringify(DEFAULT_SUBFOCUSES)),
+      currentDate: todayISO,
+      currentArea: null
+    };
+    saveState();
+  })();
+
+  var currentDate = state.currentDate || todayISO;
+  var expandedSubFocus = {}; // area -> subFocus -> bool
+
+  function ensureDay(date){
+    if (!state.days[date]) state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null };
+    return state.days[date];
+  }
+
+  function saveState(){
+    state.currentDate = currentDate;
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function formatDateLabel(date){
+    var d = new Date(date);
+    return d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+  }
+
+  function getActions(){
+    if (!Array.isArray(state.actions) || !state.actions.length) state.actions = DEFAULT_ACTIONS.slice();
+    return state.actions;
+  }
+
+  function generateSuggestionForArea(area){
+    var bank = SUGGESTION_BANK[area] || SUGGESTION_BANK._default || [];
+    if (!bank.length) {
+      alert("No ideas available yet for this area.");
+      return;
+    }
+    var existing = getActions().filter(a => a.area === area);
+    var picked = null;
+    for (var i=0;i<bank.length;i++){
+      var s = bank[i];
+      var found = existing.some(a => a.title === s.title);
+      if (!found){
+        picked = s;
+        break;
+      }
+    }
+    if (!picked){
+      alert("You’ve already added all the ideas I have for this area.");
+      return;
+    }
+    var subName = picked.subFocus ||
+      (state.subFocuses[area] && state.subFocuses[area][0]) ||
+      "General";
+    if (!state.subFocuses[area]) state.subFocuses[area] = [subName];
+    if (state.subFocuses[area].indexOf(subName) === -1) state.subFocuses[area].push(subName);
+
+    var id = "g" + Date.now() + Math.floor(Math.random()*1000);
+    state.actions.push({
+      id:id,
+      area:area,
+      subFocus:subName,
+      title:picked.title,
+      benefit:picked.benefit,
+      minutes:picked.minutes,
+      favorite:false,
+      icon:picked.icon,
+      blocks:picked.blocks
+    });
+    saveState();
+    render();
+  }
+
+  // ---------- DOM REFS ----------
+
+  var dateLabel       = document.getElementById("dateLabel");
+  var progressChip    = document.getElementById("progressChip");
+  var dateInput       = document.getElementById("dateInput");
+
+  var weekBars        = document.getElementById("weekBars");
+  var weekSummary     = document.getElementById("weekSummary");
+
+  var streakHighlights= document.getElementById("streakHighlights");
+  var smartNowList    = document.getElementById("smartNowList");
+  var smartNowMeta    = document.getElementById("smartNowMeta");
+
+  var quoteText       = document.getElementById("quoteText");
+  var nextQuoteBtn    = document.getElementById("nextQuoteBtn");
+
+  var areasGrid       = document.getElementById("areasGrid");
+  var addAreaBtn      = document.getElementById("addAreaBtn");
+
+  var areaDetailView       = document.getElementById("view-area-detail");
+  var areaBackBtn          = document.getElementById("areaBackBtn");
+  var areaDetailTitle      = document.getElementById("areaDetailTitle");
+  var areaDetailSubtitle   = document.getElementById("areaDetailSubtitle");
+  var subFocusList         = document.getElementById("subFocusList");
+  var addSubFocusBtn       = document.getElementById("addSubFocusBtn");
+  var areaAddSuggestionBtn = document.getElementById("areaAddSuggestionBtn");
+
+  var morningInput    = document.getElementById("morningInput");
+  var journalInput    = document.getElementById("journalInput");
+  var eveningInput    = document.getElementById("eveningInput");
+  var moodButtons     = document.querySelectorAll(".mood-btn");
+
+  var streakValue     = document.getElementById("streakValue");
+  var minutesValue    = document.getElementById("minutesValue");
+  var repsValue       = document.getElementById("repsValue");
+  var calendarEl      = document.getElementById("calendar");
+
+  // ---------- RENDER ----------
+
+  function render(){
+    var day = ensureDay(currentDate);
+    dateInput.value = currentDate;
+    dateLabel.textContent = formatDateLabel(currentDate);
+
+    morningInput.value = day.morning || "";
+    eveningInput.value = day.evening || "";
+    journalInput.value = day.journal || "";
+
+    if (state.quoteIndex < 0) state.quoteIndex = 0;
+    if (state.quoteIndex >= QUOTES.length) state.quoteIndex = QUOTES.length-1;
+    quoteText.textContent = "“" + QUOTES[state.quoteIndex] + "”";
+
+    moodButtons.forEach(function(btn){
+      btn.classList.toggle("active", btn.dataset.mood === day.mood);
+    });
+
+    renderProgress(day);
+    renderWeekGlance();
+    renderStreakHighlights();
+    renderSmartNow(day);
+    renderAreasToday(day);
+    renderStats();
+    renderCalendar();
+
+    if (state.currentArea) {
+      renderAreaDetail(day);
+    }
+  }
+
+  function renderProgress(day){
+    var actions = getActions();
+    var total = actions.length;
+    var done = actions.filter(a => day.done[a.id]).length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    progressChip.textContent = "Today: " + pct + "% ("+done+"/"+total+")";
+  }
+
+  function renderWeekGlance(){
+    weekBars.innerHTML = "";
+    var actions = getActions();
+    if (!actions.length){
+      weekSummary.textContent = "Add a few 1% steps to start your rhythm.";
+      return;
+    }
+    var base = new Date(currentDate);
+    var dayOfWeek = base.getDay();
+    var monday = new Date(base);
+    monday.setDate(base.getDate() - ((dayOfWeek + 6) % 7));
+    var completions = [];
+    for (var i=0;i<7;i++){
+      var d = new Date(monday);
+      d.setDate(monday.getDate()+i);
+      var key = d.toISOString().slice(0,10);
+      var day = state.days[key] || {done:{}};
+      var total = actions.length || 1;
+      var done = actions.filter(a => day.done[a.id]).length;
+      var pct = Math.round(done/total*100);
+      completions.push({date:key,pct:pct});
+    }
+
+    completions.forEach(function(info,i){
+      var bar = document.createElement("div");
+      bar.className = "week-bar";
+      var pill = document.createElement("div");
+      pill.className = "week-pill";
+      var fill = document.createElement("div");
+      fill.className = "week-fill";
+      fill.style.height = Math.max(0,Math.min(100, info.pct)) + "%";
+      pill.appendChild(fill);
+      var label = document.createElement("div");
+      label.textContent = ["M","T","W","T","F","S","S"][i];
+      bar.appendChild(pill);
+      bar.appendChild(label);
+      weekBars.appendChild(bar);
+    });
+
+    var activeDays = completions.filter(c => c.pct >= 50).length;
+    weekSummary.textContent = activeDays + " of 7 days at 50%+. You’re building a gentle rhythm.";
+  }
+
+  function computeActionStreak(actionId){
+    var streak = 0;
+    var cursor = new Date(currentDate);
+    while (true){
+      var key = cursor.toISOString().slice(0,10);
+      var day = state.days[key];
+      if (!day) break;
+      var done = day.done && day.done[actionId];
+      if (!done) break;
+      streak++;
+      cursor.setDate(cursor.getDate()-1);
+    }
+    return streak;
+  }
+
+  function renderStreakHighlights(){
+    streakHighlights.innerHTML = "";
+    var actions = getActions();
+    var streaks = actions.map(a => ({action:a, streak:computeActionStreak(a.id)}))
+                         .filter(x => x.streak>0)
+                         .sort((a,b)=>b.streak-a.streak)
+                         .slice(0,3);
+
+    if (!streaks.length){
+      streakHighlights.innerHTML = '<span class="small">Complete one 1% action today to start your streaks.</span>';
+      return;
+    }
+
+    streaks.forEach(s => {
+      var pill = document.createElement("div");
+      pill.className = "highlight-pill";
+      pill.innerHTML = "⚡ <span class='label'>" +
+        s.action.title.replace(/ –.*/,"") +
+        "</span> – " + s.streak + " day" + (s.streak===1?"":"s");
+      streakHighlights.appendChild(pill);
+    });
+  }
+
+  function renderSmartNow(day){
+    smartNowList.innerHTML = "";
+    var block = timeBlock();
+    smartNowMeta.textContent = "Next up • " + block;
+    var actions = getActions();
+    if (!actions.length){
+      smartNowList.innerHTML = "<div class='small'>Add a few 1% steps in your focus areas first.</div>";
+      return;
+    }
+
+    var undone = actions.filter(a => !day.done[a.id]);
+    var pool = undone.length ? undone : actions.slice();
+    pool = pool.filter(a => {
+      if (!a.blocks || !a.blocks.length) return true;
+      if (a.blocks.indexOf("Any") >= 0) return true;
+      return a.blocks.indexOf(block)>=0;
+    });
+    pool.sort((a,b)=>{
+      var sa = (a.favorite?2:0);
+      var sb = (b.favorite?2:0);
+      return sb-sa;
+    });
+
+    pool.slice(0,5).forEach(function(a){
+      var row = document.createElement("div");
+      row.className = "smart-item";
+
+      row.addEventListener("click", function(){
+        var d = ensureDay(currentDate);
+        d.done[a.id] = !d.done[a.id];
+        saveState();
+        render();
+      });
+
+      var ic = document.createElement("div");
+      ic.className = "smart-icon";
+      ic.textContent = a.icon || "✨";
+
+      var body = document.createElement("div");
+      body.className = "smart-body";
+      var title = document.createElement("div");
+      title.className = "smart-title";
+      title.textContent = a.title.replace(/ –.*/,"");
+      var sub = document.createElement("div");
+      sub.className = "smart-sub";
+      sub.textContent = a.benefit || "";
+      body.appendChild(title);
+      body.appendChild(sub);
+
+      var meta = document.createElement("div");
+      meta.className = "smart-meta";
+      meta.innerHTML = (a.minutes||1) + " min<br>" + (a.favorite?'<span class="heart">♥</span>':"&nbsp;");
+
+      row.appendChild(ic);
+      row.appendChild(body);
+      row.appendChild(meta);
+      smartNowList.appendChild(row);
+    });
+  }
+
+  // AREAS LIST (main Areas tab)
+  function renderAreasToday(day){
+    areasGrid.innerHTML = "";
+    var actions = getActions();
+
+    var areaSet = {};
+    (state.areas || []).forEach(function(a){ areaSet[a] = true; });
+    actions.forEach(function(a){ areaSet[a.area] = true; });
+
+    var areaNames = Object.keys(areaSet).sort();
+
+    if (!areaNames.length){
+      areasGrid.innerHTML = "<div class='small'>Add your first focus area to get started.</div>";
+      return;
+    }
+
+    areaNames.forEach(function(area){
+      var areaActions = actions.filter(function(a){ return a.area === area; });
+      var doneCount = areaActions.filter(function(a){ return day.done[a.id]; }).length;
+      var total = areaActions.length;
+      var pct = total ? Math.round(doneCount/total*100) : 0;
+
+      var card = document.createElement("div");
+      card.className = "area-card";
+
+      card.addEventListener("click", function(){
+        openAreaDetail(area);
+      });
+
+      var main = document.createElement("div");
+      main.className = "area-main";
+
+      var name = document.createElement("div");
+      name.className = "area-name";
+      name.innerHTML = "<span>💚</span><span>"+area+"</span>";
+
+      var meta = document.createElement("div");
+      meta.className = "area-meta";
+      meta.textContent = total ? (doneCount+" / "+total+" • "+pct+"% today") : "No tasks yet";
+
+      main.appendChild(name);
+      main.appendChild(meta);
+
+      var right = document.createElement("div");
+      right.className = "area-right";
+
+      var pill = document.createElement("div");
+      pill.className = "area-pill";
+      pill.textContent = total ? (total+" tasks") : "0 tasks";
+      right.appendChild(pill);
+
+      var del = document.createElement("span");
+      del.className = "trash-btn";
+      del.innerHTML = "🗑️";
+      del.title = "Delete focus area";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if (!confirm("Delete focus area '" + area + "' and all its tasks?")) return;
+
+        if (Array.isArray(state.areas)) {
+          state.areas = state.areas.filter(function(aName){ return aName !== area; });
+        }
+
+        var ids = areaActions.map(function(t){ return t.id; });
+
+        state.actions = state.actions.filter(function(a){ return a.area !== area; });
+
+        Object.keys(state.days).forEach(function(k){
+          var d = state.days[k];
+          if (!d || !d.done) return;
+          ids.forEach(function(id){
+            if (d.done[id]) delete d.done[id];
+          });
+        });
+
+        delete state.subFocuses[area];
+        if (state.currentArea === area) state.currentArea = null;
+        saveState();
+        render();
+      });
+      right.appendChild(del);
+
+      var chev = document.createElement("div");
+      chev.className = "area-chevron";
+      chev.textContent = "›";
+      right.appendChild(chev);
+
+      card.appendChild(main);
+      card.appendChild(right);
+      areasGrid.appendChild(card);
+    });
+  }
+
+  // AREA DETAIL VIEW
+  function openAreaDetail(area){
+    state.currentArea = area;
+    document.getElementById("view-areas").style.display = "none";
+    areaDetailView.style.display = "block";
+    var day = ensureDay(currentDate);
+    renderAreaDetail(day);
+    saveState();
+  }
+
+  function renderAreaDetail(day){
+    if (!state.currentArea) return;
+    var area = state.currentArea;
+    areaDetailTitle.textContent = area;
+
+    var allActions = getActions().filter(function(a){ return a.area === area; });
+    var names = state.subFocuses[area] || [];
+
+    if (!names.length) {
+      // derive from tasks
+      var tmp = {};
+      allActions.forEach(function(a){ if (a.subFocus) tmp[a.subFocus] = true; });
+      names = Object.keys(tmp);
+      state.subFocuses[area] = names.slice();
+      saveState();
+    }
+
+    if (!names.length) {
+      areaDetailSubtitle.textContent = "Add a sub-focus to begin organizing actions.";
+    } else {
+      areaDetailSubtitle.textContent = "Tap a sub-focus to reveal its 1% actions.";
+    }
+
+    subFocusList.innerHTML = "";
+
+    names.forEach(function(sfName){
+      var tasks = allActions.filter(function(a){ return a.subFocus === sfName; });
+      var doneCount = tasks.filter(function(a){ return day.done[a.id]; }).length;
+      var total = tasks.length;
+      var pct = total ? Math.round(doneCount/total*100) : 0;
+
+      var card = document.createElement("div");
+      card.className = "fa-card";
+
+      var header = document.createElement("div");
+      header.className = "fa-header";
+
+      var name = document.createElement("div");
+      name.className = "fa-name";
+      name.innerHTML = "<span>🌀</span><span>"+sfName+"</span>";
+
+      var right = document.createElement("div");
+      right.className = "fa-right";
+
+      var summary = document.createElement("span");
+      summary.className = "fa-summary";
+      summary.textContent = doneCount+" / "+total+" • "+pct+"%";
+      right.appendChild(summary);
+
+      var delSF = document.createElement("span");
+      delSF.className = "trash-btn";
+      delSF.innerHTML = "🗑️";
+      delSF.title = "Delete sub-focus";
+      delSF.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if (!confirm("Remove sub-focus '"+sfName+"' and all its tasks?")) return;
+
+        var ids = tasks.map(function(t){ return t.id; });
+        state.actions = state.actions.filter(function(a){ return !(a.area===area && a.subFocus===sfName); });
+
+        Object.keys(state.days).forEach(function(k){
+          var d = state.days[k];
+          if (!d || !d.done) return;
+          ids.forEach(function(id){
+            if (d.done[id]) delete d.done[id];
+          });
+        });
+
+        state.subFocuses[area] = (state.subFocuses[area] || []).filter(function(n){ return n !== sfName; });
+        saveState();
+        render();
+      });
+      right.appendChild(delSF);
+
+      var toggle = document.createElement("span");
+      toggle.className = "fa-toggle";
+      if (!expandedSubFocus[area]) expandedSubFocus[area] = {};
+      toggle.textContent = expandedSubFocus[area][sfName] ? "▴" : "▾";
+      right.appendChild(toggle);
+
+      header.appendChild(name);
+      header.appendChild(right);
+
+      var tasksEl = document.createElement("div");
+      tasksEl.className = "fa-tasks";
+      if (expandedSubFocus[area][sfName]) tasksEl.style.display = "block";
+
+      tasks.forEach(function(task){
+        var row = document.createElement("div");
+        row.className = "fa-task";
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!day.done[task.id];
+        cb.addEventListener("change", function(){
+          ensureDay(currentDate).done[task.id] = cb.checked;
+          saveState();
+          render();
+        });
+
+        var body = document.createElement("div");
+        body.className = "fa-task-body";
+
+        var titleRow = document.createElement("div");
+        titleRow.className = "fa-task-title-row";
+        var titleSpan = document.createElement("span");
+        titleSpan.textContent = task.title.replace(/ –.*/,"");
+        titleRow.appendChild(titleSpan);
+
+        var mins = document.createElement("span");
+        mins.className = "pill";
+        mins.textContent = (task.minutes || 1) + " min";
+        mins.title = "Tap to edit minutes";
+        mins.addEventListener("click", function(ev){
+          ev.stopPropagation();
+          var val = prompt("Minutes for this task?", task.minutes || 3);
+          if (!val) return;
+          var m = parseInt(val,10);
+          if (!m || m<1) m=1;
+          task.minutes = m;
+          saveState();
+          render();
+        });
+        titleRow.appendChild(mins);
+
+        var smart = document.createElement("span");
+        smart.className = "pill pill-smart";
+        smart.textContent = task.favorite ? "Next up ✓" : "Add to Next up";
+        smart.addEventListener("click", function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          task.favorite = !task.favorite;
+          saveState();
+          render();
+        });
+        titleRow.appendChild(smart);
+
+        var benefit = document.createElement("div");
+        benefit.className = "fa-task-benefit";
+        benefit.textContent = task.benefit || "";
+
+        body.appendChild(titleRow);
+        body.appendChild(benefit);
+
+        var del = document.createElement("span");
+        del.className = "trash-btn";
+        del.innerHTML = "🗑️";
+        del.title = "Delete task";
+        del.addEventListener("click", function(ev){
+          ev.stopPropagation();
+          if (!confirm("Remove this task from " + sfName + "?")) return;
+          state.actions = state.actions.filter(function(a){ return a.id !== task.id; });
+          Object.keys(state.days).forEach(function(k){
+            var d = state.days[k];
+            if (d.done && d.done[task.id]) delete d.done[task.id];
+          });
+          saveState();
+          render();
+        });
+
+        row.appendChild(cb);
+        row.appendChild(body);
+        row.appendChild(del);
+        tasksEl.appendChild(row);
+      });
+
+      var footer = document.createElement("div");
+      footer.className = "fa-footer";
+
+      var add = document.createElement("span");
+      add.className = "linkish";
+      add.textContent = "+ Add task";
+      add.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        var title = prompt("New 1% task for "+sfName+"?");
+        if (!title) return;
+        var m = parseInt(prompt("Minutes (number)?") || "3",10);
+        if (!m || m<1) m = 3;
+        var benefit = prompt("Short benefit line (optional):") || "Supports your long-term vision.";
+        var id = "u" + Date.now() + Math.floor(Math.random()*1000);
+        state.actions.push({
+          id:id, area:area, subFocus:sfName, title:title, benefit:benefit,
+          minutes:m, favorite:false
+        });
+        saveState();
+        render();
+      });
+
+      footer.appendChild(add);
+      card.appendChild(header);
+      card.appendChild(tasksEl);
+      card.appendChild(footer);
+
+      header.addEventListener("click", function(){
+        if (!expandedSubFocus[area]) expandedSubFocus[area] = {};
+        expandedSubFocus[area][sfName] = !expandedSubFocus[area][sfName];
+        render();
+      });
+
+      subFocusList.appendChild(card);
+    });
+  }
+
+  function renderStats(){
+    var dates = Object.keys(state.days).sort();
+    var streak = 0;
+    if (dates.length){
+      var cursor = new Date(currentDate);
+      while (true){
+        var key = cursor.toISOString().slice(0,10);
+        var day = state.days[key];
+        if (!day) break;
+        var any = Object.values(day.done||{}).some(Boolean);
+        if (!any) break;
+        streak++;
+        cursor.setDate(cursor.getDate()-1);
+      }
+    }
+    streakValue.textContent = streak + " day" + (streak===1?"":"s");
+
+    var base = new Date(currentDate);
+    var dow = base.getDay();
+    var monday = new Date(base);
+    monday.setDate(base.getDate() - ((dow+6)%7));
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate()+6);
+
+    var mins = 0;
+    var reps = 0;
+    var actions = getActions();
+    for (var d=new Date(monday); d<=sunday; d.setDate(d.getDate()+1)){
+      var key = d.toISOString().slice(0,10);
+      var day = state.days[key];
+      if (!day) continue;
+      actions.forEach(function(a){
+        if (day.done[a.id]){
+          mins += (a.minutes||0);
+          if (a.reps) reps += a.reps;
+        }
+      });
+    }
+    minutesValue.textContent = mins;
+    repsValue.textContent = reps;
+  }
+
+  function renderCalendar(){
+    calendarEl.innerHTML = "";
+    var actions = getActions();
+    for (var i=13;i>=0;i--){
+      var d = new Date();
+      d.setDate(d.getDate()-i);
+      var key = d.toISOString().slice(0,10);
+      var day = state.days[key] || {done:{}};
+      var total = actions.length||1;
+      var done = actions.filter(function(a){ return day.done[a.id]; }).length;
+      var pct = Math.round(done/total*100);
+      var cell = document.createElement("div");
+      cell.className = "cal-day";
+      cell.textContent = pct + "%";
+      var light = 100 - Math.round(pct*0.4);
+      cell.style.background = "hsl(140,60%,"+light+"%)";
+      calendarEl.appendChild(cell);
+    }
+  }
+
+  // ---------- EVENTS ----------
+
+  dateInput.addEventListener("change", function(){
+    currentDate = dateInput.value || todayISO;
+    ensureDay(currentDate);
+    saveState();
+    render();
+  });
+
+  nextQuoteBtn.addEventListener("click", function(){
+    state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
+    saveState();
+    render();
+  });
+
+  morningInput && morningInput.addEventListener("input", function(){
+    ensureDay(currentDate).morning = morningInput.value;
+    saveState();
+  });
+  eveningInput && eveningInput.addEventListener("input", function(){
+    ensureDay(currentDate).evening = eveningInput.value;
+    saveState();
+  });
+  journalInput && journalInput.addEventListener("input", function(){
+    ensureDay(currentDate).journal = journalInput.value;
+    saveState();
+  });
+
+  moodButtons.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      ensureDay(currentDate).mood = btn.dataset.mood;
+      saveState();
+      render();
+    });
+  });
+
+  var views = {
+    home:    document.getElementById("view-home"),
+    areas:   document.getElementById("view-areas"),
+    checkin: document.getElementById("view-checkin"),
+    stats:   document.getElementById("view-stats")
+  };
+  var navBtns = document.querySelectorAll(".nav-btn");
+  navBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var v = btn.dataset.view;
+      Object.keys(views).forEach(function(k){
+        views[k].style.display = (k===v) ? "block" : "none";
+      });
+      areaDetailView.style.display = "none"; // hide detail when switching tabs
+      navBtns.forEach(function(b){ b.classList.toggle("active", b===btn); });
+    });
+  });
+
+  addAreaBtn.addEventListener("click", function(){
+    var name = prompt("New focus area name (e.g., Travel, Creativity, Recovery)?");
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    if (!state.areas) state.areas = [];
+    if (state.areas.indexOf(name) === -1) {
+      state.areas.push(name);
+    }
+    if (!state.subFocuses[name]) state.subFocuses[name] = [];
+    saveState();
+    render();
+  });
+
+  areaBackBtn.addEventListener("click", function(){
+    areaDetailView.style.display = "none";
+    document.getElementById("view-areas").style.display = "block";
+    state.currentArea = null;
+    saveState();
+    render();
+  });
+
+  addSubFocusBtn.addEventListener("click", function(){
+    if (!state.currentArea) {
+      alert("Open a focus area first.");
+      return;
+    }
+    var name = prompt("New sub-focus for " + state.currentArea + " (e.g., Morning, Recovery, PT)?");
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    if (!state.subFocuses[state.currentArea]) state.subFocuses[state.currentArea] = [];
+    if (state.subFocuses[state.currentArea].indexOf(name) === -1) {
+      state.subFocuses[state.currentArea].push(name);
+    }
+    saveState();
+    render();
+  });
+
+  areaAddSuggestionBtn.addEventListener("click", function(){
+    if (!state.currentArea) {
+      alert("Open a focus area first.");
+      return;
+    }
+    generateSuggestionForArea(state.currentArea);
+  });
+
+  // ---------- INIT ----------
+  dateInput.value = currentDate;
+  render();
+</script>
+</body>
+</html>
