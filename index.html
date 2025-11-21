@@ -459,6 +459,40 @@
       flex-wrap:wrap;
     }
 
+    /* Routines */
+    .routine-card {
+      border-radius:16px;
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      padding:8px 10px;
+      margin-bottom:8px;
+    }
+    .routine-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+    }
+    .routine-name {
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:14px;
+      font-weight:600;
+    }
+    .routine-steps {
+      margin-top:6px;
+      padding-left:2px;
+      display:none;
+    }
+    .routine-step {
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:13px;
+      padding:3px 0;
+    }
+
     /* bottom nav */
     nav {
       position: sticky;
@@ -647,6 +681,20 @@
       </section>
     </div>
 
+    <!-- ROUTINES VIEW -->
+    <div id="view-routines" style="display:none;">
+      <section class="section-card">
+        <div class="section-title-row">
+          <div class="section-title">Routines</div>
+          <div class="section-meta linkish" id="addRoutineBtn">＋ Add routine</div>
+        </div>
+        <div class="small" style="margin-bottom:4px;">
+          Chain your 1% actions into simple flows (morning, evening, pre-run).
+        </div>
+        <div id="routineList"></div>
+      </section>
+    </div>
+
     <!-- CHECK-IN VIEW -->
     <div id="view-checkin" style="display:none;">
       <section class="section-card">
@@ -686,11 +734,11 @@
       </section>
     </div>
 
-    <!-- STATS VIEW -->
+    <!-- STATS / PROGRESS VIEW -->
     <div id="view-stats" style="display:none;">
       <section class="section-card">
         <div class="section-title-row">
-          <div class="section-title">Your momentum</div>
+          <div class="section-title">Your progress</div>
         </div>
         <div class="stats-grid">
           <div class="stat-card">
@@ -727,13 +775,17 @@
       <span class="nav-icon">🎯</span>
       <span>Areas</span>
     </div>
+    <div class="nav-btn" data-view="routines">
+      <span class="nav-icon">🔁</span>
+      <span>Routines</span>
+    </div>
     <div class="nav-btn" data-view="checkin">
       <span class="nav-icon">✍️</span>
       <span>Check-In</span>
     </div>
     <div class="nav-btn" data-view="stats">
-      <span class="nav-icon">📊</span>
-      <span>Stats</span>
+      <span class="nav-icon">📈</span>
+      <span>Progress</span>
     </div>
   </nav>
 </div>
@@ -864,6 +916,35 @@
     { id:"a18", area:"EZ Tool", subFocus:"Marketing",     title:"Improve one line of copy",       minutes:4, reps:1, benefit:"Sharpens your message", favorite:false, blocks:["Evening"], icon:"✍️" }
   ];
 
+  // Default routines for the new Routines tab
+  var DEFAULT_ROUTINES = [
+    {
+      id: "r1",
+      name: "Morning Routine",
+      steps: [
+        { title: "Cold plunge – 2 min", linkActionId: "a9" },
+        { title: "Hot shower", linkActionId: null },
+        { title: "Meditation – 10 min", linkActionId: "a10" }
+      ]
+    },
+    {
+      id: "r2",
+      name: "Evening Wind-down",
+      steps: [
+        { title: "Tidy one part of the setup", linkActionId: "a12" },
+        { title: "Write 1 line of gratitude", linkActionId: null }
+      ]
+    },
+    {
+      id: "r3",
+      name: "Movement Micro-block",
+      steps: [
+        { title: "1 set of 10 squats", linkActionId: "a5" },
+        { title: "5-min brisk walk", linkActionId: "a6" }
+      ]
+    }
+  ];
+
   var STORAGE_KEY = "onepct_v43_focus";
   var todayISO = new Date().toISOString().slice(0,10);
 
@@ -875,20 +956,28 @@
         var parsed = JSON.parse(raw);
         if (parsed && parsed.actions && parsed.days) {
           state = parsed;
+          // ensure new fields exist
+          if (!state.areas) state.areas = DEFAULT_AREAS.slice();
+          if (!state.subFocuses) state.subFocuses = JSON.parse(JSON.stringify(DEFAULT_SUBFOCUSES));
+          if (!state.routines) state.routines = DEFAULT_ROUTINES.slice();
+          if (typeof state.quoteIndex !== "number") state.quoteIndex = 0;
+          if (!state.quoteDate) state.quoteDate = state.currentDate || todayISO;
           return;
         }
       }
     } catch(e){}
     // Fresh clean slate
     state = {
-      version: "4.3.0",
+      version: "4.4.0",
       actions: DEFAULT_ACTIONS.slice(),
       days: {},
       quoteIndex: 0,
+      quoteDate: todayISO,
       areas: DEFAULT_AREAS.slice(),
       subFocuses: JSON.parse(JSON.stringify(DEFAULT_SUBFOCUSES)),
       currentDate: todayISO,
-      currentArea: null
+      currentArea: null,
+      routines: DEFAULT_ROUTINES.slice()
     };
     saveState();
   })();
@@ -897,13 +986,18 @@
   var expandedSubFocus = {}; // area -> subFocus -> bool
 
   function ensureDay(date){
-    if (!state.days[date]) state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null };
+    if (!state.days[date]) {
+      state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null, routineDone:{} };
+    } else {
+      if (!state.days[date].done) state.days[date].done = {};
+      if (!state.days[date].routineDone) state.days[date].routineDone = {};
+    }
     return state.days[date];
   }
 
   function saveState(){
     state.currentDate = currentDate;
-    state.version = "4.3.0";
+    state.version = "4.4.0";
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
   }
 
@@ -918,11 +1012,11 @@
       alert("No ideas available yet for this area.");
       return;
     }
-    var existing = getActions().filter(a => a.area === area);
+    var existing = getActions().filter(function(a){ return a.area === area; });
     var picked = null;
     for (var i=0;i<bank.length;i++){
       var s = bank[i];
-      var found = existing.some(a => a.title === s.title);
+      var found = existing.some(function(a){ return a.title === s.title; });
       if (!found){
         picked = s;
         break;
@@ -953,6 +1047,23 @@
     });
     saveState();
     render();
+  }
+
+  function getQuoteIndexForDate(dateStr){
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return 0;
+    var days = Math.floor(d.getTime()/86400000);
+    var idx = days % QUOTES.length;
+    if (idx < 0) idx += QUOTES.length;
+    return idx;
+  }
+
+  function syncQuoteForDate(){
+    if (state.quoteDate !== currentDate){
+      state.quoteIndex = getQuoteIndexForDate(currentDate);
+      state.quoteDate = currentDate;
+      saveState();
+    }
   }
 
   // ---------- DOM REFS ----------
@@ -991,10 +1102,15 @@
   var repsValue       = document.getElementById("repsValue");
   var calendarEl      = document.getElementById("calendar");
 
+  var routineList     = document.getElementById("routineList");
+  var addRoutineBtn   = document.getElementById("addRoutineBtn");
+
   // ---------- RENDER ----------
 
   function render(){
     var day = ensureDay(currentDate);
+    syncQuoteForDate();
+
     dateInput.value = currentDate;
 
     morningInput.value = day.morning || "";
@@ -1016,6 +1132,7 @@
     renderAreasToday(day);
     renderStats();
     renderCalendar();
+    renderRoutines(day);
 
     if (state.currentArea) {
       renderAreaDetail(day);
@@ -1025,7 +1142,7 @@
   function renderProgress(day){
     var actions = getActions();
     var total = actions.length;
-    var done = actions.filter(a => day.done[a.id]).length;
+    var done = actions.filter(function(a){ return day.done[a.id]; }).length;
     var pct = total ? Math.round(done/total*100) : 0;
     progressChip.textContent = "Today: " + pct + "% ("+done+"/"+total+")";
   }
@@ -1048,7 +1165,7 @@
       var key = d.toISOString().slice(0,10);
       var day = state.days[key] || {done:{}};
       var total = actions.length || 1;
-      var done = actions.filter(a => day.done[a.id]).length;
+      var done = actions.filter(function(a){ return day.done[a.id]; }).length;
       var pct = Math.round(done/total*100);
       completions.push({date:key,pct:pct});
     }
@@ -1069,7 +1186,7 @@
       weekBars.appendChild(bar);
     });
 
-    var activeDays = completions.filter(c => c.pct >= 50).length;
+    var activeDays = completions.filter(function(c){ return c.pct >= 50; }).length;
     weekSummary.textContent = activeDays + " of 7 days at 50%+. You’re building a gentle rhythm.";
   }
 
@@ -1091,17 +1208,18 @@
   function renderStreakHighlights(){
     streakHighlights.innerHTML = "";
     var actions = getActions();
-    var streaks = actions.map(a => ({action:a, streak:computeActionStreak(a.id)}))
-                         .filter(x => x.streak>0)
-                         .sort((a,b)=>b.streak-a.streak)
-                         .slice(0,3);
+    var streaks = actions.map(function(a){
+      return {action:a, streak:computeActionStreak(a.id)};
+    }).filter(function(x){ return x.streak>0; })
+      .sort(function(a,b){ return b.streak-a.streak; })
+      .slice(0,3);
 
     if (!streaks.length){
       streakHighlights.innerHTML = '<span class="small">Complete one 1% action today to start your streaks.</span>';
       return;
     }
 
-    streaks.forEach(s => {
+    streaks.forEach(function(s){
       var pill = document.createElement("div");
       pill.className = "highlight-pill";
       pill.innerHTML = "⚡ <span class='label'>" +
@@ -1121,14 +1239,14 @@
       return;
     }
 
-    var undone = actions.filter(a => !day.done[a.id]);
+    var undone = actions.filter(function(a){ return !day.done[a.id]; });
     var pool = undone.length ? undone : actions.slice();
-    pool = pool.filter(a => {
+    pool = pool.filter(function(a){
       if (!a.blocks || !a.blocks.length) return true;
       if (a.blocks.indexOf("Any") >= 0) return true;
       return a.blocks.indexOf(block)>=0;
     });
-    pool.sort((a,b)=>{
+    pool.sort(function(a,b){
       var sa = (a.favorite?2:0);
       var sb = (b.favorite?2:0);
       return sb-sa;
@@ -1572,11 +1690,85 @@
     }
   }
 
+  function renderRoutines(day){
+    if (!routineList) return;
+    routineList.innerHTML = "";
+    var routines = state.routines || [];
+    if (!routines.length){
+      routineList.innerHTML = "<div class='small'>Add a routine to chain your favorite 1% actions.</div>";
+      return;
+    }
+    if (!day.routineDone) day.routineDone = {};
+
+    routines.forEach(function(rt){
+      var steps = rt.steps || [];
+      var doneMap = day.routineDone[rt.id] || {};
+      var doneCount = 0;
+      for (var idx=0; idx<steps.length; idx++){
+        if (doneMap[idx]) doneCount++;
+      }
+      var total = steps.length;
+      var pct = total ? Math.round(doneCount/total*100) : 0;
+
+      var card = document.createElement("div");
+      card.className = "routine-card";
+
+      var header = document.createElement("div");
+      header.className = "routine-header";
+
+      var name = document.createElement("div");
+      name.className = "routine-name";
+      name.innerHTML = "<span>🔁</span><span>"+rt.name+"</span>";
+      header.appendChild(name);
+
+      var meta = document.createElement("span");
+      meta.className = "fa-summary";
+      meta.textContent = total ? (doneCount+" / "+total+" • "+pct+"%") : "No steps yet";
+      header.appendChild(meta);
+
+      var stepsEl = document.createElement("div");
+      stepsEl.className = "routine-steps";
+
+      steps.forEach(function(step, idx){
+        var row = document.createElement("div");
+        row.className = "routine-step";
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!doneMap[idx];
+        cb.addEventListener("change", function(){
+          if (!day.routineDone[rt.id]) day.routineDone[rt.id] = {};
+          day.routineDone[rt.id][idx] = cb.checked;
+          saveState();
+          render();
+        });
+
+        var label = document.createElement("div");
+        label.textContent = step.title;
+
+        row.appendChild(cb);
+        row.appendChild(label);
+        stepsEl.appendChild(row);
+      });
+
+      card.appendChild(header);
+      if (steps.length) card.appendChild(stepsEl);
+
+      header.addEventListener("click", function(){
+        var isOpen = stepsEl.style.display === "block";
+        stepsEl.style.display = isOpen ? "none" : "block";
+      });
+
+      routineList.appendChild(card);
+    });
+  }
+
   // ---------- EVENTS ----------
 
   dateInput.addEventListener("change", function(){
     currentDate = dateInput.value || todayISO;
     ensureDay(currentDate);
+    syncQuoteForDate();
     saveState();
     render();
   });
@@ -1611,6 +1803,7 @@
   var views = {
     home:    document.getElementById("view-home"),
     areas:   document.getElementById("view-areas"),
+    routines:document.getElementById("view-routines"),
     checkin: document.getElementById("view-checkin"),
     stats:   document.getElementById("view-stats")
   };
@@ -1671,6 +1864,27 @@
       return;
     }
     generateSuggestionForArea(state.currentArea);
+  });
+
+  addRoutineBtn.addEventListener("click", function(){
+    var name = prompt("Routine name (e.g., Morning Routine, Pre-run, Evening Wind-down)?");
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    var stepsLine = prompt("List steps separated by commas (e.g., Cold plunge, Shower, Meditate 5 min):");
+    var stepsArr = [];
+    if (stepsLine && stepsLine.trim()){
+      var parts = stepsLine.split(",");
+      for (var i=0;i<parts.length;i++){
+        var t = parts[i].trim();
+        if (t) stepsArr.push({ title:t, linkActionId:null });
+      }
+    }
+    var id = "r" + Date.now() + Math.floor(Math.random()*1000);
+    if (!state.routines) state.routines = [];
+    state.routines.push({ id:id, name:name, steps:stepsArr });
+    saveState();
+    render();
   });
 
   // ---------- INIT ----------
