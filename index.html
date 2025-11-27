@@ -1,142 +1,141 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>1% Better. Every Day.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg-top: #b7dcc9;
-      --bg-bottom: #d0e6db;
-      --accent: #10b981;
-      --accent-soft: #a7f3d0;
-      --accent-strong: #047857;
-      --text-main: #0f172a;
-      --text-subtle: #64748b;
-      --card-bg: #ffffff;
-      --card-border: rgba(15,23,42,0.06);
-    }
-    * { box-sizing: border-box; }
+<meta charset="utf-8" />
+<title>1% Better. Every Day.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+:root {
+--bg-top: #b7dcc9;
+--bg-bottom: #d0e6db;
+--accent: #10b981;
+--accent-soft: #a7f3d0;
+--accent-strong: #047857;
+--text-main: #0f172a;
+--text-subtle: #64748b;
+--card-bg: #ffffff;
+--card-border: rgba(15,23,42,0.06);
+}
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-        "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at top left, var(--bg-top), var(--bg-bottom));
-      color: var(--text-main);
-      font-size: 15px;
-    }
+body {
+margin: 0;
+padding: 0;
+font-family: system-ui, -apple-system, BlinkMacSystemFont,
+"SF Pro Text", sans-serif;
+background: radial-gradient(circle at top left, var(--bg-top), var(--bg-bottom));
+color: var(--text-main);
+font-size: 15px;
+}
 
-    .app {
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+.app {
+max-width: 480px;
+margin: 0 auto;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
 
-    header {
-      padding: 18px 18px 8px;
-      text-align: left;
-    }
+header {
+padding: 18px 18px 8px;
+text-align: left;
+}
 
-    .hero-card {
-      background: var(--card-bg);
-      border-radius: 28px;
-      padding: 18px 20px;
-      box-shadow: 0 20px 45px rgba(15,23,42,0.12);
-      border: 1px solid var(--card-border);
-    }
+.hero-card {
+background: var(--card-bg);
+border-radius: 28px;
+padding: 18px 20px;
+box-shadow: 0 20px 45px rgba(15,23,42,0.12);
+border: 1px solid var(--card-border);
+}
 
-    .hero-row {
-      display: flex;
-      gap: 14px;
+.hero-row {
+display: flex;
+gap: 14px;
+align-items: center;
+}
+
+/* 1% logo: sunrise over a wave inside a glowing circle */
+.hero-icon {
+position: relative;
+width: 60px;
+height: 60px;
+border-radius: 999px;
+background: radial-gradient(circle at 30% 10%, #fef9c3 0, #facc15 35%, #22c55e 80%);
+border: 2px solid #ffffff;
+box-shadow:
+0 0 0 3px rgba(34, 197, 94, 0.28),
+0 12px 26px rgba(15, 23, 42, 0.35);
+overflow: hidden;
+}
+.hero-icon::before {
+content: "";
+position: absolute;
+inset: 0;
+background:
+radial-gradient(circle at 50% 140%, #0f766e 0, #0f766e 40%, transparent 41%),
+linear-gradient(to top, rgba(15,23,42,0.12), transparent 40%);
+}
+.hero-icon::after {
+content: "";
+position: absolute;
+left: 50%;
+bottom: 46%;
+width: 24px;
+height: 24px;
+transform: translateX(-50%);
+background:
+radial-gradient(circle, #fefce8 0, #facc15 55%, transparent 56%),
+conic-gradient(from 0deg,
+rgba(250, 204, 21, 0.0) 0deg,
+rgba(250, 204, 21, 0.9) 20deg,
+rgba(250, 204, 21, 0.0) 40deg,
+rgba(250, 204, 21, 0.0) 80deg,
+rgba(250, 204, 21, 0.9) 100deg,
+rgba(250, 204, 21, 0.0) 120deg,
+rgba(250, 204, 21, 0.0) 160deg,
+rgba(250, 204, 21, 0.9) 180deg,
+rgba(250, 204, 21, 0.0) 200deg,
+rgba(250, 204, 21, 0.0) 240deg,
+rgba(250, 204, 21, 0.9) 260deg,
+rgba(250, 204, 21, 0.0) 280deg,
+rgba(250, 204, 21, 0.0) 320deg,
+rgba(250, 204, 21, 0.9) 340deg,
+rgba(250, 204, 21, 0.0) 360deg
+);
+border-radius: 999px;
+box-shadow: 0 0 10px rgba(250, 204, 21, 0.9);
+}
+
+h1 {
+margin: 0;
+font-size: 24px;
+font-weight: 800;
+letter-spacing: -0.02em;
+}
+
+.subtitle {
+margin-top: 4px;
+font-size: 13px;
+color: var(--text-subtle);
+}
+
+.hero-meta {
+display: flex;
+gap: 8px;
+margin-top: 12px;
+font-size: 12px;
+color: var(--text-subtle);
+flex-wrap: wrap;
       align-items: center;
-    }
+}
 
-    .hero-icon {
-      position: relative;
-      width: 60px;
-      height: 60px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 10%, #fef9c3 0, #facc15 35%, #22c55e 80%);
-      border: 2px solid #ffffff;
-      box-shadow:
-        0 0 0 3px rgba(34, 197, 94, 0.28),
-        0 12px 26px rgba(15, 23, 42, 0.35);
-      overflow: hidden;
-    }
-    .hero-icon::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 140%, #0f766e 0, #0f766e 40%, transparent 41%),
-        linear-gradient(to top, rgba(15,23,42,0.12), transparent 40%);
-    }
-    .hero-icon::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: 46%;
-      width: 24px;
-      height: 24px;
-      transform: translateX(-50%);
-      background:
-        radial-gradient(circle, #fefce8 0, #facc15 55%, transparent 56%),
-        conic-gradient(from 0deg,
-          rgba(250, 204, 21, 0.0) 0deg,
-          rgba(250, 204, 21, 0.9) 20deg,
-          rgba(250, 204, 21, 0.0) 40deg,
-          rgba(250, 204, 21, 0.0) 80deg,
-          rgba(250, 204, 21, 0.9) 100deg,
-          rgba(250, 204, 21, 0.0) 120deg,
-          rgba(250, 204, 21, 0.0) 160deg,
-          rgba(250, 204, 21, 0.9) 180deg,
-          rgba(250, 204, 21, 0.0) 200deg,
-          rgba(250, 204, 21, 0.0) 240deg,
-          rgba(250, 204, 21, 0.9) 260deg,
-          rgba(250, 204, 21, 0.0) 280deg,
-          rgba(250, 204, 21, 0.0) 320deg,
-          rgba(250, 204, 21, 0.9) 340deg,
-          rgba(250, 204, 21, 0.0) 360deg
-        );
-      border-radius: 999px;
-      box-shadow: 0 0 10px rgba(250, 204, 21, 0.9);
-    }
+.chip {
+@@ -147,6 +148,29 @@
+font-weight: 600;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .subtitle {
-      margin-top: 4px;
-      font-size: 13px;
-      color: var(--text-subtle);
-    }
-
-    .chip {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .chip-strong {
-      border-color: var(--accent-soft);
-      color: var(--accent-strong);
-      background: #ecfdf5;
-      font-weight: 600;
-    }
-
+    /* Rehab button under date, slightly bigger */
     .rehab-cta {
       margin-top: 10px;
     }
@@ -159,367 +158,624 @@
       font-size: 16px;
     }
 
-    main {
-      flex: 1;
-      padding: 8px 18px 70px;
+main {
+flex: 1;
+padding: 8px 18px 70px;
+@@ -459,6 +483,81 @@
+flex-wrap:wrap;
+}
+
+    /* Rehab specific styling (reuses fa-card structure) */
+    .rehab-phase-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:4px;
+    }
+    .rehab-phase-title {
+      font-weight:600;
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .rehab-phase-badge {
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      background:#f0fdf4;
+      color:#166534;
+    }
+    .rehab-exercise {
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      padding:6px 7px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      background:#ffffff;
+      margin-bottom:6px;
+      font-size:13px;
+    }
+    .rehab-exercise-main {
+      flex:1;
+    }
+    .rehab-exercise-title-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:4px;
+      align-items:center;
+      margin-bottom:2px;
+      font-weight:600;
+    }
+    .rehab-exercise-benefit {
+      font-size:12px;
+      color:var(--text-subtle);
+    }
+    .rehab-tag {
+      font-size:10px;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      color:var(--text-subtle);
+    }
+    .rehab-adapt-note {
+      font-size:11px;
+      color:#166534;
+      margin-top:2px;
     }
 
-    .section-card {
-      background: var(--card-bg);
-      border-radius: 22px;
-      padding: 14px 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: 0 10px 30px rgba(15,23,42,0.05);
-      margin-top: 10px;
+    /* Animation placeholder */
+    .rehab-anim-btn {
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid #bfdbfe;
+      background:#eff6ff;
+      color:#1d4ed8;
+      cursor:pointer;
+      margin-left:auto;
+      white-space:nowrap;
     }
 
-    nav {
-      position: sticky;
-      bottom: 0;
-      background: #ffffff;
-      border-top: 1px solid #e5e7eb;
-      display: flex;
-      justify-content: space-around;
-      padding: 6px 0 8px;
-    }
-    .nav-btn {
-      flex: 1;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-subtle);
-      cursor: pointer;
-    }
-    .nav-icon {
-      font-size: 19px;
-      display: block;
-      margin-bottom: 2px;
-    }
-    .nav-btn.active {
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-  </style>
-</head>
-
-<body>
-<div class="app">
-
-  <header>
-    <div class="hero-card">
-      <div class="hero-row">
-        <div class="hero-icon" aria-hidden="true"></div>
-        <div>
-          <h1>1% Better. Every Day.</h1>
-          <div class="subtitle">Small shifts. Compounding change.</div>
-        </div>
-      </div>
-      <div class="hero-meta" style="margin-top:12px;">
-        <span class="chip chip-strong" id="progressChip">Today: 0% (0/0)</span>
-        <span class="chip">
-          <span class="small">View date:</span>
-          <input id="dateInput" type="date" />
-        </span>
-      </div>
+/* bottom nav */
+nav {
+position: sticky;
+@@ -564,6 +663,12 @@
+<input id="dateInput" type="date" />
+</span>
+</div>
       <div class="rehab-cta">
         <button id="rehabBtn" class="rehab-btn">
           <span class="icon">🩺</span>
           <span>Rehab</span>
         </button>
       </div>
-    </div>
-  </header>
+</div>
+</header>
 
-  <main>
+@@ -608,6 +713,18 @@
+Protect your streaks. Even a 1-minute version counts.
+</div>
+</section>
 
-    <!-- HOME VIEW -->
-    <div id="view-home">
-      <!-- original home sections preserved exactly -->
-    </div>
-
-    <!-- AREAS VIEW -->
-    <div id="view-areas" style="display:none;"></div>
-
-    <!-- AREA DETAIL VIEW -->
-    <div id="view-area-detail" style="display:none;"></div>
-
-    <!-- CHECK-IN VIEW -->
-    <div id="view-checkin" style="display:none;"></div>
-
-    <!-- STATS VIEW -->
-    <div id="view-stats" style="display:none;"></div>
-
-    <!-- REHAB VIEW (NEW, REMOVED FROM HOME) -->
-    <div id="view-rehab" style="display:none;">
-      <section class="section-card">
-        <div class="section-title">Shoulder Rehab</div>
-        <div id="rehabPhaseLabel" class="small" style="margin-top:4px;"></div>
-      </section>
-      <section class="section-card">
+      <!-- SHOULDER REHAB (NEW) -->
+      <section class="section-card" id="rehabSection">
+        <div class="section-title-row">
+          <div class="section-title">Shoulder Rehab</div>
+          <div class="section-meta" id="rehabPhaseLabel">Phase overview</div>
+        </div>
+        <div class="small" style="margin-bottom:6px;">
+          Follow your PT’s instructions first. This rehab helper tracks your daily work, supports fastest safe healing, and logs completions into your 1% stats.
+        </div>
         <div id="rehabPhases"></div>
       </section>
-    </div>
-
-  </main>
-
-  <nav>
-    <div class="nav-btn active" data-view="home">
-      <span class="nav-icon">🌤️</span>
-      <span>Home</span>
-    </div>
-    <div class="nav-btn" data-view="areas">
-      <span class="nav-icon">🎯</span>
-      <span>Areas</span>
-    </div>
-    <div class="nav-btn" data-view="checkin">
-      <span class="nav-icon">✍️</span>
-      <span>Check-In</span>
-    </div>
-    <div class="nav-btn" data-view="stats">
-      <span class="nav-icon">📊</span>
-      <span>Stats</span>
-    </div>
-    <div class="nav-btn" data-view="rehab">
-      <span class="nav-icon">🩺</span>
-      <span>Rehab</span>
-    </div>
-  </nav>
-
 </div>
 
-<script>
-// =======================================
-// 1% Better — Version 1.1.0 (Rehab Separated)
-// Original working Version 1 code preserved
-// =======================================
-
-// ---------- CONSTANTS / QUOTES ----------
-var QUOTES = [
-  "The journey of a thousand miles begins with one step.",
-  "Momentum beats motivation.",
-  "Small shifts create big change.",
-  "Each small step is a vote for who you’re becoming.",
-  "Rest is part of progress.",
-  "You don’t need a new life, you need a new day."
+<!-- AREAS VIEW (list) -->
+@@ -864,7 +981,170 @@
+{ id:"a18", area:"EZ Tool", subFocus:"Marketing",     title:"Improve one line of copy",       minutes:4, reps:1, benefit:"Sharpens your message", favorite:false, blocks:["Evening"], icon:"✍️" }
 ];
 
-function timeBlock() {
-  var h = new Date().getHours();
-  if (h < 10) return "Morning";
-  if (h < 14) return "Midday";
-  if (h < 18) return "Afternoon";
-  if (h < 22) return "Evening";
-  return "Night";
-}
+  var STORAGE_KEY = "onepct_v43_focus";
+  /* Rehab phases & exercises – these are PT-style, not a substitute for your doctor/PT. */
+  var REHAB_PHASES = [
+    {
+      id: "p1",
+      name: "Phase 1 – Calm + Mobility",
+      focus: "Reduce pain, keep the joint moving gently."
+    },
+    {
+      id: "p2",
+      name: "Phase 2 – Assisted Range",
+      focus: "Increase pain-free range of motion and control."
+    },
+    {
+      id: "p3",
+      name: "Phase 3 – Strength & Control",
+      focus: "Build strength and stability for daily life."
+    }
+  ];
 
-// ---------- DEFAULT FOCUS SETS ----------
-var DEFAULT_AREAS = [
-  "Shoulder", "Diet", "Exercise", "Dance",
-  "Wellness", "Anya's Creativity Zone",
-  "Soundbath", "Ciqu", "EZ Tool"
-];
+  /* Each exercise links to a hidden actionId so it counts in stats/totals */
+  var REHAB_PLAN = {
+    p1: [
+      {
+        id: "p1e1",
+        title: "Pendulum circles",
+        sets: 2,
+        reps: 10,
+        side: "Left shoulder",
+        benefit: "Decompresses the joint and increases blood flow with almost no load.",
+        minutes: 3,
+        linkActionId: "rh1"
+      },
+      {
+        id: "p1e2",
+        title: "Scap squeezes seated",
+        sets: 2,
+        reps: 10,
+        side: "Shoulder blades",
+        benefit: "Wakes up postural muscles to support the shoulder socket.",
+        minutes: 3,
+        linkActionId: "rh2"
+      },
+      {
+        id: "p1e3",
+        title: "Table slides – flexion",
+        sets: 2,
+        reps: 8,
+        side: "Front of shoulder",
+        benefit: "Gently opens overhead motion without lifting against gravity.",
+        minutes: 4,
+        linkActionId: "rh3"
+      },
+      {
+        id: "p1e4",
+        title: "Infrared or PEMF – 10 min",
+        sets: 1,
+        reps: 1,
+        side: "Treatment zone",
+        benefit: "Supports circulation and tissue recovery around the injured area.",
+        minutes: 10,
+        linkActionId: "rh4"
+      }
+    ],
+    p2: [
+      {
+        id: "p2e1",
+        title: "Wand flexion – supine",
+        sets: 2,
+        reps: 10,
+        side: "Front of shoulder",
+        benefit: "Uses the good arm to guide the injured side into more range safely.",
+        minutes: 4,
+        linkActionId: "rh5"
+      },
+      {
+        id: "p2e2",
+        title: "Wand external rotation at side",
+        sets: 2,
+        reps: 10,
+        side: "Rotator cuff",
+        benefit: "Retrains external rotation without forcing the joint.",
+        minutes: 4,
+        linkActionId: "rh6"
+      },
+      {
+        id: "p2e3",
+        title: "Wall slides – flexion",
+        sets: 2,
+        reps: 8,
+        side: "Front & top of shoulder",
+        benefit: "Rebuilds overhead pattern with the wall supporting your arm.",
+        minutes: 4,
+        linkActionId: "rh7"
+      },
+      {
+        id: "p2e4",
+        title: "Cold plunge or cool shower",
+        sets: 1,
+        reps: 1,
+        side: "Whole system",
+        benefit: "Down-regulates pain sensitivity and supports recovery.",
+        minutes: 3,
+        linkActionId: "a9" // reuse your cold plunge action
+      }
+    ],
+    p3: [
+      {
+        id: "p3e1",
+        title: "Sidelying external rotation",
+        sets: 2,
+        reps: 10,
+        side: "Rotator cuff",
+        benefit: "Strengthens deep stabilizers that protect the joint.",
+        minutes: 6,
+        linkActionId: "rh8"
+      },
+      {
+        id: "p3e2",
+        title: "Band rows",
+        sets: 2,
+        reps: 12,
+        side: "Upper back",
+        benefit: "Balances posture by strengthening mid-back support.",
+        minutes: 6,
+        linkActionId: "rh9"
+      },
+      {
+        id: "p3e3",
+        title: "Band ER/IR at side",
+        sets: 2,
+        reps: 10,
+        side: "Rotator cuff",
+        benefit: "Builds rotational control needed for reaching and lifting.",
+        minutes: 6,
+        linkActionId: "rh10"
+      },
+      {
+        id: "p3e4",
+        title: "Infrared or PEMF – 10–15 min",
+        sets: 1,
+        reps: 1,
+        side: "Treatment zone",
+        benefit: "Helps tissues recover from new strength work.",
+        minutes: 10,
+        linkActionId: "rh4" // same modality action
+      }
+    ]
+  };
 
-var DEFAULT_SUBFOCUSES = {
-  "Shoulder": ["Mobility","PT & Rehab"],
-  "Diet": ["Fasting","Meals"],
-  "Exercise": ["Strength","Cardio"],
-  "Dance": ["Salsa","Footwork"],
-  "Wellness": ["Cold Plunge","Breathwork","Meditation"],
-  "Anya's Creativity Zone": ["Setup","Content"],
-  "Soundbath": ["Practice","Events"],
-  "Ciqu": ["Finance","Operations"],
-  "EZ Tool": ["Product","Marketing"]
-};
+  /* Hidden rehab actions that plug into your existing stats/totals */
+  var REHAB_ACTIONS = [
+    { id:"rh1",  area:"Shoulder", subFocus:"PT & Rehab", title:"Pendulum circles – 2×10",            minutes:3,  reps:20, benefit:"Gentle joint decompression & circulation", favorite:false, blocks:["Morning","Evening"], icon:"🔄" },
+    { id:"rh2",  area:"Shoulder", subFocus:"PT & Rehab", title:"Scap squeezes seated – 2×10",        minutes:3,  reps:20, benefit:"Activates postural support for the shoulder", favorite:false, blocks:["Any"], icon:"🧘" },
+    { id:"rh3",  area:"Shoulder", subFocus:"PT & Rehab", title:"Table slides – 2×8",                  minutes:4,  reps:16, benefit:"Restores flexion without heavy load", favorite:false, blocks:["Morning","Afternoon"], icon:"🧱" },
+    { id:"rh4",  area:"Shoulder", subFocus:"PT & Rehab", title:"Infrared/PEMF – 10 min",             minutes:10, reps:1,  benefit:"Supports local tissue recovery & blood flow", favorite:false, blocks:["Any"], icon:"💡" },
+    { id:"rh5",  area:"Shoulder", subFocus:"PT & Rehab", title:"Wand flexion – 2×10",                minutes:4,  reps:20, benefit:"Guided overhead range with assist", favorite:false, blocks:["Morning","Evening"], icon:"🪄" },
+    { id:"rh6",  area:"Shoulder", subFocus:"PT & Rehab", title:"Wand external rotation – 2×10",      minutes:4,  reps:20, benefit:"Builds external rotation control", favorite:false, blocks:["Any"], icon:"🌀" },
+    { id:"rh7",  area:"Shoulder", subFocus:"PT & Rehab", title:"Wall slides – 2×8",                  minutes:4,  reps:16, benefit:"Rebuilds overhead motion against the wall", favorite:false, blocks:["Any"], icon:"⬆️" },
+    { id:"rh8",  area:"Shoulder", subFocus:"PT & Rehab", title:"Sidelying ER – 2×10",                minutes:6,  reps:20, benefit:"Targets deep rotator cuff stabilizers", favorite:false, blocks:["Afternoon","Evening"], icon:"🏋️" },
+    { id:"rh9",  area:"Shoulder", subFocus:"PT & Rehab", title:"Band rows – 2×12",                   minutes:6,  reps:24, benefit:"Strengthens upper back to offload shoulder", favorite:false, blocks:["Any"], icon:"🏹" },
+    { id:"rh10", area:"Shoulder", subFocus:"PT & Rehab", title:"Band ER/IR – 2×10",                  minutes:6,  reps:20, benefit:"Rotational strength for safe lifting", favorite:false, blocks:["Any"], icon:"♻️" }
+  ];
 
-// ---------- SUGGESTIONS ----------
-var SUGGESTION_BANK = {
-  "Shoulder": [
-    { title:"Shoulder circles – 3 reps", minutes:2, reps:3, benefit:"Keeps shoulder joint awake", icon:"🌀", blocks:["Morning"], subFocus:"Mobility" },
-    { title:"Wall slides – 5 reps", minutes:3, reps:5, benefit:"Supports scapular control", icon:"🧱", blocks:["Any"], subFocus:"PT & Rehab" }
-  ],
-  "_default": [
-    { title:"Take 3 slow breaths", minutes:1, reps:3, benefit:"Recenters your mind", icon:"🌬️", blocks:["Any"] }
-  ]
-};
-
-// ---------- DEFAULT ACTIONS ----------
-var DEFAULT_ACTIONS = [
-  { id:"a1", area:"Shoulder", subFocus:"Mobility", title:"Shoulder CARs – 3 slow circles", minutes:3, reps:6, benefit:"Keep mobility alive", favorite:true, blocks:["Morning"], icon:"🌀" },
-  { id:"a2", area:"Shoulder", subFocus:"PT & Rehab", title:"Wall slides – 5 reps", minutes:3, reps:5, benefit:"Scapular control", favorite:false, blocks:["Any"], icon:"🧱" },
-  { id:"a9", area:"Wellness", subFocus:"Cold Plunge", title:"Cold plunge – 2 min", minutes:2, reps:1, benefit:"Boosts dopamine", favorite:true, blocks:["Morning"], icon:"❄️" },
-  { id:"a10", area:"Wellness", subFocus:"Meditation", title:"Meditate – 10 min", minutes:10, reps:1, benefit:"Calms mind", favorite:false, blocks:["Evening"], icon:"🧘" }
-];
-
-// ---------- REHAB PHASES + ACTIONS ----------
-var REHAB_PHASES = [
-  { id:"p1", name:"Phase 1 – Calm + Mobility" },
-  { id:"p2", name:"Phase 2 – Assisted Range" },
-  { id:"p3", name:"Phase 3 – Strength + Control" }
-];
-
-// Minimal exercise set preserved
-var REHAB_PLAN = {
-  p1: [
-    { id:"rh1", title:"Pendulum circles", minutes:3, reps:10, benefit:"Gentle decompression" },
-    { id:"rh2", title:"Scap squeezes", minutes:3, reps:10, benefit:"Supports posture" }
-  ]
-};
-
-// ---------- STATE LOADING ----------
-var STORAGE_KEY = "onepct_v110_focus";
+  var STORAGE_KEY = "onepct_v43_focus"; // keep same key so data stays
 var todayISO = new Date().toISOString().slice(0,10);
+
 var state;
-
-(function init(){
-  try {
-    var raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) { state = JSON.parse(raw); }
-  } catch(e){}
-
-  if (!state) {
-    state = {
-      version: "1.1.0",
-      actions: DEFAULT_ACTIONS.slice(),
-      days:{},
-      areas: DEFAULT_AREAS.slice(),
-      subFocuses: JSON.parse(JSON.stringify(DEFAULT_SUBFOCUSES)),
-      currentDate: todayISO,
-      quoteIndex: 0,
-      rehab: { currentPhaseId:"p1" }
-    };
-  }
-  saveState();
+@@ -888,22 +1168,47 @@
+areas: DEFAULT_AREAS.slice(),
+subFocuses: JSON.parse(JSON.stringify(DEFAULT_SUBFOCUSES)),
+currentDate: todayISO,
+      currentArea: null
+      currentArea: null,
+      rehab: { currentPhaseId: "p1" }
+};
+saveState();
 })();
 
-function ensureDay(date){
-  if (!state.days[date]) {
-    state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null, rehab:{} };
+  // Ensure rehab actions + structure exist for upgraded users
+  function ensureRehabSetup(){
+    if (!state.rehab) {
+      state.rehab = { currentPhaseId: "p1" };
+    }
+    if (!Array.isArray(state.actions) || !state.actions.length) {
+      state.actions = DEFAULT_ACTIONS.slice();
+    }
+    // make sure rehab actions are present exactly once
+    REHAB_ACTIONS.forEach(function(rh){
+      var exists = state.actions.some(function(a){ return a.id === rh.id; });
+      if (!exists) {
+        state.actions.push(Object.assign({}, rh));
+      }
+    });
   }
-  return state.days[date];
+
+  ensureRehabSetup();
+
+var currentDate = state.currentDate || todayISO;
+var expandedSubFocus = {}; // area -> subFocus -> bool
+
+function ensureDay(date){
+    if (!state.days[date]) state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null };
+    if (!state.days[date]) {
+      state.days[date] = { done:{}, morning:"", evening:"", journal:"", mood:null, rehab:{} };
+    } else {
+      if (!state.days[date].done) state.days[date].done = {};
+      if (!state.days[date].rehab) state.days[date].rehab = {};
+    }
+return state.days[date];
 }
 
 function saveState(){
-  state.currentDate = currentDate;
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+state.currentDate = currentDate;
+    state.version = "4.3.0";
+    state.version = "4.4.0"; // upgraded
+try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
 }
 
-var currentDate = state.currentDate || todayISO;
-
-// ---------- DOM ELEMENTS ----------
-var views = {
-  home:    document.getElementById("view-home"),
-  areas:   document.getElementById("view-areas"),
-  checkin: document.getElementById("view-checkin"),
-  stats:   document.getElementById("view-stats"),
-  rehab:   document.getElementById("view-rehab")
-};
-
-var progressChip = document.getElementById("progressChip");
-var dateInput = document.getElementById("dateInput");
-var quoteText = document.getElementById("quoteText");
-
-// Rehab
-var rehabPhases = document.getElementById("rehabPhases");
-var rehabPhaseLabel = document.getElementById("rehabPhaseLabel");
-
-// ---------- NAVIGATION ----------
-var navBtns = document.querySelectorAll(".nav-btn");
-navBtns.forEach(function(btn){
-  btn.addEventListener("click", function(){
-    var v = btn.dataset.view;
-    setView(v);
-  });
-});
-
-function setView(view){
-  Object.keys(views).forEach(function(v){
-    views[v].style.display = (v === view ? "block" : "none");
-  });
-  navBtns.forEach(function(b){
-    b.classList.toggle("active", b.dataset.view === view);
-  });
-  state.currentView = view;
-  saveState();
+@@ -918,11 +1223,11 @@
+alert("No ideas available yet for this area.");
+return;
 }
+    var existing = getActions().filter(a => a.area === area);
+    var existing = getActions().filter(function(a){ return a.area === area; });
+var picked = null;
+for (var i=0;i<bank.length;i++){
+var s = bank[i];
+      var found = existing.some(a => a.title === s.title);
+      var found = existing.some(function(a){ return a.title === s.title; });
+if (!found){
+picked = s;
+break;
+@@ -991,6 +1296,177 @@
+var repsValue       = document.getElementById("repsValue");
+var calendarEl      = document.getElementById("calendar");
 
-// Rehab button in header
-document.getElementById("rehabBtn").addEventListener("click", function(){
-  setView("rehab");
-});
+  var rehabSection    = document.getElementById("rehabSection");
+  var rehabPhaseLabel = document.getElementById("rehabPhaseLabel");
+  var rehabPhases     = document.getElementById("rehabPhases");
+  var rehabBtn        = document.getElementById("rehabBtn");
+
+  // ---------- REHAB HELPERS ----------
+
+  function computeRehabStreakForExercise(exerciseId){
+    // count consecutive days from currentDate where that rehab exercise was completed
+    var streak = 0;
+    var cursor = new Date(currentDate);
+    while (true){
+      var key = cursor.toISOString().slice(0,10);
+      var day = state.days[key];
+      if (!day || !day.rehab) break;
+      var doneToday = false;
+      // search all phases for this ex id
+      Object.keys(day.rehab).forEach(function(pid){
+        var phaseMap = day.rehab[pid] || {};
+        if (phaseMap[exerciseId]) doneToday = true;
+      });
+      if (!doneToday) break;
+      streak++;
+      cursor.setDate(cursor.getDate()-1);
+    }
+    return streak;
+  }
+
+  function renderRehab(day){
+    if (!rehabPhases) return;
+    ensureRehabSetup();
+    if (!day.rehab) day.rehab = {};
+
+    // Choose current phase heuristically: default p1; if you've been consistent with p1, suggest p2, etc.
+    if (!state.rehab) state.rehab = { currentPhaseId: "p1" };
+    var currentPhaseId = state.rehab.currentPhaseId || "p1";
+
+    // simple "learning": if consistent with many p1 exercises, suggest upgrading
+    var consistentP1 = 0;
+    (REHAB_PLAN["p1"] || []).forEach(function(ex){
+      var st = computeRehabStreakForExercise(ex.id);
+      if (st >= 5) consistentP1++;
+    });
+    if (consistentP1 >= 2 && currentPhaseId === "p1") {
+      // nudge to p2 but don't force
+      rehabPhaseLabel.textContent = "You’re consistent in Phase 1 – you can consider layering Phase 2 if it feels good.";
+    } else {
+      var phaseObj = REHAB_PHASES.find(function(p){ return p.id === currentPhaseId; }) || REHAB_PHASES[0];
+      rehabPhaseLabel.textContent = phaseObj.name;
+    }
+
+    rehabPhases.innerHTML = "";
+
+    REHAB_PHASES.forEach(function(phase){
+      var phaseCard = document.createElement("div");
+      phaseCard.className = "fa-card";
+
+      var header = document.createElement("div");
+      header.className = "rehab-phase-header";
+
+      var title = document.createElement("div");
+      title.className = "rehab-phase-title";
+      title.innerHTML = "<span>"+ (phase.id === currentPhaseId ? "💚" : "🤍") +"</span><span>"+phase.name+"</span>";
+
+      var badge = document.createElement("div");
+      badge.className = "rehab-phase-badge";
+      badge.textContent = (phase.id === currentPhaseId) ? "Today’s focus" : "Optional / later";
+
+      header.appendChild(title);
+      header.appendChild(badge);
+
+      var sub = document.createElement("div");
+      sub.className = "small";
+      sub.textContent = phase.focus;
+
+      phaseCard.appendChild(header);
+      phaseCard.appendChild(sub);
+
+      var exList = document.createElement("div");
+      exList.style.marginTop = "6px";
+
+      var exs = REHAB_PLAN[phase.id] || [];
+      exs.forEach(function(ex){
+        if (!day.rehab[phase.id]) day.rehab[phase.id] = {};
+        var checked = !!day.rehab[phase.id][ex.id];
+
+        var row = document.createElement("div");
+        row.className = "rehab-exercise";
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = checked;
+
+        cb.addEventListener("change", function(){
+          if (!day.rehab[phase.id]) day.rehab[phase.id] = {};
+          day.rehab[phase.id][ex.id] = cb.checked;
+          // also sync to linked action so stats/counts include rehab
+          if (ex.linkActionId){
+            if (cb.checked) {
+              day.done[ex.linkActionId] = true;
+            } else {
+              delete day.done[ex.linkActionId];
+            }
+          }
+          saveState();
+          render(); // re-render to update stats + adapt notes
+        });
+
+        var main = document.createElement("div");
+        main.className = "rehab-exercise-main";
+
+        var topRow = document.createElement("div");
+        topRow.className = "rehab-exercise-title-row";
+
+        var titleSpan = document.createElement("span");
+        titleSpan.textContent = ex.title;
+        topRow.appendChild(titleSpan);
+
+        var loadTag = document.createElement("span");
+        loadTag.className = "rehab-tag";
+        loadTag.textContent = ex.sets + "×" + ex.reps + (ex.side ? (" • " + ex.side) : "");
+        topRow.appendChild(loadTag);
+
+        var animBtn = document.createElement("button");
+        animBtn.type = "button";
+        animBtn.className = "rehab-anim-btn";
+        animBtn.textContent = "▶ Animation";
+        animBtn.addEventListener("click", function(ev){
+          ev.stopPropagation();
+          alert("Here you could show a short animation or GIF of '"+ex.title+"'.");
+        });
+        topRow.appendChild(animBtn);
+
+        var benefit = document.createElement("div");
+        benefit.className = "rehab-exercise-benefit";
+        benefit.textContent = ex.benefit;
+
+        main.appendChild(topRow);
+        main.appendChild(benefit);
+
+        // adaptive note based on rehab streak
+        var streak = computeRehabStreakForExercise(ex.id);
+        if (streak >= 3){
+          var adapt = document.createElement("div");
+          adapt.className = "rehab-adapt-note";
+          if (streak < 6){
+            adapt.textContent = "Nice – you’ve hit this "+streak+" days in a row. If it still feels good, you can slowly increase range before adding load.";
+          } else {
+            adapt.textContent = "Strong consistency. If pain stays low, you can talk with your PT about progressing load or moving more into the next phase.";
+          }
+          main.appendChild(adapt);
+        }
+
+        row.appendChild(cb);
+        row.appendChild(main);
+        exList.appendChild(row);
+      });
+
+      phaseCard.appendChild(exList);
+
+      // clicking the card header marks this as current focus phase
+      header.addEventListener("click", function(){
+        state.rehab.currentPhaseId = phase.id;
+        saveState();
+        render();
+      });
+
+      rehabPhases.appendChild(phaseCard);
+    });
+  }
 
 // ---------- RENDER ----------
+
 function render(){
-  var day = ensureDay(currentDate);
-  dateInput.value = currentDate;
-  renderProgress(day);
-  renderQuote();
-  renderRehab(day);
-}
+@@ -1016,6 +1492,7 @@
+renderAreasToday(day);
+renderStats();
+renderCalendar();
+    renderRehab(day);
 
+if (state.currentArea) {
+renderAreaDetail(day);
+@@ -1025,7 +1502,7 @@
 function renderProgress(day){
-  var total = state.actions.length;
-  var done = Object.values(day.done).filter(Boolean).length;
-  var pct = total ? Math.round(done/total*100) : 0;
-  progressChip.textContent = "Today: " + pct + "% ("+done+"/"+total+")";
+var actions = getActions();
+var total = actions.length;
+    var done = actions.filter(a => day.done[a.id]).length;
+    var done = actions.filter(function(a){ return day.done[a.id]; }).length;
+var pct = total ? Math.round(done/total*100) : 0;
+progressChip.textContent = "Today: " + pct + "% ("+done+"/"+total+")";
+}
+@@ -1048,7 +1525,7 @@
+var key = d.toISOString().slice(0,10);
+var day = state.days[key] || {done:{}};
+var total = actions.length || 1;
+      var done = actions.filter(a => day.done[a.id]).length;
+      var done = actions.filter(function(a){ return day.done[a.id]; }).length;
+var pct = Math.round(done/total*100);
+completions.push({date:key,pct:pct});
+}
+@@ -1069,7 +1546,7 @@
+weekBars.appendChild(bar);
+});
+
+    var activeDays = completions.filter(c => c.pct >= 50).length;
+    var activeDays = completions.filter(function(c){ return c.pct >= 50; }).length;
+weekSummary.textContent = activeDays + " of 7 days at 50%+. You’re building a gentle rhythm.";
 }
 
-function renderQuote(){
-  quoteText.textContent = "“" + QUOTES[state.quoteIndex] + "”";
+@@ -1091,17 +1568,17 @@
+function renderStreakHighlights(){
+streakHighlights.innerHTML = "";
+var actions = getActions();
+    var streaks = actions.map(a => ({action:a, streak:computeActionStreak(a.id)}))
+                         .filter(x => x.streak>0)
+                         .sort((a,b)=>b.streak-a.streak)
+    var streaks = actions.map(function(a){ return {action:a, streak:computeActionStreak(a.id)}; })
+                         .filter(function(x){ return x.streak>0; })
+                         .sort(function(a,b){ return b.streak-a.streak; })
+.slice(0,3);
+
+if (!streaks.length){
+streakHighlights.innerHTML = '<span class="small">Complete one 1% action today to start your streaks.</span>';
+return;
 }
 
-function renderRehab(day){
-  rehabPhases.innerHTML = "";
-  var pid = state.rehab.currentPhaseId || "p1";
-  rehabPhaseLabel.textContent = REHAB_PHASES.find(p=>p.id===pid)?.name || "Rehab";
+    streaks.forEach(s => {
+    streaks.forEach(function(s){
+var pill = document.createElement("div");
+pill.className = "highlight-pill";
+pill.innerHTML = "⚡ <span class='label'>" +
+@@ -1121,14 +1598,14 @@
+return;
+}
 
-  REHAB_PLAN[pid].forEach(function(ex){
-    var row = document.createElement("div");
-    row.style.padding = "10px 0";
+    var undone = actions.filter(a => !day.done[a.id]);
+    var undone = actions.filter(function(a){ return !day.done[a.id]; });
+var pool = undone.length ? undone : actions.slice();
+    pool = pool.filter(a => {
+    pool = pool.filter(function(a){
+if (!a.blocks || !a.blocks.length) return true;
+if (a.blocks.indexOf("Any") >= 0) return true;
+return a.blocks.indexOf(block)>=0;
+});
+    pool.sort((a,b)=>{
+    pool.sort(function(a,b){
+var sa = (a.favorite?2:0);
+var sb = (b.favorite?2:0);
+return sb-sa;
+@@ -1673,6 +2150,13 @@
+generateSuggestionForArea(state.currentArea);
+});
 
-    var cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.style.marginRight = "8px";
-    cb.checked = !!day.rehab[ex.id];
-
-    cb.addEventListener("change", function(){
-      day.rehab[ex.id] = cb.checked;
-      // Sync to main actions if matching exists
-      var match = state.actions.find(a => a.id === ex.id);
-      if (match) {
-        if (cb.checked) day.done[match.id] = true;
-        else delete day.done[match.id];
-      }
-      saveState();
-      render();
-    });
-
-    var lbl = document.createElement("span");
-    lbl.textContent = ex.title + " – " + ex.reps + " reps";
-
-    row.appendChild(cb);
-    row.appendChild(lbl);
-    rehabPhases.appendChild(row);
+  // Rehab button: scrolls to rehab section
+  rehabBtn && rehabBtn.addEventListener("click", function(){
+    if (rehabSection && rehabSection.scrollIntoView){
+      rehabSection.scrollIntoView({ behavior:"smooth", block:"start" });
+    }
   });
-}
 
-// ---------- DATE CHANGE -----------
-dateInput.addEventListener("change", function(){
-  currentDate = dateInput.value || todayISO;
-  ensureDay(currentDate);
-  saveState();
-  render();
-});
-
-// ---------- QUOTE NEXT ----------
-document.getElementById("nextQuoteBtn").addEventListener("click", function(){
-  state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
-  saveState();
-  render();
-});
-
-// ---------- INIT VIEW ----------
-setView(state.currentView || "home");
+// ---------- INIT ----------
+dateInput.value = currentDate;
 render();
-
-</script>
-</body>
-</html>
